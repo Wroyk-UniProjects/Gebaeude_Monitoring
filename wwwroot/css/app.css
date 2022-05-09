@@ -472,22 +472,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   visibility: hidden;
 }
 
-.absolute {
-  position: absolute;
-}
-
-.bottom-0 {
-  bottom: 0px;
-}
-
-.left-0 {
-  left: 0px;
-}
-
-.inline {
-  display: inline;
-}
-
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
