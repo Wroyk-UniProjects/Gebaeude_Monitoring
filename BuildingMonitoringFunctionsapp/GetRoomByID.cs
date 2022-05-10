@@ -8,18 +8,18 @@ namespace BuildingMonitoringFunctionsapp
 {
     public static class GetRoomByID
     {
-        [FunctionName("GetRoomByID")]
+        [FunctionName("getRoomByID")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{id}/config")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/config")]
             HttpRequest req,
             [Sql("select r.[id], r.[name], r.[individual], 'OK' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
-                "join roomConfig rc on r.configId=rc.id join measurements m on r.id=m.roomId where rc.[id] = @id",
+                "join roomConfig rc on r.[configId]=rc.[id] join measurements m on r.[id]=m.[roomId] where rc.[id] = @ID",
                 CommandType = System.Data.CommandType.Text,
-                Parameters = "@id={id}",
-                ConnectionStringSetting = "SqlConnectionString")]
-            IEnumerable<Rooms> Rooms)
+                Parameters = "@ID={iD}",
+                ConnectionStringSetting = "sqlconnectionstring")]
+            IEnumerable<RoomConfig> RoomConfig)
         {
-            return new OkObjectResult(Rooms);
+            return new OkObjectResult(RoomConfig);
         }
     }
 }
