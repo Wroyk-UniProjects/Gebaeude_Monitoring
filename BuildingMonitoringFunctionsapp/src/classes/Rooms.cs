@@ -1,6 +1,6 @@
 ﻿namespace BuildingMonitoringFunctionsapp
 {
-    //class für get rooms
+    //  Klasse fuer die Azure Funktion 'getRooms'
     public class Rooms
     {
         public int id { get; set; }
@@ -11,7 +11,6 @@
         public double temp{ get; set; }
         public double targetTemp { get; set; }
         public double targetHum { get; set; }
-
     }
 }
 

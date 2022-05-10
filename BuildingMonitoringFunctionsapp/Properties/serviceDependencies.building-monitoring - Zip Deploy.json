@@ -4,6 +4,12 @@
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/buildingmonitoring8b2c",
       "type": "storage.azure",
       "connectionId": "AzureWebJobsStorage"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/monitoring-aarrs/databases/bm-sql-db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:sql_connectionString"
     }
   }
 }

@@ -1,12 +1,15 @@
 {
   "dependencies": {
-    "appInsights1": {
-      "type": "appInsights.sdk"
-    },
     "storage1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/buildingmonitoring8b2c",
       "type": "storage.azure",
       "connectionId": "AzureWebJobsStorage"
+    },
+    "mssql1": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/monitoring-aarrs/databases/bm-sql-db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:sql_connectionString"
     }
   }
 }
