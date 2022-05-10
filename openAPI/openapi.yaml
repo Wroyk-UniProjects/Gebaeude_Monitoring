@@ -1,0 +1,301 @@
+openapi: 3.0.1
+info:
+  title: Building Monitoring
+  description: 'Student project'
+  contact:
+    email: rubait01@hs-esslingen.de
+  version: 1.0.0
+externalDocs:
+  description: auer docs
+  url: https://pswtm.atlassian.net/wiki/spaces/PSWTM/overview?homepageId=229378
+servers:
+- url: https://building-monitoring.azurewebsites.net/api/
+tags:
+- name: rooms
+  description: Retrieve room information
+- name: config
+  description: Retrieve and update Configs
+- name: measurement
+  description: Retrieve and update Configs 
+paths:
+  /rooms:
+    get:
+      tags:
+      - rooms
+      summary: Returns a List of all rooms
+      description: Returns al List of all rooms.
+      operationId: getRooms
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rooms'
+      x-codegen-request-body-name: body
+  /rooms/{roomId}:
+    get:
+      tags:
+      - rooms
+      summary: Returns a the specified room
+      operationId: getRoomById
+      parameters:
+      - name: roomId
+        in: path
+        description: The id of a Room
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomDetail'
+        400:
+          description: Invalid Id supplied
+          content: {}
+        404:
+          description: Room not found
+          content: {}
+      x-codegen-request-body-name: body
+  /rooms/{roomId}/config/:
+    get:
+      tags:
+      - config
+      summary: Returns the config of the specified room
+      description: Returns a the config of the specified room
+      operationId: getConfigById
+      parameters:
+      - name: roomId
+        in: path
+        description: id of room
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+        400:
+          description: Invalid Id supplied
+          content: {}
+        404:
+          description: Room not found
+          content: {}
+      x-codegen-request-body-name: body
+    put:
+      tags:
+      - config
+      summary: Updates or adds a individual config of the specified room
+      description: This can only be done by the logged in user.
+      operationId: updateConfigById
+      parameters:
+      - name: roomId
+        in: path
+        description: id of room
+        required: true
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config' 
+      responses:
+        default:
+          description: successful operation
+          content: {}
+        400:
+          description: Invalid Id supplied
+          content: {}
+        404:
+          description: Room not found
+          content: {}
+      x-codegen-request-body-name: body
+  /rooms/config:
+    patch:
+      tags:
+      - config
+      summary: Updates the global-config
+      description: This can only be done by the logged in user.
+      operationId: updateGlobalConfig
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config' 
+      responses:
+        default:
+          description: successful operation
+      x-codegen-request-body-name: body
+  /rooms/{roomId}/measurement:
+    #get:
+      #tags:
+      #- measurement
+      #summary: Returns the latest measurement
+      #operationId: getMeasurement
+      #parameters:
+      #- name: roomId
+      #  in: path
+      #  description: id of room
+      #  required: true
+      #  schema:
+      #    type: number
+      #responses:
+      #  200:
+      #    description: successful operation
+      #    content:
+      #      application/json:
+      #       schema:
+      #          $ref: '#/components/schemas/Measurement'
+      #  400:
+      #    description: Invalid Id supplied
+      #    content: {}
+      #  404:
+      #    description: Room not found
+      #    content: {}
+      #x-codegen-request-body-name: body
+    post:
+      tags:
+      - measurement
+      summary: Add a measurement to a Room
+      description: This can only be done by the logged in user.
+      operationId: addMeasurement
+      parameters:
+      - name: roomId
+        in: path
+        description: id of room
+        required: true
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Measurement' 
+      responses:
+        default:
+          description: successful operation
+        400:
+          description: Invalid Id supplied
+          content: {}
+        404:
+          description: Room not found
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    Rooms:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Room'
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        individual:
+          type: boolean
+        status: 
+          type: string
+          enum:
+            - OK
+            - over
+            - under
+            - unknown
+        humid:
+          type: number
+          format: double
+        temper:
+          type: number
+          format: double
+        targetHumid:
+          type: number
+          format: double
+        targetTemper:
+          type: number
+          format: double
+    RoomDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        status: 
+          type: string
+        name: 
+          type: string
+        individual:
+          type: boolean
+          enum:
+            - OK
+            - overHumid
+            - underHumid
+            - overTemper
+            - underTemper
+            - unknown
+        imageUrl:
+          type: string
+        humid:
+          type: number
+          format: double
+        temper:
+          type: number
+          format: double
+        targetHumid:
+          type: number
+          format: double
+        targetTemper:
+          type: number
+          format: double
+    Config:
+      type: object
+      properties:
+        roomID:
+          type: integer
+          format: int64
+        targetHumid:
+          type: number
+          format: double
+        upperToleranceHumid: 
+          type: number
+          format: double
+        lowerToleranceHumid:
+          type: number
+          format: double
+        targetTemper:
+          type: number
+          format: double
+        upperToleranceTemper:
+          type: number
+          format: double
+        lowerToleranceTemper:
+          type: number
+          format: double
+        updateRate:
+          type: number
+          format: double
+    Measurement:
+      type: object
+      properties:
+        roomID:
+          type: integer
+          format: int64
+        humid:
+          type: number
+          format: double
+        temper:
+          type: number
+          format: double
+      
