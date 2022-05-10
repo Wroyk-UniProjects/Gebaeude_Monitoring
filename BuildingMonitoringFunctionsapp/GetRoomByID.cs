@@ -19,9 +19,9 @@ namespace BuildingMonitoringFunctionsapp
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<Room> Room)
+            IEnumerable<Room> room)
         {
-            return new OkObjectResult(Room);
+            return new OkObjectResult(room);
         }
     }
 }

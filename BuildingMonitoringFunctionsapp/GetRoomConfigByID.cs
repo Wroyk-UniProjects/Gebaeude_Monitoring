@@ -20,11 +20,9 @@ namespace BuildingMonitoringFunctionsapp
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<RoomConfig> RoomConfig)
-        {            
-            return new OkObjectResult(RoomConfig);
+            IEnumerable<RoomConfig> roomConfig)
+        {
+            return new OkObjectResult(roomConfig);
         }
     }
 }
-
-// "select [Id], [order], [title], [url], [completed] from dbo.ToDo where [Priority] > @Priority"
