@@ -9,7 +9,7 @@
       "secretStore": "AzureAppSettings",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/monitoring-aarrs/databases/bm-sql-db",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:sql_connectionString"
+      "connectionId": "sql_connectionString"
     }
   }
 }

@@ -12,13 +12,16 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms")]
         HttpRequest req,
-        [Sql("select r.[id], r.[name], r.[individual], 'ok' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
-            "join roomConfig rc on r.configId=rc.id join measurements m on r.id=m.roomId",
+        //[Sql("select r.[id], r.[name], r.[individual], 'ok' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
+        //    "join roomConfig rc on r.configId=rc.id join measurements m on r.id=m.roomId",
+        //    CommandType = System.Data.CommandType.Text,
+        //    ConnectionStringSetting = "sqlconnectionstring")]
+        [Sql("select * from dbo.rooms",
             CommandType = System.Data.CommandType.Text,
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> Rooms)
         {
-            return new OkObjectResult(Rooms);
+            return new JsonResult(Rooms);
         }
     }
 }

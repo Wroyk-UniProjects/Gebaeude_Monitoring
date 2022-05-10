@@ -19,7 +19,7 @@ namespace BuildingMonitoringFunctionsapp
                 ConnectionStringSetting = "sqlconnectionstring")]
             IEnumerable<RoomConfig> RoomConfig)
         {
-            return new OkObjectResult(RoomConfig);
+            return new JsonResult(RoomConfig);
         }
     }
 }
