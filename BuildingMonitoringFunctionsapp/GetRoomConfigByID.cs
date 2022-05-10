@@ -6,22 +6,23 @@ using System.Collections.Generic;
 
 namespace BuildingMonitoringFunctionsapp
 {
-    public static class GetRoomByID
+    public static class GetRoomConfigByID
     {
-        [FunctionName("getRoomByID")]
+        [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/config")]
             HttpRequest req,
-            [Sql("select r.[id], r.[name], r.[individual], 'OK' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
+            [Sql("select rc.[roomId], rc.[targetHum], rc.[uperToleranceH], rc.[lowerToleranceH], rc.[targetTemp], rc.[uperToleranceT], rc.[lowerToleranceT], rc.[updateRate]" +
+                "from dbo.rooms r " +
                 "join roomConfig rc on r.[configId]=rc.[id] " +
                 "join measurements m on r.[id]=m.[roomId] " +
                 "where r.[id] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<Room> Room)
-        {
-            return new OkObjectResult(Room);
+            IEnumerable<RoomConfig> RoomConfig)
+        {            
+            return new OkObjectResult(RoomConfig);
         }
     }
 }
