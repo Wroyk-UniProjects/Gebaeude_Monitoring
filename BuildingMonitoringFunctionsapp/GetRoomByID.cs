@@ -16,7 +16,7 @@ namespace BuildingMonitoringFunctionsapp
                 "join roomConfig rc on r.[configId]=rc.[id] join measurements m on r.[id]=m.[roomId] where rc.[id] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
-                ConnectionStringSetting = "sqlconnectionstring")]
+                ConnectionStringSetting = "sqldb_connection")]
             IEnumerable<RoomConfig> RoomConfig)
         {
             return new OkObjectResult(RoomConfig);

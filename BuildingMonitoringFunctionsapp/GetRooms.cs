@@ -15,7 +15,7 @@ namespace BuildingMonitoringFunctionsapp
         [Sql("select r.[id], r.[name], r.[individual], 'ok' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
             "join roomConfig rc on r.configId=rc.id join measurements m on r.id=m.roomId",
             CommandType = System.Data.CommandType.Text,
-            ConnectionStringSetting = "sqlconnectionstring")]
+            ConnectionStringSetting = "sqldb_connection")]
         IEnumerable<Room> Rooms)
         {
             return new OkObjectResult(Rooms);
