@@ -16,10 +16,12 @@ namespace BuildingMonitoringFunctionsapp
     {
         [FunctionName("getMeasurements")]
         public static IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "measurements")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/measurements")]
         HttpRequest req,
-        [Sql("select [id] from measurements",
+        [Sql("select *  from measurements" +           
+            "where r.[id] = @ID",
             CommandType = System.Data.CommandType.Text,
+            Parameters = "@ID={iD}",
             ConnectionStringSetting = "sqldb_connection")]
         IEnumerable<Measurement> measurements)
         {
