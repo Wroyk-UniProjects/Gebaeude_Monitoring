@@ -1,4 +1,5 @@
 ﻿using Microsoft.OData.Edm;
+using System;
 
 namespace BuildingMonitoringFunctionsapp
 {
