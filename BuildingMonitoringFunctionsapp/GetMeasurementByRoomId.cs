@@ -18,13 +18,13 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/measurement")]
             HttpRequest req,
-            [Sql("select * from measurement where roomId=@ID",
+            [Sql("select * from measurements where roomId=@ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<RoomConfig> roomConfig)
+            IEnumerable<Measurement> measurement)
         {
-            return new OkObjectResult(roomConfig);
+            return new OkObjectResult(measurement);
         }
       }
     }
