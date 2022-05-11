@@ -35,6 +35,7 @@ namespace BuildingMonitoringFunctionsapp
                 using (SqlConnection conn = new SqlConnection(str))
                 {
                     conn.Open();
+                    // var text = "update roomConfig set [targetTemp]="+name+" where id=1;";
                     var text = "update roomConfig set [targetTemp]=2 where id=1;";
 
                     using (SqlCommand cmd = new SqlCommand(text, conn))
