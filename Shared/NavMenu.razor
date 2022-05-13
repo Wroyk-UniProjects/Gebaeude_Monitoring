@@ -1,9 +1,25 @@
-﻿<div class="shadow-md py-6 bg-white relative flex  w-full">
-        <div>
-            <span class="block text-cyan-600 text-4xl px-3">Building Monitoring</span>
+﻿<div class="shadow-md py-6 bg-white relative flex w-full">
+        
+        <div class="flex justify-around px-3">
+            <button @onclick="ToggelMenu" class="lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
+            <span class="block text-cyan-700 text-4xl">Building Monitoring</span>
         </div>
 
-        <ul class="lg:flex lg:flex-row text-xl space-x-6 items-end">
+        <ul class="lg:flex lg:flex-row @MenuCssClass text-xl space-x-6 items-end">
+
+            <li>
+                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden" href="#!">Detail View</a>
+            </li>
+
+            <li>
+                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden" href="#!">List View</a>
+            </li>
+
             <li>
                 <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700" href="#!">Global Config</a>
             </li>
@@ -11,9 +27,17 @@
             <li>
                 <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700" href="#!">Individual Config</a>
             </li>
+
         </ul>
 </div>
 
 @code {
+    private bool menuVisible = false;
 
+    private string? MenuCssClass => menuVisible ? null : "hidden";
+
+    private void ToggelMenu()
+    {
+        menuVisible = !menuVisible;
+    }
 }
