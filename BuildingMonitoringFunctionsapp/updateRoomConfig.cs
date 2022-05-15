@@ -68,3 +68,65 @@ namespace FunctionApp2
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Threading.Tasks;
+//using BuildingMonitoringFunctionsapp;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.Azure.WebJobs;
+//using Microsoft.Azure.WebJobs.Extensions.Http;
+//using Microsoft.Extensions.Logging;
+//using Newtonsoft.Json;
+
+//namespace FunctionApp2
+//{
+//    public class updateRoomConfig
+//    {
+//        // create a new ToDoItem from body object
+//        // uses output binding to insert new item into ToDo table
+//        [FunctionName("PostToDo")]
+//        public static async Task<IActionResult> Run(
+//            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "PostFunction")] HttpRequest req,
+//            ILogger log,
+//            [Sql("dbo.measurements", ConnectionStringSetting = "SqlConnectionString")] IAsyncCollector<Measurement> measurements)
+//        {
+//            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+//            Measurement measurement = JsonConvert.DeserializeObject<Measurement>(requestBody);
+
+
+
+//            await measurements.AddAsync(measurement);
+//            await measurements.FlushAsync();
+//            List<Measurement> measurementList = new List<Measurement> { measurement};
+
+//            return new OkObjectResult(measurementList);
+//        }
+//    }
+//}
+

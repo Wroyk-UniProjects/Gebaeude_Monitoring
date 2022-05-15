@@ -38,7 +38,7 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     conn.Open();
                     // var text = "update roomConfig set [targetTemp]="+name+" where id=1;";
-                    var text = "update measurements set [temp]=2 ;";
+                    var text = "update measurements set [temp]=2 ";
 
                     using (SqlCommand cmd = new SqlCommand(text, conn))
                     {

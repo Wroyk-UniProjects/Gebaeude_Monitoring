@@ -1,5 +1,6 @@
 ﻿using Microsoft.OData.Edm;
 using System;
+using System.Threading.Tasks;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -8,5 +9,7 @@ namespace BuildingMonitoringFunctionsapp
         public int roomId { get; set; }
         public double hum { get; set; }
         public double temper { get; set; }
+
+
     }
 }
