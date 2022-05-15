@@ -15,14 +15,8 @@ namespace BuildingMonitoringFunctionsapp
     public class UpdateMeasurementByRoomId
     {
 
-
-
         [FunctionName("updateMeasurementByRoomId")]
  
-        
-
-
-        
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)] HttpRequest req)
         {
@@ -44,7 +38,7 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     conn.Open();
                     // var text = "update roomConfig set [targetTemp]="+name+" where id=1;";
-                    var text = "update measurement set [targetTemp]=2 where roomId=@ID;";
+                    var text = "update measurements set [temp]=2 ;";
 
                     using (SqlCommand cmd = new SqlCommand(text, conn))
                     {
