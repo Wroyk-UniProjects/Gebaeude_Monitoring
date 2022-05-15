@@ -50,7 +50,9 @@ namespace FunctionApp2
             {
                 conn.Open();
                 //  var text = "update roomConfig set "+name+" = 600 where roomId=2;";
-                var text = "update roomConfig set [targetHum] = 500 where roomId= " + name + ";";
+                // var text = "update roomConfig set [targetHum] = 500 where roomId= " + name + ";";
+                var text = "insert into roomConfig ([targetTemp],[targetHum], [updateRate], [roomId])  values( 1, 2,55,  2)";
+
 
                 using (SqlCommand cmd = new SqlCommand(text, conn))
                 {
