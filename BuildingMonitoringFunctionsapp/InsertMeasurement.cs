@@ -18,15 +18,15 @@ namespace BuildingMonitoringFunctionsapp
         [FunctionName("InsertMeasurement")]
         public static CreatedResult Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "addtodoitem")] HttpRequest req,
-            [Sql("[dbo].[measurements]", ConnectionStringSetting = "Server=tcp:monitoring-aarrs.database.windows.net,1433;Initial Catalog=bm-sql-db;Persist Security Info=False;User ID=bigBoss;Password=iLBd2NhoL379YGDzyChW01FymPoCnRFt;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")] out Measurement output,
+            [Sql("[dbo].[measurements]", ConnectionStringSetting = "Server=tcp:monitoring-aarrs.database.windows.net,1433;+" +
+            "Initial Catalog=bm-sql-db;Persist Security Info=False;User ID=bigBoss;Password=iLBd2NhoL379YGDzyChW01FymPoCnRFt;+" +
+            "MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")] out Measurement output,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger with SQL Output Binding function processed a request.");
-
-
             output = new Measurement
             {
-                roomId = 2,
+              //  roomId = 2,
                 hum = 1,
                 temper = 3
             };
@@ -34,7 +34,6 @@ namespace BuildingMonitoringFunctionsapp
             //string ignored = JsonConvert.SerializeObject(output,
             //Formatting.Indented,
             //new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-
 
             //JsonSerializerOptions options = new()
             //{

@@ -11,7 +11,6 @@ namespace BuildingMonitoringFunctionsapp
         public double hum { get; set; }
         public double temper { get; set; }
 
-
     }
 
 }

@@ -119,9 +119,9 @@ namespace FunctionApp2
         [FunctionName("PostToDo")]
 
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/measurementsTEST")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rooms/{iD}/measurement")]
             HttpRequest req,
-            [Sql("insert into measurements ([roomId], [temp], [hum])  values( @ID,55,  2) ",
+            [Sql("insert into measurements ([roomId], [temp], [hum])  values( @ID,5,  2) ",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
