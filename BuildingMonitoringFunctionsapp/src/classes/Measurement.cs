@@ -1,4 +1,5 @@
 ﻿using Microsoft.OData.Edm;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -12,4 +13,5 @@ namespace BuildingMonitoringFunctionsapp
 
 
     }
+
 }
