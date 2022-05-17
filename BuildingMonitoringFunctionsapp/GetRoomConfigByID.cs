@@ -3,6 +3,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -10,19 +11,17 @@ namespace BuildingMonitoringFunctionsapp
     {
         [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/config")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/roomConfig")]
             HttpRequest req,
-            [Sql("select rc.[roomId], rc.[targetHum], rc.[uperToleranceH], rc.[lowerToleranceH], rc.[targetTemp], rc.[uperToleranceT], rc.[lowerToleranceT], rc.[updateRate]" +
-                "from dbo.rooms r " +
-                "join roomConfig rc on r.[configId]=rc.[id] " +
-                "join measurements m on r.[id]=m.[roomId] " +
-                "where r.[id] = @ID",
+             [Sql("select [roomId], [targetTemp], [targetHum],[updateRate],[uperToleranceT],[lowerToleranceT],[uperToleranceH], [lowerToleranceH] from roomConfig  "+
+                  "where [roomId] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<RoomConfig> roomConfig)
+
+        IEnumerable<RoomConfig>room)
         {
-            return new OkObjectResult(roomConfig);
-        }
+            return new OkObjectResult(room.FirstOrDefault());
+        } 
+ }
     }
-}

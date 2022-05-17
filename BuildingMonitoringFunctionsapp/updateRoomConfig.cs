@@ -1,19 +1,5 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //    //test um etwas in roomconfig zu schreiben
-
 
 using System.IO;
 using System.Net;
@@ -44,7 +30,7 @@ namespace FunctionApp2
 
         [FunctionName("updateRoomConfig")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/roomConfig")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rooms/{iD}/roomConfig")]
             HttpRequest req,
              [Sql("update roomconfig set [targetTemp]=100, [targetHum]=1, [updateRate]=1, [uperToleranceT]=1," +
             "[uperToleranceH]=1,  [lowerToleranceT]=1, [lowerToleranceH]=1, " +
