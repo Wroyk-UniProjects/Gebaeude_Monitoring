@@ -12,8 +12,6 @@ namespace BuildingMonitoringFunctionsapp
         public double temper { get; set; }
         public Date date { get; set; }
 
-
-
     }
 
 }
