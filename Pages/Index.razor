@@ -2,9 +2,44 @@
 
 <PageTitle>Building Monitoring</PageTitle>
 <div class="text-center bg-gray-50 text-gray-800 py-16">
-    <h1 class="text-5xl font-bold mt-0 mb-6">Hello, world!</h1>
-    Welcome to your new app.
+
+    @if(RoomList.Count > 0)
+    {   <div class="shadow-md py-6 bg-white ">
+            <h1 class="text-5xl font-bold mt-0 mb-6">@RoomList[0].Name</h1>
+            @if (RoomList[0].Individual)
+            {
+                //TODO Mack korekt
+                <p>@RoomList[0].Status          I</p>
+            }
+            else
+            {
+                <p>@RoomList[0].Status          G</p>
+            }
+
+            <p>@RoomList[0].Temp // @RoomList[0].TargetTemp</p>
+            <p>@RoomList[0].Hum // @RoomList[0].TargetHum</p>
+        </div>
+    }
+    else
+    {
+        <p>Loding ...</p>
+    }
 </div>
 
+@code{
+    public List<Room> RoomList { get; set; } = new List<Room>();
 
+    [Inject]
+    public IRoomService RoomServic { get; set; }
 
+    protected async override Task OnInitializedAsync()
+    {
+        RoomList = await RoomServic.GetRooms();
+
+        //testing
+        foreach (var room in RoomList)
+        {
+            Console.WriteLine(room.Name);
+        }
+    }
+}
