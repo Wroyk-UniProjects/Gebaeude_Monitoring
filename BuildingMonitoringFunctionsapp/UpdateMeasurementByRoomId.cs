@@ -50,10 +50,12 @@ namespace BuildingMonitoringFunctionsapp
             {
                 conn.Open();
                 //  var text = "update roomConfig set "+name+" = 600 where roomId=2;";
-                //  var text = "update roomConfig set [targetHum] = 500 where roomId= " + name + ";";
+                  var text = "update roomConfig set [targetHum] = 500 where roomId= " + name + ";";
                 //  var text = "insert into measurements ([roomId], [temp], [hum])  values( 2,55,  2)";
-                var text = "insert into measurements ([roomId], [temp], [hum])  values( 2,55,  2);";
-
+                // var text = "insert into measurements ([roomId], [temp], [hum])  values( 2,55,  2);";
+                //var text = "update roomconfig set [targetTemp] = 100, [targetHum]= 1, [updateRate]= 1, [uperToleranceT]= 1," +
+                //            "[uperToleranceH]=1,  [lowerToleranceT]=1, [lowerToleranceH]=1, " +
+                //            "[roomId]= 2 where roomId= " + name + ";;
 
                 using (SqlCommand cmd = new SqlCommand(text, conn))
                 {

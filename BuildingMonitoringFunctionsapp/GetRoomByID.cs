@@ -3,6 +3,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -12,24 +13,17 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}")]
             HttpRequest req,
-                        [Sql("select id from rooms " +
-                "where [id] = @ID",
+             [Sql("select r.[id], m.[date], m.[temp], m.[hum] , r.[name], r.[id] as 'roomId', r.[name], r.[individual], 'ok' as status, rc.[targetTemp], rc.[targetHum] from measurements m "+
+                  "join rooms r on m.roomId=r.id join roomConfig rc on r.id=rc.roomId where date in (select max(date) from measurements group by roomId)" +
+                  "and r.[id] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            //[Sql("select r.[id], r.[name], r.[individual], 'OK' as status, r.[floorplan], m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
-            //    "join roomConfig rc on r.[configId]=rc.[id] " +
-            //    "join measurements m on r.[id]=m.[roomId] " +
-            //    "where r.[id] = @ID",
-            //    CommandType = System.Data.CommandType.Text,
-            //    Parameters = "@ID={iD}",
-            //    ConnectionStringSetting = "sqlconnectionstring")]
-            RoomDetail room)
+
+       IEnumerable<Room> room)
         {
-            //keine Liste von Objekten zurueck geben nur eins 
-            return new JsonResult(room);
+            return new OkObjectResult(room);
         }
     }
 }
 
-// "select [Id], [order], [title], [url], [completed] from dbo.ToDo where [Priority] > @Priority"
