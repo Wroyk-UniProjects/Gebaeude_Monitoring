@@ -4,6 +4,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -20,9 +21,9 @@ namespace BuildingMonitoringFunctionsapp
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
 
-       IEnumerable<Room> room)
+        IEnumerable<RoomDetail>room)
         {
-            return new OkObjectResult(room);
+            return new OkObjectResult(room.FirstOrDefault());
         }
     }
 }
