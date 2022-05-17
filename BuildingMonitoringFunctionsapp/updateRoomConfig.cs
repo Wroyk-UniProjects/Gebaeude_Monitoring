@@ -1,4 +1,20 @@
 
+//select roomId, max(date) from measurements 
+//group by roomId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    //test um etwas in roomconfig zu schreiben
 
 

@@ -12,10 +12,12 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms")]
         HttpRequest req,
-        [Sql("select r.[id], r.[name], r.[individual], 'ok' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
-            "join roomConfig rc on r.configId=rc.id join measurements m on r.id=m.roomId",
+        [Sql("select r.[id], m.[date], m.[temp], m.[hum] , r.[name], r.[id] as 'roomId', r.[name], r.[individual], 'ok' as status, rc.[targetTemp], rc.[targetHum] from measurements m "+
+            "join rooms r on m.roomId=r.id join roomConfig rc on r.id=rc.roomId where date in (select max(date) from measurements group by roomId)",
+
             CommandType = System.Data.CommandType.Text,
             ConnectionStringSetting = "sqlconnectionstring")]
+        
         IEnumerable<Room> room)
         {
             return new OkObjectResult(room);

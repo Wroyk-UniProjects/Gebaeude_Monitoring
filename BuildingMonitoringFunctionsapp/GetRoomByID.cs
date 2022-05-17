@@ -12,16 +12,22 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}")]
             HttpRequest req,
-            [Sql("select r.[id], r.[name], r.[individual], 'OK' as status, m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
-                "join roomConfig rc on r.[configId]=rc.[id] " +
-                "join measurements m on r.[id]=m.[roomId] " +
-                "where r.[id] = @ID",
+                        [Sql("select id from rooms " +
+                "where [id] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<Room> room)
+            //[Sql("select r.[id], r.[name], r.[individual], 'OK' as status, r.[floorplan], m.[hum], m.[temp], rc.[targetTemp], rc.[targetHum] from dbo.rooms r " +
+            //    "join roomConfig rc on r.[configId]=rc.[id] " +
+            //    "join measurements m on r.[id]=m.[roomId] " +
+            //    "where r.[id] = @ID",
+            //    CommandType = System.Data.CommandType.Text,
+            //    Parameters = "@ID={iD}",
+            //    ConnectionStringSetting = "sqlconnectionstring")]
+            RoomDetail room)
         {
-            return new OkObjectResult(room);
+            //keine Liste von Objekten zurueck geben nur eins 
+            return new JsonResult(room);
         }
     }
 }
