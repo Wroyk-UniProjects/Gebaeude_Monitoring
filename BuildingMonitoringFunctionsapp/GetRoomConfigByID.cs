@@ -11,7 +11,7 @@ namespace BuildingMonitoringFunctionsapp
     {
         [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/roomConfig")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/config")]
             HttpRequest req,
              [Sql("select [roomId], [targetTemp], [targetHum],[updateRate],[uperToleranceT],[lowerToleranceT],[uperToleranceH], [lowerToleranceH] from roomConfig  "+
                   "where [roomId] = @ID",
