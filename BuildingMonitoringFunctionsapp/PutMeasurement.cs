@@ -55,6 +55,7 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     connection.Open();
                     var rows = await sql_cmd.ExecuteNonQueryAsync();
+                    connection.Close();
                 }
                 catch(SqlException ex)
                 {
