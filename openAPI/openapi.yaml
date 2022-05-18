@@ -162,7 +162,7 @@ paths:
       #    description: Room not found
       #    content: {}
       #x-codegen-request-body-name: body
-    post:
+    put:
       tags:
       - measurement
       summary: Add a measurement to a Room
