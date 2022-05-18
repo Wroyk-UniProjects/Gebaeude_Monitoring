@@ -289,9 +289,6 @@ components:
     Measurement:
       type: object
       properties:
-        roomID:
-          type: integer
-          format: int64
         humid:
           type: number
           format: double
