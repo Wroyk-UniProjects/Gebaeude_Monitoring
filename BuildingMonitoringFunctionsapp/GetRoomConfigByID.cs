@@ -1,9 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.SqlClient;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -11,17 +11,19 @@ namespace BuildingMonitoringFunctionsapp
     {
         [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}/config")]
-            HttpRequest req,
-             [Sql("select [roomId], [targetTemp], [targetHum],[updateRate],[uperToleranceT],[lowerToleranceT],[uperToleranceH], [lowerToleranceH] from roomConfig  "+
-                  "where [roomId] = @ID",
-                CommandType = System.Data.CommandType.Text,
-                Parameters = "@ID={iD}",
-                ConnectionStringSetting = "sqlconnectionstring")]
-
-        IEnumerable<RoomConfig>room)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{ID}/config")] HttpRequest req, int ID)
         {
-            return new OkObjectResult(room.FirstOrDefault());
-        } 
- }
+            var connection_str = Environment.GetEnvironmentVariable("sqldb_connection");
+            using (SqlConnection connection = new SqlConnection(connection_str))
+            {
+                try
+                {
+                    return new OkObjectResult(new RoomConfig(ID, connection));
+                }catch (Exception ex)
+                {
+                    return new BadRequestObjectResult(ex.Message);
+                }
+            }
+        }
     }
+}
