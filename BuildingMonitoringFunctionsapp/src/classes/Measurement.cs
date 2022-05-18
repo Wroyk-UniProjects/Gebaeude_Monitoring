@@ -1,7 +1,4 @@
-﻿using Microsoft.OData.Edm;
-using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -10,8 +7,6 @@ namespace BuildingMonitoringFunctionsapp
         public int roomId { get; set; }
         public double hum { get; set; }
         public double temper { get; set; }
-        public Date date { get; set; }
-
+        public DateTime date { get; set; }
     }
-
 }
