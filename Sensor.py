@@ -48,7 +48,7 @@ class Main:
 
         def send_measurements(self, humidity, temperature):
             payload = {"humid": humidity, "temper": temperature}
-            self.response = requests.put(self.base_url + "rooms/" + str(self.rasp_id) + "/measurement/", data=payload)
+            self.response = requests.put(self.base_url + "rooms/" + str(self.rasp_id) + "/measurement/", json=payload)
 
             if self.response.status_code == 201:
                 return True
