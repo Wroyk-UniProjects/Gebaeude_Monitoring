@@ -13,6 +13,8 @@ create-zip:
     - tags
   script:
     - echo "creating development zip"
+    - chmod +x dependencies.sh
+    - chmod +x run.sh
   artifacts:
     name: $CI_COMMIT_BRANCH
     paths:
@@ -28,6 +30,8 @@ create-release:
     - tags
   script:
     - echo "creating release zip"
+    - chmod +x dependencies.sh
+    - chmod +x run.sh
   artifacts:
     name: $CI_COMMIT_TAG
     paths:
