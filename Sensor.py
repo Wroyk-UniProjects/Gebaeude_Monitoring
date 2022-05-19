@@ -54,3 +54,7 @@ class Main:
                 return True
             else:
                 return False
+
+
+if __name__ == "__main__":
+    Main.main(Main())
