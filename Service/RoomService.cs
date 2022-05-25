@@ -28,5 +28,20 @@ namespace Building_Monitoring_WebApp.Service
             var rooms = JsonSerializer.Deserialize<List<Room>>(content, jsonSerializerOptions);
             return rooms;
         }
+
+        public async Task<Room> GetRoom(int id)
+        {
+            var response = await client.GetAsync("https://building-monitoring.azurewebsites.net/api/rooms/" + id.ToString());
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var room = JsonSerializer.Deserialize<Room>(content, jsonSerializerOptions);
+            return room;
+        }
     }
 }

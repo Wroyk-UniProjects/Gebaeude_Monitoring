@@ -1,28 +1,43 @@
 ﻿@page "/"
 
 <PageTitle>Building Monitoring</PageTitle>
-<div class="text-center bg-gray-50 text-gray-800 py-16">
-
-    @if(RoomList.Count > 0)
-    {   <div class="shadow-md py-6 bg-white ">
-            <h1 class="text-5xl font-bold mt-0 mb-6">@RoomList[0].Name</h1>
-            @if (RoomList[0].Individual)
-            {
-                //TODO Mack korekt
-                <p>@RoomList[0].Status          I</p>
-            }
-            else
-            {
-                <p>@RoomList[0].Status          G</p>
-            }
-
-            <p>@RoomList[0].Temp // @RoomList[0].TargetTemp</p>
-            <p>@RoomList[0].Hum // @RoomList[0].TargetHum</p>
-        </div>
+<div>
+    @if(RoomList.Count <= 0)
+    {
+        <p class="text-center">Loding ...</p>
     }
     else
     {
-        <p>Loding ...</p>
+        //Mobile
+        <div class="flex flex-row justify-center w-full lg:hidden">
+            <button @onclick="SubtractIndex" class="w-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
+            <div>
+                <RoomDetailTile RoomID=RoomList[roomIndex].Id />
+                <p class="grid place-items-center">@(roomIndex + 1) / @RoomList.Count</p>
+            </div>
+            
+
+            <button @onclick="IncrementIndex" class="w-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
+
+        </div>
+
+        //Desktop
+        <div class="flex flex-row flex-wrap justify-evenly w-full lgx:hidden">
+            @foreach(Room room in RoomList)
+            {
+                <RoomDetailTile RoomID=room.Id />
+            }
+        </div>
     }
 </div>
 
@@ -32,14 +47,28 @@
     [Inject]
     public IRoomService RoomServic { get; set; }
 
+    private int roomIndex = 0;
+
+    private void IncrementIndex()
+    {
+        if( roomIndex < RoomList.Count - 1)
+        {
+            roomIndex++;
+        }
+    }
+
+    private void SubtractIndex()
+    {
+        if(roomIndex > 0)
+        {
+            roomIndex--;
+        }
+    }
+
     protected async override Task OnInitializedAsync()
     {
+
         RoomList = await RoomServic.GetRooms();
 
-        //testing
-        foreach (var room in RoomList)
-        {
-            Console.WriteLine(room.Name);
-        }
     }
 }

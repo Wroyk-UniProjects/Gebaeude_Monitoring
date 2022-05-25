@@ -1,0 +1,85 @@
+﻿<div class="my-8 md:mx-8 p-6 mdx:px-2 min-w-max max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-6">
+
+    <div class="col-span-2 mdx:px-4">
+        <p class="text-5xl font-bold">@room.Name</p>
+        <p class="col-span-3 font-bold @statusTextColor">@statusText</p>
+    </div>
+    
+
+    <div class="@statusColor text-center rounded-lg w-12 h-12 place-self-center grid place-items-center">
+        @if (room.Individual)
+        {
+            <p class="font-bold">I</p>
+        }
+        else
+        {
+            <p class="font-bold">G</p>
+        }
+    </div>
+
+    <div class="col-span-3 row-span-3 w-72 h-72">
+        <img src="@imageSurce" alt="Floorplan"/>
+    </div>
+    
+    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
+        <p class="font-bold col-span-2">Temperatur</p>
+        <p>Measured:</p> <p class="text-center">@room.Temp</p>
+        <p>Target:</p> <p class="text-center">@room.TargetTemp</p>
+    </div>
+
+    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
+        <p class="font-bold col-span-2">Humidity</p>
+        <p>Measured:</p> <p class="text-center">@room.Humid</p>
+        <p>Target:</p> <p class="text-center">@room.TargetHum</p>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public int RoomID { get; set; }
+
+    [Inject]
+    public IRoomService RoomServic { get; set; }
+
+    private Room room = new Room();
+    private String statusColor = "bg-gray-400";
+    private String statusTextColor = "text-gray-400";
+    private String statusText = "Unknow";
+    private String imageSurce = "TestFloorplan1.png";
+
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        room = await RoomServic.GetRoom(RoomID);
+
+        switch (room.Status){
+            case "ok":
+                statusColor = "bg-lime-500";
+                statusTextColor = "text-lime-500";
+                statusText = "In target range";
+                break;
+
+            case "too high":
+                statusColor = "bg-red-600";
+                statusTextColor = "text-red-600";
+                statusText = "Value exceeds target";
+                break;
+
+            case "too low":
+                statusColor = "bg-cyan-400";
+                statusTextColor = "text-cyan-400";
+                statusText = "value below target";
+                break;
+
+            default:
+                statusColor = "bg-gray-400";
+                statusTextColor = "test-gray-400";
+                statusText = "Unknow";
+                break;
+
+        }
+
+    }
+}
