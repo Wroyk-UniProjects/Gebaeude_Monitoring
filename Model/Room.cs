@@ -6,10 +6,9 @@
         public string Name { get; set; }
         public bool Individual { get; set; }
         public string Status { get; set; }
-        public double Hum { get; set; }
+        public double Humid { get; set; }
         public double Temp { get; set; }
         public double TargetHum { get; set; }
         public double TargetTemp { get; set; }
-        public string TempImageURL { get; set; }
     }
 }
