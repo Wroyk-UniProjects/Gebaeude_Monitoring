@@ -50,7 +50,7 @@ class Main:
             payload = {"humid": humidity, "temper": temperature}
             self.response = requests.put(self.base_url + "rooms/" + str(self.rasp_id) + "/measurement/", json=payload)
 
-            if self.response.status_code == 201:
+            if self.response.status_code == 200:
                 return True
             else:
                 return False
