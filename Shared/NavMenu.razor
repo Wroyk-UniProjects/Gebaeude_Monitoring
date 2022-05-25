@@ -1,4 +1,4 @@
-﻿<div class="shadow-md py-6 bg-white relative flex w-full">
+﻿<div class="shadow-md py-6 bg-white relative flex w-full flex-col lg:flex-row">
         
         <div class="flex justify-around px-3">
             <button @onclick="ToggelMenu" class="lg:hidden">
@@ -13,19 +13,23 @@
         <ul class="lg:flex lg:flex-row @MenuCssClass text-xl space-x-6 items-end">
 
             <li>
-                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden" href="#!">Detail View</a>
+                <NavLink @onclick="ToggelMenu" href="">
+                    <span class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden">Detail View</span>
+                </NavLink>
             </li>
 
             <li>
-                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden" href="#!">List View</a>
+                <NavLink @onclick="ToggelMenu" href="listview">
+                    <span class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:hidden">List View</span>
+                </NavLink>
             </li>
 
             <li>
-                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700" href="#!">Global Config</a>
+                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700">Global Config</a>
             </li>
 
             <li>
-                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700" href="#!">Individual Config</a>
+                <a class="block lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700">Individual Config</a>
             </li>
 
         </ul>
