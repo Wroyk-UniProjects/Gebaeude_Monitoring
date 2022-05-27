@@ -14,8 +14,8 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms")]
         HttpRequest req,
-        [Sql("select r.[id], m.[temp], m.[humid], r.[name], r.[individual], rc.[targetTemp], rc.[targetHum] from measurement m "+
-            "join room r on m.roomId=r.id join roomConfig rc on r.id=rc.id",
+        [Sql("select r.[id], m.[temper], m.[humid], r.[name], r.[global], rc.[targetTemper], rc.[targetHumid] from measurement m "+
+            "join room r on m.roomId=r.id join roomConfig rc on r.configId=rc.id",
             CommandType = System.Data.CommandType.Text,
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
@@ -33,11 +33,11 @@ namespace BuildingMonitoringFunctionsapp
                         if (roomConfig != null)
                         {
                             //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
-                            if (room.temp.CompareTo(roomConfig.targetTemp + roomConfig.upperToleranceT) == -1)
+                            if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == -1)
                             {
                                 room.status = "too low";
                             } //  Ist-Raumtemperatur is groeﬂer als Soll-Temperatur
-                            else if (room.temp.CompareTo(roomConfig.targetTemp + roomConfig.upperToleranceT) == 1)
+                            else if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == 1)
                             {
                                 room.status = "too high";
                             } //  Ist-Raumtemperatur is gleich als Soll-Temperatur

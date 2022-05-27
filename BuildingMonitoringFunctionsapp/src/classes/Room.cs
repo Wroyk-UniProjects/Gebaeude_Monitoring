@@ -5,12 +5,12 @@
     {
         public int id { get; set; }
         public string name { get; set; }
-        public bool individual { get; set; }
+        public bool global { get; set; }
         public string status { get; set; }
         public double humid { get; set; }
-        public double temp { get; set; }
-        public double targetTemp { get; set; }
-        public double targetHum { get; set; }
+        public double temper { get; set; }
+        public double targetTemper { get; set; }
+        public double targetHumid { get; set; }
     }
 }
 

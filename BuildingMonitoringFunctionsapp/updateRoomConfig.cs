@@ -29,8 +29,8 @@ namespace FunctionApp2
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rooms/{iD}/roomConfig")]
             HttpRequest req,
-             [Sql("update roomconfig set [targetTemp]=100, [targetHum]=1, [updateRate]=1, [uperToleranceT]=1," +
-            "[uperToleranceH]=1,  [lowerToleranceT]=1, [lowerToleranceH]=1, " +
+             [Sql("update roomconfig set [targetTemper]=100, [targetHumid]=1, [updateRate]=1, [upperToleranceTemper]=1," +
+            "[upperToleranceHumid]=1,  [lowerToleranceTemper]=1, [lowerToleranceHumid]=1, " +
             "[roomId]= 2 where [roomId] = @ID",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",

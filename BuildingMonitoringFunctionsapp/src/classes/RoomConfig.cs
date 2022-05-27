@@ -11,19 +11,19 @@ namespace BuildingMonitoringFunctionsapp
                                             "where [roomId] = @roomID";
         public int roomId { get; set; }
 
-        public double targetTemp { get; set; }
+        public double targetTemper { get; set; }
 
-        public double targetHum { get; set; }
+        public double targetHumid { get; set; }
 
         public double updateRate { get; set; }
 
-        public double upperToleranceT { get; set; }
+        public double upperToleranceTemper { get; set; }
 
-        public double lowerToleranceT { get; set; }
+        public double lowerToleranceTemper { get; set; }
 
-        public double upperToleranceH { get; set; }
+        public double upperToleranceHumid { get; set; }
 
-        public double lowerToleranceH { get; set; }
+        public double lowerToleranceHumid { get; set; }
 
         public RoomConfig(int roomID, SqlConnection connection)
         {
@@ -47,13 +47,13 @@ namespace BuildingMonitoringFunctionsapp
                         while (roomconfig_var.Read())
                         {
                             this.roomId = roomconfig_var.GetInt32(roomconfig_var.GetOrdinal("roomId"));
-                            this.targetTemp = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("targetTemp"));
-                            this.targetHum = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("targetHum"));
+                            this.targetTemper = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("targetTemper"));
+                            this.targetHumid = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("targetHumid"));
                             this.updateRate = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("updateRate"));
-                            this.upperToleranceT = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("uperToleranceT"));
-                            this.lowerToleranceT = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("lowerToleranceT"));
-                            this.upperToleranceH = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("uperToleranceH"));
-                            this.lowerToleranceH = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("lowerToleranceH"));
+                            this.upperToleranceTemper = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("uperToleranceTemper"));
+                            this.lowerToleranceTemper = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("lowerToleranceTemper"));
+                            this.upperToleranceHumid = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("uperToleranceHumid"));
+                            this.lowerToleranceHumid = roomconfig_var.GetDouble(roomconfig_var.GetOrdinal("lowerToleranceHumid"));
                         }
                     }
                 }                
@@ -75,9 +75,9 @@ namespace BuildingMonitoringFunctionsapp
 
         public static void updateRoomConfig(RoomConfig roomConfig, SqlConnection connection)
         {
-            var sql_query = "update roomconfig set [targetTemp]=" + roomConfig.targetTemp + ", [targetHum]=" + roomConfig.targetHum + ", [updateRate]=" + roomConfig.targetTemp + ", [uperToleranceT]=" + roomConfig.targetTemp + "," +
-                            "[uperToleranceH]=" + roomConfig.targetTemp + ",  [lowerToleranceT]=" + roomConfig.targetTemp + ", [lowerToleranceH]=" + roomConfig.targetTemp + ", " +
-                            "[roomId]= " + roomConfig.targetTemp + " where [roomId] = " + roomConfig.roomId;
+            var sql_query = "update roomconfig set [targetTemper]=" + roomConfig.targetTemper + ", [targetHumid]=" + roomConfig.targetHumid + ", [updateRate]=" + roomConfig.targetTemper + ", [uperToleranceTemper]=" + roomConfig.targetTemper + "," +
+                            "[uperToleranceHumid]=" + roomConfig.targetTemper + ",  [lowerToleranceTemper]=" + roomConfig.targetTemper + ", [lowerToleranceHumid]=" + roomConfig.targetTemper + ", " +
+                            "[roomId]= " + roomConfig.targetTemper + " where [roomId] = " + roomConfig.roomId;
 
             //  Create command
             SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
