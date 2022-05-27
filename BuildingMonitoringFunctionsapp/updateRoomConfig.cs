@@ -1,6 +1,3 @@
-
-//    //test um etwas in roomconfig zu schreiben
-
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -93,7 +90,7 @@ namespace FunctionApp2
 //        public static IActionResult Run(
 //            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "rooms/{iD}/measurement")]
 //            HttpRequest req,
-//            [Sql("insert into measurements ([roomId], [temp], [hum])  values( @ID,5,  2) ",
+//            [Sql("insert into measurements ([roomId], [temp], [humid])  values( @ID,5,  2) ",
 //                CommandType = System.Data.CommandType.Text,
 //                Parameters = "@ID={iD}",
 //                ConnectionStringSetting = "sqlconnectionstring")]

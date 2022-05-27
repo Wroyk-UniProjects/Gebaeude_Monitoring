@@ -39,7 +39,7 @@ namespace BuildingMonitoringFunctionsapp
                 string sqlFormattedDate = measurement.date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
 
                 //  SQL query
-                var sql_query = "update measurements set [temp] = " + measurement.temper + ", [hum] = " + measurement.hum + ", [date] = '" + sqlFormattedDate + "' where roomId = @roomID";
+                var sql_query = "update measurement set [temper] = " + measurement.temper + ", [humid] = " + measurement.humid + ", [date] = '" + sqlFormattedDate + "' where roomId = @roomID";
 
                 //  Create command
                 SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
