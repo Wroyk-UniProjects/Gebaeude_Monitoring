@@ -1,17 +1,67 @@
 ﻿@page "/globalsettings"
 
 <div class="flex w-full justify-center">
-	<div class=" align-center">
-		<h1 class="font-bold text-2xl">Global Settings</h1>
-		<div class="bg-gray-50">
-			<p>Target Temperature:</p>
-			<div class="flex">
-				<button class="p-2 px-4 my-1">-</button><p>#temp</p><button>+</button><span>°C</span>
-			</div>
+	<div class="w-60">
+		<h1 class="text-center font-bold text-2xl my-5">Global Settings</h1>
+
+		<p class="text-center text-xl">Target Temperature:</p>
+		<div class="flex items-center mb-4">
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
+			<p class="mx-auto w-12 text-xl text-center text-sky-500">#temp</p>
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<span class="mx-auto w-12 text-xl font-bold">°C</span>
+		</div>
+
+		<p class="text-center text-xl">Target Humidity:</p>
+		<div class="flex items-center mb-4">
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
+			<p class="mx-auto w-12 text-xl text-center text-sky-500">#humi</p>
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<span class="mx-auto w-12 text-xl font-bold">%</span>
+		</div>
+
+		<p class="text-center text-xl">Update Rate:</p>
+		<div class="flex items-center mb-4">
+			@* @onclick="DecrementValue(@testValue)" *@
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
+			<p class="mx-auto w-12 text-xl text-center text-sky-500">@testValue</p>
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<span class="mx-auto w-12 text-xl font-bold">Sec.</span>
+		</div>
+
+		<p class="text-center text-xl">Tolerance:</p>
+		<div class="flex items-center mb-4">
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
+			<p class="mx-auto w-12 text-xl text-center text-sky-500">#tole</p>
+			<button class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<span class="mx-auto w-12 text-xl font-bold">+/-</span>
+		</div>
+
+		<div class="flex flex-col justify-center">
+			<button class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold">Save</button>
+			<button class="mx-6 py-1 bg-gray-200 rounded-full">Cancel</button>
 		</div>
 	</div>
 </div>
 
 @code {
+	private int testValue = 10;
+	private int maxLimit = 500;
+	private int minLimit = 0;
 
+	private int IncrementValue(int val) {
+		return ++val;
+	}
+	private int DecrementValue(int val)
+	{
+		return --val;
+	}
+	private void SaveData()
+	{
+		//if ( Data inside boundaries) {send new global-config to db; and close settings-menu}
+	}
+	private void CancelAll()
+	{
+		//replace values with old global-config
+	}
 }
