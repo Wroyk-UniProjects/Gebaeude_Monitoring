@@ -119,6 +119,19 @@ paths:
           content: {}
       x-codegen-request-body-name: body
   /rooms/config:
+    get:
+      tags:
+      - config
+      summary: Returns the global-config
+      description: Returns a the config of the specified room
+      operationId: getGlobalConfig
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
     patch:
       tags:
       - config
@@ -162,7 +175,7 @@ paths:
       #    description: Room not found
       #    content: {}
       #x-codegen-request-body-name: body
-    put:
+    post:
       tags:
       - measurement
       summary: Add a measurement to a Room
@@ -289,6 +302,9 @@ components:
     Measurement:
       type: object
       properties:
+        roomID:
+          type: integer
+          format: int64
         humid:
           type: number
           format: double

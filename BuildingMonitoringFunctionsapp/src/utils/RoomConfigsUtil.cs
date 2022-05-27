@@ -13,6 +13,11 @@ namespace BuildingMonitoringFunctionsapp.src.utils
         private static readonly string query = "select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid]," +
                                       "[lowerToleranceHumid] from roomConfig";
 
+        enum status
+        {
+
+        }
+
         public static List<RoomConfig> getRoomConfigList()
         {
             List<RoomConfig> roomConfigsList = new List<RoomConfig>(); 
