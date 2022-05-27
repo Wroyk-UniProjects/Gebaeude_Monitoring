@@ -32,7 +32,7 @@ namespace BuildingMonitoringFunctionsapp
                     {
                         try
                         {
-                            return new OkObjectResult(new RoomConfig(ID, connection));
+                            return new OkObjectResult(new RoomConfig());
                         }
                         catch (Exception ex)
                         {
@@ -41,7 +41,7 @@ namespace BuildingMonitoringFunctionsapp
                     }
                     else
                     {
-                        RoomConfig.updateRoomConfig(new_roomConfig, connection);
+                        //RoomConfig.updateRoomConfig(new_roomConfig, connection);
                         return new OkResult();
                     }
                 }

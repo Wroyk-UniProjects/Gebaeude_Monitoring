@@ -7,8 +7,11 @@ namespace BuildingMonitoringFunctionsapp
     //  Klasse fuer die Azure Funktion 'getRoomConfig'
     public class RoomConfig
     {
-        private static string queryID = "select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid],[lowerToleranceHumid] from roomConfig  " +
-                                            "where [id] = @roomID";
+        //  private static string queryID = "select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid]," +
+        //                              "[lowerToleranceHumid] from roomConfig  " +
+        //                               "where id=(select configId from room where id=@roomID)";
+        //private static string queryID = "select * from roomConfig  " +
+        //                                   "where id=@roomId";
         public int roomId { get; set; }
 
         public double targetTemper { get; set; }
@@ -24,13 +27,15 @@ namespace BuildingMonitoringFunctionsapp
         public double upperToleranceHumid { get; set; }
 
         public double lowerToleranceHumid { get; set; }
+    }
+}
 
-        public RoomConfig(int roomID, SqlConnection connection)
+     /*   public RoomConfig(int roomID, SqlConnection connection)
         {
             //  Create SQL command based on connection
             SqlCommand sql_cmd = new SqlCommand(queryID, connection);
 
-            sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+            sql_cmd.Parameters.Add("@roomId", System.Data.SqlDbType.Int);
             sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
 
             //  Used to show errors, if any
@@ -75,9 +80,10 @@ namespace BuildingMonitoringFunctionsapp
 
         public static void updateRoomConfig(RoomConfig roomConfig, SqlConnection connection)
         {
-            var sql_query = "update roomconfig set [targetTemper]=" + roomConfig.targetTemper + ", [targetHumid]=" + roomConfig.targetHumid + ", [updateRate]=" + roomConfig.targetTemper + ", [uperToleranceTemper]=" + roomConfig.targetTemper + "," +
-                            "[uperToleranceHumid]=" + roomConfig.targetTemper + ",  [lowerToleranceTemper]=" + roomConfig.targetTemper + ", [lowerToleranceHumid]=" + roomConfig.targetTemper + ", " +
-                            "[roomId]= " + roomConfig.targetTemper + " where [roomId] = " + roomConfig.roomId;
+            var sql_query = "update roomconfig set [targetTemper]=" + roomConfig.targetTemper + ", [targetHumid]=" + roomConfig.targetHumid + ", [updateRate]=" + roomConfig.updateRate + ", [upperToleranceTemper]=" + roomConfig.upperToleranceTemper + "," +
+                            "[upperToleranceHumid]=" + roomConfig.upperToleranceHumid + ",  [lowerToleranceTemper]=" + roomConfig.lowerToleranceTemper + ", [lowerToleranceHumid]=" + roomConfig.lowerToleranceHumid;
+                          
+                            //"[id]= " + roomConfig.ID + " where [roomId] = " + roomConfig.roomId;
 
             //  Create command
             SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
@@ -103,6 +109,7 @@ namespace BuildingMonitoringFunctionsapp
 }
 
 
+    */
 
 // int ID, double targetTemp, double targetHum, double updateRate, double upperToleranceT,double lowerToleranceT, double upperToleranceH, double lowerToleranceH, SqlConnection connection
 

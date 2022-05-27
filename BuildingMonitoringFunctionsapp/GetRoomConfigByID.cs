@@ -18,8 +18,11 @@ namespace BuildingMonitoringFunctionsapp
             {
                 try
                 {
-                    return new OkObjectResult(new RoomConfig(ID, connection));
-                }catch (Exception ex)
+                    // return new OkObjectResult(new RoomConfig(ID, connection));
+                    return new OkObjectResult(new RoomConfig());
+
+                }
+                catch (Exception ex)
                 {
                     return new BadRequestObjectResult(ex.Message);
                 }

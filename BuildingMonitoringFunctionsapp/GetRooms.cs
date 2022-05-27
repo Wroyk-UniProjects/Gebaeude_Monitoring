@@ -29,7 +29,7 @@ namespace BuildingMonitoringFunctionsapp
                     try
                     {
                         //  Raumkonfiguration basierend auf der Raum-ID abrufen + RoomConfig-Objekt erzeugen
-                        RoomConfig roomConfig = new RoomConfig(room.id, connection);
+                       /* RoomConfig roomConfig = new RoomConfig(room.id, connection);
                         if (roomConfig != null)
                         {
                             //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
@@ -45,7 +45,7 @@ namespace BuildingMonitoringFunctionsapp
                             {
                                 room.status = "ok";
                             }
-                        }
+                        }*/
                     }
                     catch (Exception ex)
                     {
