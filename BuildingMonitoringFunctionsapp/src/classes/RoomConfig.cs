@@ -7,8 +7,8 @@ namespace BuildingMonitoringFunctionsapp
     //  Klasse fuer die Azure Funktion 'getRoomConfig'
     public class RoomConfig
     {
-        private static string queryID = "select [roomId],[targetTemp],[targetHum],[updateRate],[uperToleranceT],[lowerToleranceT],[uperToleranceH],[lowerToleranceH] from roomConfig  " +
-                                            "where [roomId] = @roomID";
+        private static string queryID = "select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid],[lowerToleranceHumid] from roomConfig  " +
+                                            "where [id] = @roomID";
         public int roomId { get; set; }
 
         public double targetTemper { get; set; }
