@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Building_Monitoring_WebApp.Service
 {
-    public class ConfigService
+    public class ConfigService : IConfigService
     {
         private HttpClient client;
         private JsonSerializerOptions jsonSerializerOptions;
