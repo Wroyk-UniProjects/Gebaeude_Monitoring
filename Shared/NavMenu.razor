@@ -1,38 +1,43 @@
-﻿<ul class="absolute shadow-2xl left-0 top-0 pt-20 px-5 bg-white shadow-md h-full flex-col @MenuCssClass text-center font-bold lg:hidden">
+﻿<!-- Mobile NavMenu -->
+<ul class="absolute shadow-2xl left-0 top-0 pt-20 px-5 bg-white shadow-md h-full flex-col @MenuCssClass text-center font-bold lg:hidden">
+    <!-- View Buttons -->
     <li class="text-xl">Views</li>
     <NavLink @onclick="ToggelMenu" href="">
-        <li class="my-2 p-1 px-2 border-2 rounded-full bg-sky-500 hover:text-gray-600 focus:text-gray-600">Detail</li>
+        <li class="nav-btn">Detail</li>
     </NavLink>
 
     <NavLink @onclick="ToggelMenu" href="listview">
-        <li class="my-2 p-1 px-2 border-2 rounded-full bg-sky-500 hover:text-gray-600 focus:text-gray-600">List</li>
+        <li class="nav-btn">List</li>
     </NavLink>
 
+    <!-- Settings Buttons -->
     <li class="text-xl">Configs</li>
     <NavLink @onclick="ToggelMenu" href="globalsettings">
-        <li class="my-2 p-1 px-2 border-2 rounded-full bg-sky-500 hover:text-gray-600 focus:text-gray-600">Global</li>
+        <li class="nav-btn">Global</li>
     </NavLink>
 
     <NavLink @onclick="ToggelMenu" href="">
-        <li class="my-2 p-1 px-2 border-2 rounded-full bg-sky-500 hover:text-gray-600 focus:text-gray-600">Individual</li>
+        <li class="nav-btn">Individual</li>
     </NavLink>
 </ul>
 
+<!-- Menu Icon -->
 <button @onclick="ToggelMenu" class="absolute left-0 ml-5 mt-4 sm:mt-5 pt-1 lg:hidden">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
     </svg>
 </button>
 
+<!-- Desktop NavMenu -->
 <div class="shadow-md py-6 bg-white w-full items-center lg:flex">
-    <h1 class="text-cyan-700 text-center border-2 text-2xl sm:text-4xl lg:basis-1/2">Building Monitoring</h1>
+    <h1 class="text-cyan-700 text-center text-2xl sm:text-4xl lg:basis-1/2">Building Monitoring</h1>
     <ul>
         <NavLink href="globalsettings">
-            <li class="hidden lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:inline">Global Config</li>
+            <li class="nav-btn-desktop">Global Config</li>
         </NavLink>
 
         <NavLink>
-            <li class="hidden lg:px-2 py-2 text-gray-500 hover:text-gray-700 focus:text-gray-700 lg:inline">Individual Config</li>
+            <li class="nav-btn-desktop">Individual Config</li>
         </NavLink>
     </ul>
 </div>
