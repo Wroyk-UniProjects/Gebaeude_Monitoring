@@ -15,7 +15,7 @@ namespace Building_Monitoring_WebApp.Service
         }
         public async Task<Config> GetConfig()
         {
-            var response = await client.GetAsync("https://building-monitoring.azurewebsites.net/api/rooms/config'");
+            var response = await client.GetAsync("https://building-monitoring.azurewebsites.net/api/rooms/config");
 
             var content = await response.Content.ReadAsStringAsync();
 
