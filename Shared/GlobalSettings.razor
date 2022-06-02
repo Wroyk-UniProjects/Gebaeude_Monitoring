@@ -7,36 +7,36 @@
 		<!-- Temperature -->
 		<p class="text-center text-xl">Target Temperature:</p>
 		<div class="flex items-center mb-4">
-			<button @onclick="decrementTemp" class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
-			<p class="mx-auto w-12 text-xl text-center text-sky-500">@cnfg.TargetTemp</p>
-			<button @onclick="incrementTemp" class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<button @onclick="decrementTemp" class="minus-btn">-</button>
+			<p class="settings-values">@cnfg.TargetTemp</p>
+			<button @onclick="incrementTemp" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">°C</span>
 		</div>
 
 		<!-- Humidity -->
 		<p class="text-center text-xl">Target Humidity:</p>
 		<div class="flex items-center mb-4">
-			<button @onclick="decrementHumi" class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
-			<p class="mx-auto w-12 text-xl text-center text-sky-500">@cnfg.TargetHumi</p>
-			<button @onclick="incrementHumi" class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<button @onclick="decrementHumi" class="minus-btn">-</button>
+			<p class="settings-values">@cnfg.TargetHumi</p>
+			<button @onclick="incrementHumi" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">%</span>
 		</div>
 
 		<!-- Update Rate -->
 		<p class="text-center text-xl">Update Rate:</p>
 		<div class="flex items-center mb-4">
-			<button @onclick="decrementUpdate" class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
-			<p class="mx-auto w-12 text-xl text-center text-sky-500">@cnfg.UpdateRate</p>
-			<button @onclick="incrementUpdate" class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<button @onclick="decrementUpdate" class="minus-btn">-</button>
+			<p class="settings-values">@cnfg.UpdateRate</p>
+			<button @onclick="incrementUpdate" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">Sec.</span>
 		</div>
 
 		<!-- Tolerance -->
 		<p class="text-center text-xl">Tolerance:</p>
 		<div class="flex items-center mb-4">
-			<button @onclick="decrementTole" class="mx-auto border-2 border-sky-500 rounded-full px-3.5 pb-1 my-1 font-bold text-sky-500 text-3xl">-</button>
-			<p class="mx-auto w-12 text-xl text-center text-sky-500">@cnfg.TargetHumi-@cnfg.LoToleHumi</p>
-			<button @onclick="incrementTole" class="mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl">+</button>
+			<button @onclick="decrementTole" class="minus-btn">-</button>
+			<p class="settings-values">@(@cnfg.TargetHumi-@cnfg.LoToleHumi)</p>
+			<button @onclick="incrementTole" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">+/-</span>
 		</div>
 
