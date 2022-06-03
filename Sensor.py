@@ -51,7 +51,7 @@ class Main:
     dht_sensor = adafruit_dht.DHT22(board.D23, use_pulseio=False)
 
     # create instance for teh api connection
-    api_connection = ApiConnection(api_url, api_key, rasp_id)
+    api_connection = None
 
     def main(self):
 
@@ -118,6 +118,8 @@ class Main:
         except ValueError:
             print("rasp-id " + not_int_msg)
             sys.exit(1)
+
+        self.api_connection = ApiConnection(self.api_url, self.api_key, self.rasp_id)
 
     def _update_config(self):
         config_parser = configparser.RawConfigParser()
