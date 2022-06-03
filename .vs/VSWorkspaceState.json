@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BuildingMonitoringFunctionsapp"
+    "\\BuildingMonitoringFunctionsapp",
+    "\\BuildingMonitoringFunctionsapp\\src",
+    "\\BuildingMonitoringFunctionsapp\\src\\classes"
   ],
   "SelectedNode": "\\BuildingMonitoringFunctionsapp\\BuildingMonitoringFunctionsapp.sln",
   "PreviewInSolutionExplorer": false
