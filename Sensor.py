@@ -47,8 +47,8 @@ class Main:
     config_path = r"/etc/BuildingMonitoring/config.ini"
 
     # define sensor and data port
-    # port GPIO2 (Pin 3 on Rasp 4)
-    dht_sensor = adafruit_dht.DHT22(board.D2, use_pulseio=False)
+    # port GPIO23 (Pin 16 on Rasp 4)
+    dht_sensor = adafruit_dht.DHT22(board.D23, use_pulseio=False)
 
     # create instance for teh api connection
     api_connection = ApiConnection(api_url, api_key, rasp_id)
