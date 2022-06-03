@@ -18,6 +18,7 @@ create-zip:
   artifacts:
     name: $CI_COMMIT_BRANCH
     paths:
+      - config.ini
       - Sensor.py
       - run.sh
       - requirements.txt
@@ -35,6 +36,7 @@ create-release:
   artifacts:
     name: $CI_COMMIT_TAG
     paths:
+      - config.ini
       - Sensor.py
       - run.sh
       - requirements.txt

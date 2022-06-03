@@ -110,14 +110,16 @@ class Main:
         temp_rasp_id = config_parser.get("Default", "RASP-ID")
 
         not_int_msg = "is not an int.\r\n" + "Please check the config file.\r\n" + "Exiting script"
-        if not isinstance(self.timeout, int):
+        try:
+            self.timeout = int(temp_timeout)
+        except ValueError:
             print("update rate" + not_int_msg)
             sys.exit(1)
-        if not isinstance(self.rasp_id, int):
+        try:
+            self.rasp_id = int(temp_rasp_id)
+        except ValueError:
             print("rasp-id " + not_int_msg)
             sys.exit(1)
-        self.timeout = int(temp_timeout)
-        self.rasp_id = int(temp_rasp_id)
 
     def _update_config(self):
         config_parser = configparser.RawConfigParser()
