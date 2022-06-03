@@ -56,11 +56,9 @@ class Main:
     def main(self):
 
         # read config
-
         self._init_config()
 
         # read sensor data
-
         while self.running:
             try:
                 self.dht_sensor.measure()
