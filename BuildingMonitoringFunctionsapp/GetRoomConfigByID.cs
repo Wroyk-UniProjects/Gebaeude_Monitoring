@@ -28,8 +28,9 @@ namespace BuildingMonitoringFunctionsapp
                  "rc.[lowerToleranceHumid] " +
                  "from roomConfig  " +
                  "rc join room r on " +
-                 "r.configId=rc.id " +
-                 "where rc.id=(select configId from room where id=@roomID)",
+                 "r.id=rc.id " +
+                 "where rc.id=@roomID",
+
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@roomID={roomID}",
                 ConnectionStringSetting = "sqlconnectionstring")]
