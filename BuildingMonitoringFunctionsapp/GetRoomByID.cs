@@ -14,9 +14,19 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}")]
             HttpRequest req,
-            [Sql("select r.[id], m.[date], m.[temper], m.[humid] , r.[name], r.[id] as 'roomId', r.[name], r.[global], 'ok' as status, rc.[targetTemper], rc.[targetHumid] from measurement m "+
-                  "join room r on m.roomId=r.id join roomConfig rc on r.id=rc.id where date in (select max(date) from measurement group by roomId)" +
-                  "and r.[id] = @ID",
+         [Sql("(select r.[id], m.[temper], m.[humid], r.[name], r.[global], " +
+            "rc.[targetTemper], rc.[targetHumid] " +
+            "from measurement m  " +
+            "join room r on m.roomId=r.id " +
+            "join roomConfig rc on r.id=rc.id " +
+            "where r.global=0 and r.[id] = @ID)"+
+            "union"+
+            "(select r.[id], m.[temper], m.[humid], " +
+            "r.[name], r.[global], " +
+            "(select rc1.targetTemper from roomConfig rc1 where rc1.id=0),  " +
+            "(select rc11.targetHumid from roomConfig rc11 where rc11.id=0) " +
+            "from measurement m  join room r on m.roomId=r.id " +
+            "join roomConfig rc on r.id=rc.id where r.global=1 and r.[id] = @ID)",
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
