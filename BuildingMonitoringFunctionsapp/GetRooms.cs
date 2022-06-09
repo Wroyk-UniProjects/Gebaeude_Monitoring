@@ -15,7 +15,7 @@ namespace BuildingMonitoringFunctionsapp
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms")]
         HttpRequest req,
         [Sql("select r.[id], m.[temper], m.[humid], r.[name], r.[global], rc.[targetTemper], rc.[targetHumid] from measurement m "+
-            "join room r on m.roomId=r.id join roomConfig rc on r.configId=rc.id",
+            "join room r on m.roomId=r.id join roomConfig rc on r.id=rc.id",
             CommandType = System.Data.CommandType.Text,
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
