@@ -12,7 +12,7 @@ namespace BuildingMonitoringFunctionsapp
         //                               "where id=(select configId from room where id=@roomID)";
         // private static string queryID = "select * from roomConfig  " +
         //                                   "where id=@roomId";
-        public int roomId { get; set; }
+        public int id { get; set; }
 
         public float targetTemper { get; set; }
 

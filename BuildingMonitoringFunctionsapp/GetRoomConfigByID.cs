@@ -10,15 +10,27 @@ using System.Linq;
 
 namespace BuildingMonitoringFunctionsapp
 {
+    //test 
     public static class GetRoomConfigByID
     {
         [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{roomID}/config")]
             HttpRequest req,
-            [Sql("select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid]," +
-                                          "[lowerToleranceHumid] from roomConfig  " +
-                                           "where id=(select configId from room where id=@roomID)",
+            [Sql("select " +
+                 "r.id," +
+                 "rc.[targetTemper]," +
+                 "rc.[targetHumid]," +
+                 "rc.[updateRate]," +
+                 "rc.[upperToleranceTemper]," +
+                 "rc.[lowerToleranceTemper]," +
+                 "rc.[upperToleranceHumid]," +
+                 "rc.[lowerToleranceHumid] " +
+                 "from roomConfig  " +
+                 "rc join room r on " +
+                 "r.id=rc.id " +
+                 "where rc.id=@roomID",
+
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@roomID={roomID}",
                 ConnectionStringSetting = "sqlconnectionstring")]

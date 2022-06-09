@@ -37,8 +37,9 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  SQL query
                 var sql_query =
-                    "update roomConfig set" +
-                    "[targetTemper] = " + roomConfig.targetTemper +", [targetHumid] = " + roomConfig.targetHumid + 
+                    " update roomConfig set" +
+                    " [targetTemper] = " + roomConfig.targetTemper +", " +
+                    " [targetHumid] = " + roomConfig.targetHumid + 
                     ", [updateRate] = " + roomConfig.updateRate +
                     ", [upperToleranceTemper] = " + roomConfig.upperToleranceTemper +
                     ", [lowerToleranceTemper] = " + roomConfig.lowerToleranceTemper +
