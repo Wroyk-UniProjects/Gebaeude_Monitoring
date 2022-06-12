@@ -7,7 +7,7 @@
       "defaultValue": "building-monitoring",
       "metadata": {
         "_parameterType": "resourceGroup",
-        "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
+        "description": "Der Name der Ressourcengruppe für die Ressource. Es wird empfohlen, Ressourcen für eine bessere Nachverfolgung in derselben Ressourcengruppe zu platzieren."
       }
     },
     "resourceGroupLocation": {
@@ -15,7 +15,7 @@
       "defaultValue": "germanywestcentral",
       "metadata": {
         "_parameterType": "location",
-        "description": "Location of the resource group. Resource groups could have different location than resources."
+        "description": "Der Standort der Ressourcengruppe. Ressourcengruppen können andere Standorte als Ressourcen aufweisen."
       }
     },
     "resourceLocation": {
@@ -23,7 +23,7 @@
       "defaultValue": "[parameters('resourceGroupLocation')]",
       "metadata": {
         "_parameterType": "location",
-        "description": "Location of the resource. By default use resource group's location, unless the resource provider is not supported there."
+        "description": "Der Standort der Ressource. Verwenden Sie standardmäßig den Standort der Ressourcengruppe, sofern der Ressourcenanbieter dort unterstützt wird."
       }
     }
   },

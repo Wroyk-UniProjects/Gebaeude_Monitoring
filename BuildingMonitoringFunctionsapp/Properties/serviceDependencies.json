@@ -1,12 +1,11 @@
 {
   "dependencies": {
-    "storage1": {
-      "type": "storage",
-      "connectionId": "AzureWebJobsStorage"
+    "secrets1": {
+      "type": "secrets"
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "sql_connectionString"
+      "connectionId": "ConnectionStrings"
     }
   }
 }
