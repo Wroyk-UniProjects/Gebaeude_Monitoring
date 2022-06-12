@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace BuildingMonitoringFunctionsapp
 {
-    //test 
     public static class GetRoomConfigByID
     {
         [FunctionName("getRoomConfigByID")]

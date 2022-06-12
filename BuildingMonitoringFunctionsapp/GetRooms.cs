@@ -14,19 +14,18 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms")]
         HttpRequest req,
-        [Sql("(select r.[id], m.[temper], m.[humid], r.[name], r.[global], " +
-            "rc.[targetTemper], rc.[targetHumid] " +
-            "from measurement m  " +
-            "join room r on m.roomId=r.id " +
-            "join roomConfig rc on r.id=rc.id " +
-            "where r.global=0)"+
-            "union"+
-            "(select r.[id], m.[temper], m.[humid], " +
-            "r.[name], r.[global], " +
-            "(select rc1.targetTemper from roomConfig rc1 where rc1.id=0),  " +
-            "(select rc11.targetHumid from roomConfig rc11 where rc11.id=0) " +
-            "from measurement m  join room r on m.roomId=r.id " +
-            "join roomConfig rc on r.id=rc.id where r.global=1)",
+        [Sql("select r.[id], " +
+             "m.[temper], " +
+             "m.[humid], " +
+             "r.[name], " +
+             "r.[global], " +
+             "rc.[targetTemper], " +
+             "rc.[targetHumid] " +
+             "from measurement m "+
+             "join room r " +
+             "on m.roomId=r.id " +
+             "join roomConfig rc " +
+             "on r.id=rc.id",
             CommandType = System.Data.CommandType.Text,
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
@@ -40,31 +39,32 @@ namespace BuildingMonitoringFunctionsapp
                     try
                     {
                         //  Raumkonfiguration basierend auf der Raum-ID abrufen + RoomConfig-Objekt erzeugen
-                       /* RoomConfig roomConfig = new RoomConfig(room.id, connection);
-                        if (roomConfig != null)
-                        {
-                            //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
-                            if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == -1)
-                            {
-                                room.status = "too low";
-                            } //  Ist-Raumtemperatur is groeﬂer als Soll-Temperatur
-                            else if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == 1)
-                            {
-                                room.status = "too high";
-                            } //  Ist-Raumtemperatur is gleich als Soll-Temperatur
-                            else
-                            {
-                                room.status = "ok";
-                            }
-                        }*/
+                        /* RoomConfig roomConfig = new RoomConfig(room.id, connection);
+                         if (roomConfig != null)
+                         {
+                             //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
+                             if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == -1)
+                             {
+                                 room.status = "too low";
+                             } //  Ist-Raumtemperatur is groeer als Soll-Temperatur
+                             else if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == 1)
+                             {
+                                 room.status = "too high";
+                             } //  Ist-Raumtemperatur is gleich als Soll-Temperatur
+                             else
+                             {
+                                 room.status = "ok";
+                             }
+                         }*/
                     }
                     catch (Exception ex)
                     {
                         return new BadRequestObjectResult(ex);
                     }
-                }                
+                }
             }
             return new OkObjectResult(rooms);
         }
     }
 }
+

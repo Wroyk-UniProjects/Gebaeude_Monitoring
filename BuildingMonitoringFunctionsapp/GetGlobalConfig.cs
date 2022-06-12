@@ -14,9 +14,15 @@ namespace BuildingMonitoringFunctionsapp
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/config")]
             HttpRequest req,
-            [Sql(" select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper]," +
-            "[upperToleranceHumid],[lowerToleranceHumid] from roomConfig " +
-            "where id=0;",
+            [Sql("select [targetTemper]," +
+                 "[targetHumid]," +
+                 "[updateRate]," +
+                 "[upperToleranceTemper]," +
+                 "[lowerToleranceTemper]," +
+                 "[upperToleranceHumid]," +
+                 "[lowerToleranceHumid] " +
+                 "from roomConfig " +
+                 "where id=0;",
                 CommandType = System.Data.CommandType.Text,
                 ConnectionStringSetting = "sqlconnectionstring")]
             IEnumerable<RoomConfig> roomConfig)
