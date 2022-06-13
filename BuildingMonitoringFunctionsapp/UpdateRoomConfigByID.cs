@@ -52,7 +52,7 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  Create parameter from Route
                 sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
-                sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = id;
+                sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
 
                 StringBuilder errorMessages = new StringBuilder();
 
