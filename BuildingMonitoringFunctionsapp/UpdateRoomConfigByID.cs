@@ -37,7 +37,8 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  SQL query
                 var sql_query = "update roomConfig set " +
-                    "  [targetTemper] = " + roomConfig.targetTemper +
+                    "[id]=@roomID " +
+                    ",  [targetTemper] = " + roomConfig.targetTemper +
                     ", [targetHumid] = " + roomConfig.targetHumid +
                     ", [updateRate] = " + roomConfig.updateRate +
                     ", [upperToleranceTemper] =" + roomConfig.upperToleranceTemper +
@@ -51,7 +52,7 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  Create parameter from Route
                 sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
-                sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
+                sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = id;
 
                 StringBuilder errorMessages = new StringBuilder();
 
