@@ -23,7 +23,7 @@ namespace BuildingMonitoringFunctionsapp
         [FunctionName("updateRoomConfigByID")]
 
         public async Task<IActionResult> Run(
-             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rooms/{roomID}/roomConfig")] HttpRequest req, int roomID)
+             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rooms/{roomID}/config")] HttpRequest req, int roomID)
         {
             //  Read request body
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -37,15 +37,17 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  SQL query
                 var sql_query = "update roomConfig set " +
-                    "[id]=@roomID " +
-                    ",  [targetTemper] = " + roomConfig.targetTemper +
+                    " [targetTemper] = " + roomConfig.targetTemper +
                     ", [targetHumid] = " + roomConfig.targetHumid +
                     ", [updateRate] = " + roomConfig.updateRate +
                     ", [upperToleranceTemper] =" + roomConfig.upperToleranceTemper +
                     ", [lowerToleranceTemper] =" + roomConfig.lowerToleranceTemper +
                     ", [upperToleranceHumid] =" + roomConfig.upperToleranceHumid +
                     ", [lowerToleranceHumid] =" + roomConfig.lowerToleranceHumid +
-                    ", where id = @roomID";
+                    " where id=@roomID";
+    
+
+                   // ", where id = @roomID";
 
                 //  Create command
                 SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
