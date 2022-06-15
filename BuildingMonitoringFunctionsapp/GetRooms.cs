@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
 using System.Data.SqlClient;
+using BuildingMonitoringFunctionsapp.src.utils;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -30,32 +31,48 @@ namespace BuildingMonitoringFunctionsapp
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
         {
-            var connection_str = Environment.GetEnvironmentVariable("sqldb_connection");
+            List<RoomConfig> roomConfigs = new List<RoomConfig>();
+            List<Measurement> measurements = new List<Measurement>();
+            try
+            {
+                roomConfigs = RoomConfigsUtil.getRoomConfigList();
+                measurements = MeasurementUtil.getMeasurementList();
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
 
-            using (SqlConnection connection = new SqlConnection(connection_str))
+            try
             {
                 foreach (var room in rooms)
                 {
                     try
                     {
-                        //  Raumkonfiguration basierend auf der Raum-ID abrufen + RoomConfig-Objekt erzeugen
-                        /* RoomConfig roomConfig = new RoomConfig(room.id, connection);
-                         if (roomConfig != null)
-                         {
-                             //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
-                             if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == -1)
-                             {
-                                 room.status = "too low";
-                             } //  Ist-Raumtemperatur is groeer als Soll-Temperatur
-                             else if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == 1)
-                             {
-                                 room.status = "too high";
-                             } //  Ist-Raumtemperatur is gleich als Soll-Temperatur
-                             else
-                             {
-                                 room.status = "ok";
-                             }
-                         }*/
+                        foreach (var roomconfig in roomConfigs)
+                        {
+                            try
+                            {
+                                foreach (var measurement in measurements)
+                                {
+                                    try
+                                    {
+                                        if (room.id == roomconfig.id && roomconfig.id == measurement.roomId)
+                                        {
+                                            room.status = StatusUtil.GetStatus(measurement, roomconfig, room.status);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        return new BadRequestObjectResult(ex);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                return new BadRequestObjectResult(ex);
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -63,6 +80,11 @@ namespace BuildingMonitoringFunctionsapp
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+
             return new OkObjectResult(rooms);
         }
     }

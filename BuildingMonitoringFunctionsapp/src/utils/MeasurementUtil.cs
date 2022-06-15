@@ -6,14 +6,13 @@ using System.Data;
 
 namespace BuildingMonitoringFunctionsapp.src.utils
 {
-    internal class RoomConfigsUtil
+    internal class MeasurementUtil
     {
-        private static readonly string query = "select [targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid]," +
-                                      "[lowerToleranceHumid] from roomConfig";
+        private static readonly string query = "select [roomId],[temper],[humid],[date] from measurement";
 
-        public static List<RoomConfig> getRoomConfigList()
+        public static List<Measurement> getMeasurementList()
         {
-            List<RoomConfig> roomConfigsList = new List<RoomConfig>(); 
+            List<Measurement> measurements = new List<Measurement>();
 
             var connection_str = Environment.GetEnvironmentVariable("sqldb_connection");
 
@@ -21,9 +20,6 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             {
                 //  Create SQL command based on connection
                 SqlCommand sql_cmd = new SqlCommand(query, connection);
-
-                //sql_cmd.Parameters.Add("@roomId", System.Data.SqlDbType.Int);
-                //sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
 
                 //  Used to show errors, if any
                 StringBuilder errorMessages = new StringBuilder();
@@ -34,8 +30,8 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                     connection.Open();
                     using (sql_cmd)
                     {
-                        var roomconfig_var = sql_cmd.ExecuteReader();
-                        roomConfigsList = Utils.getList<RoomConfig>(roomconfig_var);
+                        var measurement_var = sql_cmd.ExecuteReader();
+                        measurements = Utils.getList<Measurement>(measurement_var);
                     }
                     connection.Close();
                 }
@@ -53,7 +49,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                     return null;
                 }
             }
-            return roomConfigsList;
+            return measurements;
         }
     }
 }
