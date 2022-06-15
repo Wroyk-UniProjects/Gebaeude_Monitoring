@@ -31,62 +31,27 @@ namespace BuildingMonitoringFunctionsapp
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
         {
-            List<RoomConfig> roomConfigs = new List<RoomConfig>();
-            List<Measurement> measurements = new List<Measurement>();
-            try
-            {
-                roomConfigs = RoomConfigsUtil.getRoomConfigList();
-                measurements = MeasurementUtil.getMeasurementList();
-            }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(ex);
-            }
+            var connection_str = Environment.GetEnvironmentVariable("sqlconnectionstring");
 
-            try
+            List<Measurement> l = new List<Measurement>();
+
+            using (SqlConnection connection = new SqlConnection(connection_str))
             {
-                foreach (var room in rooms)
+                try
                 {
-                    try
+                    foreach (Room room in rooms)
                     {
-                        foreach (var roomconfig in roomConfigs)
-                        {
-                            try
-                            {
-                                foreach (var measurement in measurements)
-                                {
-                                    try
-                                    {
-                                        if (room.id == roomconfig.id && roomconfig.id == measurement.roomId)
-                                        {
-                                            room.status = StatusUtil.GetStatus(measurement, roomconfig, room.status);
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        return new BadRequestObjectResult(ex);
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                return new BadRequestObjectResult(ex);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        return new BadRequestObjectResult(ex);
+                        RoomConfig rc = RoomConfigsUtil.createRoomConfig(room.id, connection);
+                        Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
+                        room.status = StatusUtil.GetStatus(m, rc, room.status);
                     }
                 }
+                catch (Exception es)
+                {
+                    return new BadRequestObjectResult(es);
+                }
             }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(ex);
-            }
-
             return new OkObjectResult(rooms);
         }
     }
 }
-

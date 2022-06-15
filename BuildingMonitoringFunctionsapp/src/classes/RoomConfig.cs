@@ -9,18 +9,18 @@ namespace BuildingMonitoringFunctionsapp
     {
         public int id { get; set; }
 
-        public float targetTemper { get; set; }
+        public double targetTemper { get; set; }
 
-        public float targetHumid { get; set; }
+        public double targetHumid { get; set; }
 
-        public float updateRate { get; set; }
+        public double updateRate { get; set; }
 
-        public float upperToleranceTemper { get; set; }
+        public double upperToleranceTemper { get; set; }
 
-        public float lowerToleranceTemper { get; set; }
+        public double lowerToleranceTemper { get; set; }
 
-        public float upperToleranceHumid { get; set; }
+        public double upperToleranceHumid { get; set; }
 
-        public float lowerToleranceHumid { get; set; }
+        public double lowerToleranceHumid { get; set; }
     }
 }
