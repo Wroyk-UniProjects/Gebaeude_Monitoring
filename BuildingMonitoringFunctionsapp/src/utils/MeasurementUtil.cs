@@ -88,15 +88,5 @@ namespace BuildingMonitoringFunctionsapp.src.utils
 
 
 
-
-
-
-
-
-
-
-
-
-
     }
 }
