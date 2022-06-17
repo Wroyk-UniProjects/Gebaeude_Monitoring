@@ -15,6 +15,7 @@ create-zip:
     - echo "creating development zip"
     - apt-get update
     - apt-get install zip unzip
+    - apt install curl
     - chmod +x dependencies.sh
     - chmod +x run.sh
     - zip $CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
@@ -35,7 +36,9 @@ create-release:
     - tags
   script:
     - echo "creating release zip"
-    - apt-get install zip gzip tar
+    - apt-get update
+    - apt-get install zip unzip
+    - apt install curl
     - chmod +x dependencies.sh
     - chmod +x run.sh
     - zip monitoring_v$CI_COMMIT_TA.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
