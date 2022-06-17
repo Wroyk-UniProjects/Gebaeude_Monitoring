@@ -18,7 +18,7 @@ create-zip:
     - apt-get install curl -y
     - chmod +x dependencies.sh
     - chmod +x run.sh
-    - zip $CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
+    - zip monitoring_$CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
     - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_$CI_COMMIT_BRANCH.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/test/"
   artifacts:
     name: $CI_COMMIT_BRANCH
