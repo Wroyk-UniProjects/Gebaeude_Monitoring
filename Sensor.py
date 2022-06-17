@@ -92,7 +92,7 @@ class Main:
         if self.timeout < 1:
             _update_time()
         else:
-            waiting_interval = self.timeout // 1 + 1
+            waiting_interval = self.timeout // 1
             while waiting_interval:
                 _update_time()
                 waiting_interval -= 1

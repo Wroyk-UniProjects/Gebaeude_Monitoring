@@ -13,8 +13,11 @@ create-zip:
     - tags
   script:
     - echo "creating development zip"
+    - sudo apt-get install zip gzip tar
     - chmod +x dependencies.sh
     - chmod +x run.sh
+    - sudo zip $CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
+    - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_$CI_COMMIT_BRANCH.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/test/"
   artifacts:
     name: $CI_COMMIT_BRANCH
     paths:
@@ -31,8 +34,11 @@ create-release:
     - tags
   script:
     - echo "creating release zip"
+    - sudo apt-get install zip gzip tar
     - chmod +x dependencies.sh
     - chmod +x run.sh
+    - sudo zip monitoring_v$CI_COMMIT_TA.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
+    - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_v$CI_COMMIT_TA.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/releases/"
   artifacts:
     name: $CI_COMMIT_TAG
     paths:
