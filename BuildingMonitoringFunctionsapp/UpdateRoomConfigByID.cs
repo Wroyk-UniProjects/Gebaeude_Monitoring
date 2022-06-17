@@ -37,14 +37,14 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  SQL query
                 var sql_query = "update roomConfig set " +
-                    " [targetTemper] = " + roomConfig.targetTemper +
+                    "  [targetTemper] = " + roomConfig.targetTemper +
                     ", [targetHumid] = " + roomConfig.targetHumid +
                     ", [updateRate] = " + roomConfig.updateRate +
                     ", [upperToleranceTemper] =" + roomConfig.upperToleranceTemper +
                     ", [lowerToleranceTemper] =" + roomConfig.lowerToleranceTemper +
                     ", [upperToleranceHumid] =" + roomConfig.upperToleranceHumid +
                     ", [lowerToleranceHumid] =" + roomConfig.lowerToleranceHumid +
-                    " where id=@roomID";
+                    "  where id=@roomID";
     
 
                    // ", where id = @roomID";

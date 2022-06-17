@@ -19,6 +19,7 @@ namespace BuildingMonitoringFunctionsapp
              "m.[humid], " +
              "r.[name], " +
              "r.[global], " +
+             "r.[status],"+
              "rc.[targetTemper], " +
              "rc.[targetHumid] " +
              "from measurement m "+
@@ -59,11 +60,11 @@ namespace BuildingMonitoringFunctionsapp
                     }
                     catch (Exception ex)
                     {
-                        return new BadRequestObjectResult(ex);
+                        return new BadRequestObjectResult(ex); //http fehler zurückgeben
                     }
                 }
             }
-            return new OkObjectResult(rooms);
+            return new OkObjectResult(rooms); //200 zurückgeben
         }
     }
 }
