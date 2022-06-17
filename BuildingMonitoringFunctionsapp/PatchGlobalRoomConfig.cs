@@ -43,7 +43,7 @@ namespace BuildingMonitoringFunctionsapp
                     ", [updateRate] = " + roomConfig.updateRate +
                     ", [upperToleranceTemper] = " + roomConfig.upperToleranceTemper +
                     ", [lowerToleranceTemper] = " + roomConfig.lowerToleranceTemper +
-                    ", [upperToleranceHumid] = " + roomConfig.lowerToleranceHumid +
+                    ", [upperToleranceHumid] = " + roomConfig.upperToleranceHumid +
                     ", [lowerToleranceHumid] = " + roomConfig.lowerToleranceHumid + "where id = 0";
 
                 //  Create command
