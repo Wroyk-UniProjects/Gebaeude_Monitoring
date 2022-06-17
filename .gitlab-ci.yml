@@ -13,9 +13,9 @@ create-zip:
     - tags
   script:
     - echo "creating development zip"
-    - apt-get update
-    - apt-get install zip unzip
-    - apt-get install curl
+    - apt-get update -y
+    - apt-get install zip unzip -y
+    - apt-get install curl -y
     - chmod +x dependencies.sh
     - chmod +x run.sh
     - zip $CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
@@ -36,9 +36,9 @@ create-release:
     - tags
   script:
     - echo "creating release zip"
-    - apt-get update
-    - apt-get install zip unzip
-    - apt-get install curl
+    - apt-get update -y
+    - apt-get install zip unzip -y
+    - apt-get install curl -y
     - chmod +x dependencies.sh
     - chmod +x run.sh
     - zip monitoring_v$CI_COMMIT_TA.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
