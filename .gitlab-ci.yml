@@ -13,7 +13,8 @@ create-zip:
     - tags
   script:
     - echo "creating development zip"
-    - apt-get install zip gzip tar
+    - apt-get update
+    - apt-get install zip unzip
     - chmod +x dependencies.sh
     - chmod +x run.sh
     - zip $CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
