@@ -1,4 +1,4 @@
-﻿namespace Building_Monitoring_WebApp.Utilities
+namespace Building_Monitoring_WebApp.Utilities
 {
     public class RoomStatus
     {
@@ -47,6 +47,38 @@
                 case States.undefined:
                 default:
                     return "roomStatusUndefined";
+                    break;
+            }
+        }
+
+        public static String getRoomStateTextCSS(String stateName)
+        {
+            switch (getRoomState(stateName))
+            {
+                case States.ok:
+                    return "roomStatusTextOk";
+                    break;
+
+                case States.tooHigh:
+                case States.tooHighTemp:
+                case States.tooHighHum:
+                    return "roomStatusTextTooHigh";
+                    break;
+
+                case States.tooLow:
+                case States.tooLowTemp:
+                case States.tooLowHum:
+                    return "roomStatusTextTooLow";
+                    break;
+
+                case States.tooHighTemptooLowHum:
+                case States.tooLowTemptooHighHum:
+                    return "roomStatusTextMixed";
+                    break;
+
+                case States.undefined:
+                default:
+                    return "roomStatusTextUndefined";
                     break;
             }
         }

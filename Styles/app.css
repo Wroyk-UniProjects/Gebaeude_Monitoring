@@ -34,11 +34,41 @@
 .roomStatusUndefined {
     @apply bg-gray-400;
 }
-.roomStatusHighTempLowHum {
-    
+/* Status Text Colors */
+.roomStatusTextOk {
+    @apply text-lime-500;
 }
-.roomStatusLowTempHighHum{
 
+.roomStatusTextTooHigh {
+    @apply text-red-600;
+}
+
+.roomStatusTextTooLow {
+    @apply text-cyan-400;
+}
+
+.roomStatusTextUndefined {
+    @apply text-black;
+}
+
+/* Status Mixt Colors */
+.roomStatusTextMixed {
+    @apply text-fuchsia-800;
+}
+
+.roomStatusHighTempLowHum {
+    background: rgb(220,38,38);
+    background: -moz-linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    background: -webkit-linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    background: linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dc2626",endColorstr="#22d3ee",GradientType=1);
+}
+.roomStatusLowTempHighHum {
+    background: rgb(34,211,238);
+    background: -moz-linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    background: -webkit-linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    background: linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#22d3ee",endColorstr="#dc2626",GradientType=1);
 }
 
 
