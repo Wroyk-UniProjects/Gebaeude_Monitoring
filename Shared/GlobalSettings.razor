@@ -8,7 +8,7 @@
 		<p class="text-center text-xl">Target Temperature:</p>
 		<div class="flex items-center mb-4">
 			<button @onclick="decrementTemp" class="minus-btn">-</button>
-			<p class="settings-values">@cnfg.TargetTemp</p>
+			<p class="settings-values">@cnfg.TargetTemper</p>
 			<button @onclick="incrementTemp" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">°C</span>
 		</div>
@@ -17,7 +17,7 @@
 		<p class="text-center text-xl">Target Humidity:</p>
 		<div class="flex items-center mb-4">
 			<button @onclick="decrementHumi" class="minus-btn">-</button>
-			<p class="settings-values">@cnfg.TargetHumi</p>
+			<p class="settings-values">@cnfg.TargetHumid</p>
 			<button @onclick="incrementHumi" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">%</span>
 		</div>
@@ -66,20 +66,28 @@
 
 	}
 	// Temperature Buttons - functionallity
-	private void decrementTemp() { cnfg.TargetTemp -= 0.5; }
-	private void incrementTemp() { cnfg.TargetTemp += 0.5; }
+	private void decrementTemp() { cnfg.TargetTemper -= 0.5; }
+	private void incrementTemp() { cnfg.TargetTemper += 0.5; }
 
 	// Humidity Buttons - functionallity
-	private void decrementHumi() { cnfg.TargetHumi -= 0.5; }
-	private void incrementHumi() { cnfg.TargetHumi += 0.5; }
+	private void decrementHumi() { cnfg.TargetHumid -= 0.5; }
+	private void incrementHumi() { cnfg.TargetHumid += 0.5; }
 
 	// Update Rate Buttons - functionallity
 	private void decrementUpdate() { cnfg.UpdateRate -= 10; }
 	private void incrementUpdate() { cnfg.UpdateRate += 10; }
 
 	// Tolerance Buttons - functionallity
-	private void decrementTole() { tolerance -= 0.5;	}
-	private void incrementTole() { tolerance += 0.5;    }
+	private void decrementTole() { tolerance -= 0.5; updateCnfg(); }
+	private void incrementTole() { tolerance += 0.5; updateCnfg(); }
+
+	private void updateCnfg()
+	{
+		cnfg.UpperToleranceTemper = cnfg.TargetTemper + tolerance;
+		cnfg.LowerToleranceTemper = cnfg.TargetTemper - tolerance;
+		cnfg.UpperToleranceHumid = cnfg.TargetHumid + tolerance;
+		cnfg.LowerToleranceHumid = cnfg.TargetHumid - tolerance;
+	}
 
 	// Save and Cancel Button - functionallity
 	private void saveChanges() { CnfgService.PutConfig(cnfg);/*404 could not find PUT*/}
