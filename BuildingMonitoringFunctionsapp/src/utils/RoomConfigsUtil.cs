@@ -67,7 +67,9 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
                 //  Create SQL command based on connection
+                
                 SqlCommand sql_cmd = new SqlCommand(query, connection);
+
                 //  Try to connect and execute query
                 try
                 {
@@ -110,6 +112,8 @@ namespace BuildingMonitoringFunctionsapp.src.utils
         {
             RoomConfig rc = new RoomConfig();
             //  Create SQL command based on connection
+            String query = "select[id],[targetTemper],[targetHumid],[updateRate],[upperToleranceTemper],[lowerToleranceTemper],[upperToleranceHumid]," +
+                                      "[lowerToleranceHumid] from roomConfig where id=@roomID";
             SqlCommand sql_cmd = new SqlCommand(query, connection);
 
             sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);

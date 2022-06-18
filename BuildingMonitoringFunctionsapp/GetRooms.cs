@@ -42,7 +42,9 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     foreach (Room room in rooms)
                     {
-                        RoomConfig rc = RoomConfigsUtil.createRoomConfig(room.id, connection);
+                        RoomConfig rc = RoomConfigsUtil.createRoomConfig((room.global ? 0 : room.id), connection);
+                        room.targetHumid = rc.targetHumid;
+                        room.targetTemper = rc.targetTemper;
                         Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
                         room.status = StatusUtil.GetStatus(m, rc, room.status);
                     }
