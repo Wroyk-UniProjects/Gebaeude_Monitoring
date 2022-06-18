@@ -29,7 +29,7 @@ namespace Building_Monitoring_WebApp.Service
             return rooms;
         }
 
-        public async Task<Room> GetRoom(int id)
+        public async Task<RoomDetail> GetRoom(int id)
         {
             var response = await client.GetAsync("https://building-monitoring.azurewebsites.net/api/rooms/" + id.ToString());
 
@@ -40,7 +40,7 @@ namespace Building_Monitoring_WebApp.Service
                 throw new ApplicationException(content);
             }
 
-            var room = JsonSerializer.Deserialize<Room>(content, jsonSerializerOptions);
+            var room = JsonSerializer.Deserialize<RoomDetail>(content, jsonSerializerOptions);
             return room;
         }
     }
