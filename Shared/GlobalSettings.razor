@@ -35,7 +35,7 @@
 		<p class="text-center text-xl">Tolerance:</p>
 		<div class="flex items-center mb-4">
 			<button @onclick="decrementTole" class="minus-btn">-</button>
-			<p class="settings-values">@(@cnfg.TargetHumi-@cnfg.LoToleHumi)</p>
+			<p class="settings-values">@tolerance</p>
 			<button @onclick="incrementTole" class="plus-btn">+</button>
 			<span class="mx-auto w-12 text-xl font-bold">+/-</span>
 		</div>
@@ -82,6 +82,6 @@
 	private void incrementTole() { tolerance += 0.5;    }
 
 	// Save and Cancel Button - functionallity
-	private void saveChanges() { /* TODO: patch to db */}
+	private void saveChanges() { CnfgService.PutConfig(cnfg);}
 	private void undoChanges() { cnfg = oldCnfg; /* TODO: go back to detail view */ }
 }
