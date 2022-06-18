@@ -47,9 +47,9 @@
     public IRoomService RoomServic { get; set; }
 
     private Room room = new Room();
-    private String statusColor = "bg-gray-400";
-    private String statusTextColor = "text-gray-400";
-    private String statusText = "Unknow";
+    private String statusColor = "roomStatusUndefined";
+    private String statusTextColor = "roomStatusTextUndefined";
+    private String statusText = "Not Loaded";
     private String imageSource = "TestFloorplan1.png";
 
 
@@ -58,33 +58,9 @@
     {
         room = await RoomServic.GetRoom(RoomID);
 
-        //setzen des
-        switch (room.Status){
-            case "ok":
-                statusColor = "bg-lime-500";
-                statusTextColor = "text-lime-500";
-                statusText = "In target range";
-                break;
-
-            case "too high":
-                statusColor = "bg-red-600";
-                statusTextColor = "text-red-600";
-                statusText = "Value exceeds target";
-                break;
-
-            case "too low":
-                statusColor = "bg-cyan-400";
-                statusTextColor = "text-cyan-400";
-                statusText = "value below target";
-                break;
-
-            default:
-                statusColor = "bg-gray-400";
-                statusTextColor = "test-gray-400";
-                statusText = "Unknow";
-                break;
-
-        }
+        statusColor = RoomStatus.getRoomStateCSS(room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
+        statusText = RoomStatus.getSimpelRoomStateText(room.Status);
 
     }
 }
