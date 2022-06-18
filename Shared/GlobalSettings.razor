@@ -51,9 +51,7 @@
 @code {
 	public Config oldCnfg { get; set; } = new Config();
 	public Config cnfg { get; set; } = new Config();
-	private double tolerance = 2.0;
-	private int maxLimit = 500;
-	private int minLimit = 0;
+	private double tolerance;
 
 	[Inject]
 	public IConfigService CnfgService { get; set; }
@@ -63,6 +61,7 @@
 
 		oldCnfg = await CnfgService.GetConfig();
 		cnfg = await CnfgService.GetConfig();
+		tolerance = Math.Abs(Math.Truncate((cnfg.UpperToleranceTemper-cnfg.TargetTemper) * 100) / 100);
 
 	}
 	// Temperature Buttons - functionallity
@@ -74,8 +73,8 @@
 	private void incrementHumi() { cnfg.TargetHumid += 0.5; }
 
 	// Update Rate Buttons - functionallity
-	private void decrementUpdate() { cnfg.UpdateRate -= 10; }
-	private void incrementUpdate() { cnfg.UpdateRate += 10; }
+	private void decrementUpdate() { cnfg.UpdateRate -= 1; }
+	private void incrementUpdate() { cnfg.UpdateRate += 1; }
 
 	// Tolerance Buttons - functionallity
 	private void decrementTole() { tolerance -= 0.5; updateCnfg(); }
@@ -90,6 +89,6 @@
 	}
 
 	// Save and Cancel Button - functionallity
-	private void saveChanges() { CnfgService.PatchConfig(cnfg);/*404 could not find PUT*/}
-	private void undoChanges() { cnfg = oldCnfg; /*only works once, why?*/ }
+	private void saveChanges() { CnfgService.PatchConfig(cnfg); }
+	private async void undoChanges() { cnfg = new Config(oldCnfg); }
 }

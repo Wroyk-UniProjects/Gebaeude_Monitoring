@@ -10,5 +10,22 @@
         public double LowerToleranceTemper { get; set; }
         public double UpperToleranceHumid { get; set; }
         public double LowerToleranceHumid { get; set; }
+
+        public Config()
+        {
+
+        }
+
+        public Config(Config cnfgToCopy)
+        {
+            Id = cnfgToCopy.Id;
+            TargetTemper = cnfgToCopy.TargetTemper;
+            TargetHumid = cnfgToCopy.TargetHumid;
+            UpdateRate = cnfgToCopy.UpdateRate;
+            UpperToleranceTemper = cnfgToCopy.UpperToleranceTemper;
+            LowerToleranceTemper = cnfgToCopy.LowerToleranceTemper;
+            UpperToleranceHumid = cnfgToCopy.UpperToleranceHumid;
+            LowerToleranceHumid = cnfgToCopy.LowerToleranceHumid;
+        }
     }
 }
