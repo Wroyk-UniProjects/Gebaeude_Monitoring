@@ -88,3 +88,6 @@ env.yml
 
 # Temporary files
 *~
+BuildingMonitoringFunctionsapp/BuildingMonitoringFunctionsapp.csproj.user
+
+BuildingMonitoringFunctionsapp/Properties/
