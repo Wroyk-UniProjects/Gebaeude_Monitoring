@@ -1,4 +1,4 @@
-namespace Building_Monitoring_WebApp.Utilities
+﻿namespace Building_Monitoring_WebApp.Utilities
 {
     public class RoomStatus
     {
@@ -104,6 +104,48 @@ namespace Building_Monitoring_WebApp.Utilities
                 case States.tooLowTemptooHighHum:
                     return "Too Low";
                     break;
+
+                case States.undefined:
+                default:
+                    return "Unknown";
+                    break;
+            }
+        }
+
+        public static String getDetailedRoomStateText(String stateName)
+        {
+            switch (getRoomState(stateName))
+            {
+                case States.ok:
+                    return "OK";
+                    break;
+
+                case States.tooHigh:
+                    return "Temperature and humidity too high";
+                    break;
+                case States.tooHighTemp:
+                    return "Temperature too high";
+                    break;
+                case States.tooHighHum:
+                    return "Humidity too high";
+                    break;
+                case States.tooHighTemptooLowHum:
+                    return "Temperature too high and humidity too low";
+                    break;
+
+                case States.tooLow:
+                    return "Temperature and humidity too low";
+                    break;
+                case States.tooLowTemp:
+                    return "Temperature too low";
+                    break;
+                case States.tooLowHum:
+                    return "Humidity too low";
+                    break;
+                case States.tooLowTemptooHighHum:
+                    return "Temperature too low and humidity too high";
+                    break;
+
 
                 case States.undefined:
                 default:
