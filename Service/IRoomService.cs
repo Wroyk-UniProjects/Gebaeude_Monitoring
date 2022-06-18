@@ -5,6 +5,6 @@ namespace Building_Monitoring_WebApp.Service
     public interface IRoomService
     {
         Task<List<Room>> GetRooms();
-        Task<Room> GetRoom(int roomId);
+        Task<RoomDetail> GetRoom(int roomId);
     }
 }
