@@ -1,10 +1,12 @@
 ﻿using Building_Monitoring_WebApp.Model;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Building_Monitoring_WebApp.Service
 {
     public class ConfigService : IConfigService
     {
+        private readonly string url = "https://building-monitoring.azurewebsites.net/api/rooms/config";
         private HttpClient client;
         private JsonSerializerOptions jsonSerializerOptions;
 
@@ -15,7 +17,7 @@ namespace Building_Monitoring_WebApp.Service
         }
         public async Task<Config> GetConfig()
         {
-            var response = await client.GetAsync("https://building-monitoring.azurewebsites.net/api/rooms/config");
+            var response = await client.GetAsync(url);
 
             var content = await response.Content.ReadAsStringAsync();
 
@@ -26,6 +28,12 @@ namespace Building_Monitoring_WebApp.Service
 
             var config = JsonSerializer.Deserialize<Config>(content, jsonSerializerOptions);
             return config;
+        }
+        public async Task PatchConfig(Config newConfig)
+        {
+            var jsonContent = JsonContent.Create(newConfig);
+            var response = await client.PatchAsync(url, jsonContent);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -5,5 +5,6 @@ namespace Building_Monitoring_WebApp.Service
     public interface IConfigService
     {
         Task<Config> GetConfig();
+        Task PatchConfig(Config newConfig);
     }
 }
