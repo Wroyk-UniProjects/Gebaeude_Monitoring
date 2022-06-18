@@ -85,7 +85,31 @@ namespace Building_Monitoring_WebApp.Utilities
 
         public static String getSimpelRoomStateText(String stateName)
         {
-            return "";
+            switch (getRoomState(stateName))
+            {
+                case States.ok:
+                    return "OK";
+                    break;
+
+                case States.tooHigh:
+                case States.tooHighTemp:
+                case States.tooHighHum:
+                case States.tooHighTemptooLowHum:
+                    return "Too High";
+                    break;
+
+                case States.tooLow:
+                case States.tooLowTemp:
+                case States.tooLowHum:
+                case States.tooLowTemptooHighHum:
+                    return "Too Low";
+                    break;
+
+                case States.undefined:
+                default:
+                    return "Unknown";
+                    break;
+            }
         }
 
         public static States getRoomState(String stateName)
