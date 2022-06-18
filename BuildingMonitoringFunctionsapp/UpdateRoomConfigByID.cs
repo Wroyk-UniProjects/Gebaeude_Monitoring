@@ -23,7 +23,7 @@ namespace BuildingMonitoringFunctionsapp
         [FunctionName("updateRoomConfigByID")]
 
         public async Task<IActionResult> Run(
-             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rooms/{roomID}/roomConfig")] HttpRequest req, int roomID)
+             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "rooms/{roomID}/config")] HttpRequest req, int roomID)
         {
             //  Read request body
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -44,14 +44,22 @@ namespace BuildingMonitoringFunctionsapp
                     ", [lowerToleranceTemper] =" + roomConfig.lowerToleranceTemper +
                     ", [upperToleranceHumid] =" + roomConfig.upperToleranceHumid +
                     ", [lowerToleranceHumid] =" + roomConfig.lowerToleranceHumid +
-                    ", where id = @roomID";
+                    "  where id=@roomID";
+
+                var sql_query1 = "update room set [global]=0 where id=@roomID";
+
 
                 //  Create command
                 SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
+                SqlCommand sql_cmd1 = new SqlCommand(sql_query1, connection);
+
 
                 //  Create parameter from Route
                 sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
                 sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
+
+                sql_cmd1.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+                sql_cmd1.Parameters[sql_cmd1.Parameters.Count - 1].Value = roomID;
 
                 StringBuilder errorMessages = new StringBuilder();
 
@@ -60,6 +68,8 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     connection.Open();
                     var rows = await sql_cmd.ExecuteNonQueryAsync();
+                    var rows1 = await sql_cmd1.ExecuteNonQueryAsync();
+
                     connection.Close();
                 }
                 catch (SqlException ex)

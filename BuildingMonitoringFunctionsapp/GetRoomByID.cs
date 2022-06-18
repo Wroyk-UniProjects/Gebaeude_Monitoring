@@ -15,6 +15,7 @@ namespace BuildingMonitoringFunctionsapp
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{iD}")]
             HttpRequest req,
          [Sql("(select r.[id], m.[temper], m.[humid], r.[name], r.[global], " +
+              "r.[status], r.[floorplan] as imageUrl," +
               "rc.[targetTemper], rc.[targetHumid] " +
               "from measurement m  " +
               "join room r on m.roomId=r.id " +
@@ -23,6 +24,7 @@ namespace BuildingMonitoringFunctionsapp
               "union"+
               "(select r.[id], m.[temper], m.[humid], " +
               "r.[name], r.[global], " +
+              "r.[status], r.[floorplan] as imageUrl," +
               "(select rc1.targetTemper from roomConfig rc1 where rc1.id=0),  " +
               "(select rc11.targetHumid from roomConfig rc11 where rc11.id=0) " +
               "from measurement m  join room r on m.roomId=r.id " +

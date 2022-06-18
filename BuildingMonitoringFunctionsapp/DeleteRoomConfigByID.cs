@@ -1,53 +1,48 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.Data.SqlClient;
 using System.Text;
 
 namespace BuildingMonitoringFunctionsapp
 {
-    public class PatchGlobalRoomConfig
-    {
-    private readonly ILogger<PatchGlobalRoomConfig> _logger;
 
-        public PatchGlobalRoomConfig(ILogger<PatchGlobalRoomConfig> log)
+    public class DeleteRoomConfigByID {
+        private readonly ILogger<DeleteRoomConfigByID> _logger;
+
+        public DeleteRoomConfigByID(ILogger<DeleteRoomConfigByID> log)
         {
             _logger = log;
         }
+        [FunctionName("deleteRoomConfigByID")]
 
-        [FunctionName("patchGlobalRoomConfig")]
         public async Task<IActionResult> Run(
-          [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "rooms/config")] HttpRequest req)
+             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "rooms/{roomID}/config")] HttpRequest req, int roomID)
         {
             //  Read request body
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var connection_str = Environment.GetEnvironmentVariable("sqldb_connection");
 
-            //  Convert JSON Object in roomConfig Object
-            RoomConfig roomConfig= JsonConvert.DeserializeObject<RoomConfig>(requestBody);
-            
+            //  Convert JSON Object in Measurement Object
+         //   RoomConfig roomConfig = JsonConvert.DeserializeObject<RoomConfig>(requestBody);
+
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
+                var sql_query1 = "update room set [global]=1 where id=@roomID";
 
-                //  SQL query
-                var sql_query =
-                    " update roomConfig set" +
-                    " [targetTemper] = " + roomConfig.targetTemper +", " +
-                    " [targetHumid] = " + roomConfig.targetHumid + 
-                    ", [updateRate] = " + roomConfig.updateRate +
-                    ", [upperToleranceTemper] = " + roomConfig.upperToleranceTemper +
-                    ", [lowerToleranceTemper] = " + roomConfig.lowerToleranceTemper +
-                    ", [upperToleranceHumid] = " + roomConfig.upperToleranceHumid +
-                    ", [lowerToleranceHumid] = " + roomConfig.lowerToleranceHumid + "where id = 0";
 
                 //  Create command
-                SqlCommand sql_cmd = new SqlCommand(sql_query, connection);
+                SqlCommand sql_cmd1 = new SqlCommand(sql_query1, connection);
+
+
+                sql_cmd1.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+                sql_cmd1.Parameters[sql_cmd1.Parameters.Count - 1].Value = roomID;
 
                 StringBuilder errorMessages = new StringBuilder();
 
@@ -55,10 +50,11 @@ namespace BuildingMonitoringFunctionsapp
                 try
                 {
                     connection.Open();
-                    var rows = await sql_cmd.ExecuteNonQueryAsync();
+                    var rows1 = await sql_cmd1.ExecuteNonQueryAsync();
+
                     connection.Close();
                 }
-                catch(SqlException ex)
+                catch (SqlException ex)
                 {
                     for (int i = 0; i < ex.Errors.Count; i++)
                     {
@@ -76,5 +72,3 @@ namespace BuildingMonitoringFunctionsapp
         }
     }
 }
-
-
