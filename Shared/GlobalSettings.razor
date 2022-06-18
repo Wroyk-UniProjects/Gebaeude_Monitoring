@@ -90,6 +90,6 @@
 	}
 
 	// Save and Cancel Button - functionallity
-	private void saveChanges() { CnfgService.PutConfig(cnfg);/*404 could not find PUT*/}
+	private void saveChanges() { CnfgService.PatchConfig(cnfg);/*404 could not find PUT*/}
 	private void undoChanges() { cnfg = oldCnfg; /*only works once, why?*/ }
 }

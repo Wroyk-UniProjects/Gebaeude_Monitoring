@@ -29,14 +29,11 @@ namespace Building_Monitoring_WebApp.Service
             var config = JsonSerializer.Deserialize<Config>(content, jsonSerializerOptions);
             return config;
         }
-        public async Task PutConfig(Config newConfig)
+        public async Task PatchConfig(Config newConfig)
         {
-            var response = await client.PutAsJsonAsync(url, newConfig);
-            var content = await response.Content.ReadFromJsonAsync<Config>();
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content.ToString());
-            }
+            var jsonContent = JsonContent.Create(newConfig);
+            var response = await client.PatchAsync(url, jsonContent);
+            response.EnsureSuccessStatusCode();
         }
     }
 }
