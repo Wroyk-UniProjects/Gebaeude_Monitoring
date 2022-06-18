@@ -82,6 +82,6 @@
 	private void incrementTole() { tolerance += 0.5;    }
 
 	// Save and Cancel Button - functionallity
-	private void saveChanges() { CnfgService.PutConfig(cnfg);}
-	private void undoChanges() { cnfg = oldCnfg; /* TODO: go back to detail view */ }
+	private void saveChanges() { CnfgService.PutConfig(cnfg);/*404 could not find PUT*/}
+	private void undoChanges() { cnfg = oldCnfg; /*only works once, why?*/ }
 }
