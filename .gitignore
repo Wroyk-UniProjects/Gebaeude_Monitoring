@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+Properties/serviceDependencies.json
+
+Properties/serviceDependencies.local.json
+
+Properties/ServiceDependencies/BuildingMonitoringWebApp20220619010234 - Web Deploy/profile.arm.json
