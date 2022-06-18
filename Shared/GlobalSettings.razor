@@ -51,7 +51,7 @@
 @code {
 	public Config oldCnfg { get; set; } = new Config();
 	public Config cnfg { get; set; } = new Config();
-	private double tolerance;
+	private double tolerance, oldTolerance;
 
 	[Inject]
 	public IConfigService CnfgService { get; set; }
@@ -61,6 +61,7 @@
 
 		oldCnfg = await CnfgService.GetConfig();
 		cnfg = await CnfgService.GetConfig();
+		oldTolerance = Math.Abs(Math.Truncate((cnfg.UpperToleranceTemper-cnfg.TargetTemper) * 100) / 100);
 		tolerance = Math.Abs(Math.Truncate((cnfg.UpperToleranceTemper-cnfg.TargetTemper) * 100) / 100);
 
 	}
@@ -77,18 +78,21 @@
 	private void incrementUpdate() { cnfg.UpdateRate += 1; }
 
 	// Tolerance Buttons - functionallity
-	private void decrementTole() { tolerance -= 0.5; updateCnfg(); }
-	private void incrementTole() { tolerance += 0.5; updateCnfg(); }
+	private void decrementTole() { updateCnfg(false); }
+	private void incrementTole() { updateCnfg(true); }
 
-	private void updateCnfg()
+	private void updateCnfg(bool decInc)
 	{
-		cnfg.UpperToleranceTemper = cnfg.TargetTemper + tolerance;
-		cnfg.LowerToleranceTemper = cnfg.TargetTemper - tolerance;
-		cnfg.UpperToleranceHumid = cnfg.TargetHumid + tolerance;
-		cnfg.LowerToleranceHumid = cnfg.TargetHumid - tolerance;
+		if (decInc) { tolerance = Math.Truncate((tolerance + 0.5) * 100) / 100; }
+		else tolerance = Math.Truncate((tolerance - 0.5) * 100) / 100;
+
+		cnfg.UpperToleranceTemper = Math.Truncate((cnfg.TargetTemper + tolerance) * 100) / 100;
+		cnfg.LowerToleranceTemper = Math.Truncate((cnfg.TargetTemper - tolerance) * 100) / 100;
+		cnfg.UpperToleranceHumid = Math.Truncate((cnfg.TargetHumid + tolerance) * 100) / 100;
+		cnfg.LowerToleranceHumid = Math.Truncate((cnfg.TargetHumid - tolerance) * 100) / 100;
 	}
 
 	// Save and Cancel Button - functionallity
 	private void saveChanges() { CnfgService.PatchConfig(cnfg); }
-	private async void undoChanges() { cnfg = new Config(oldCnfg); }
+	private async void undoChanges() { cnfg = new Config(oldCnfg); tolerance = oldTolerance; }
 }
