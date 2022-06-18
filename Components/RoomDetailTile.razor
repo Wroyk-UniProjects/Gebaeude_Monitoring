@@ -9,6 +9,7 @@
     <div class="@statusColor text-center rounded-lg w-12 h-12 place-self-center grid place-items-center">
         @if (room.Individual)
         {
+           
             <p class="font-bold">I</p>
         }
         else
@@ -17,16 +18,19 @@
         }
     </div>
 
+    <!--Floorplan-->
     <div class="col-span-3 row-span-3 w-72 h-72">
         <img src="@imageSource" alt="Floorplan"/>
     </div>
     
+    <!--Temeratur-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
         <p class="font-bold col-span-2">Temperatur</p>
         <p>Measured:</p> <p class="text-center">@room.Temper</p>
         <p>Target:</p> <p class="text-center">@room.TargetTemper</p>
     </div>
 
+    <!--Humiditi-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
         <p class="font-bold col-span-2">Humidity</p>
         <p>Measured:</p> <p class="text-center">@room.Humid</p>
@@ -54,6 +58,7 @@
     {
         room = await RoomServic.GetRoom(RoomID);
 
+        //setzen des
         switch (room.Status){
             case "ok":
                 statusColor = "bg-lime-500";
