@@ -1,6 +1,6 @@
 ﻿namespace Building_Monitoring_WebApp.Model
 {
-    public class Room
+    public class RoomDetail
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -10,5 +10,6 @@
         public double Temper { get; set; }
         public double TargetHumid { get; set; }
         public double TargetTemper { get; set; }
+        public String ImageUrl { get; set; }
     }
 }

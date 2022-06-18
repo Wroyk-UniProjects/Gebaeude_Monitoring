@@ -1,5 +1,10 @@
 ﻿@tailwind base;
 @tailwind components;
+@tailwind utilities;
+
+/*@import '../Components/RoomDetailTile.razor.css';*/
+
+
 .nav-btn {
     @apply my-2 p-1 px-2 border-2 rounded-full bg-sky-500 hover:text-gray-600 focus:text-gray-600;
 }
@@ -15,9 +20,57 @@
 .plus-btn {
     @apply mx-auto border-2 border-sky-500 rounded-full px-3 p-1 my-1 font-bold text-sky-500 text-2xl;
 }
-@tailwind utilities;
 
-/*@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');*/
+/* Status Indikator Colors */
+.roomStatusOk {
+    @apply bg-lime-500;
+}
+.roomStatusTooHigh {
+    @apply bg-red-600;
+}
+.roomStatusTooLow {
+    @apply bg-cyan-400;
+}
+.roomStatusUndefined {
+    @apply bg-gray-400;
+}
+/* Status Text Colors */
+.roomStatusTextOk {
+    @apply text-lime-500;
+}
+
+.roomStatusTextTooHigh {
+    @apply text-red-600;
+}
+
+.roomStatusTextTooLow {
+    @apply text-cyan-400;
+}
+
+.roomStatusTextUndefined {
+    @apply text-black;
+}
+
+/* Status Mixt Colors */
+.roomStatusTextMixed {
+    @apply text-fuchsia-800;
+}
+
+.roomStatusHighTempLowHum {
+    background: rgb(220,38,38);
+    background: -moz-linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    background: -webkit-linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    background: linear-gradient(135deg, rgba(220,38,38,1) 50%, rgba(34,211,238,1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dc2626",endColorstr="#22d3ee",GradientType=1);
+}
+.roomStatusLowTempHighHum {
+    background: rgb(34,211,238);
+    background: -moz-linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    background: -webkit-linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    background: linear-gradient(135deg, rgba(34,211,238,1) 50%, rgba(220,38,38,1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#22d3ee",endColorstr="#dc2626",GradientType=1);
+}
+
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
