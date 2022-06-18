@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +24,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
         public static string GetStatus(Measurement measurement, RoomConfig roomConfig, string currentStatus)
         {
             Status status;
-            if (String.IsNullOrEmpty(currentStatus))
+            if (String.IsNullOrEmpty(currentStatus) || !Enum.GetNames(typeof(Status)).Contains(currentStatus))
             {
                 status = Status.undefined;
             }
