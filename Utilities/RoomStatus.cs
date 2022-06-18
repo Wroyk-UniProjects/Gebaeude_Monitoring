@@ -156,7 +156,7 @@
 
         public static States getRoomState(String stateName)
         {
-            if (String.IsNullOrEmpty(stateName) || !Enum.GetNames(typeof(States)).Contains("stateName"))
+            if (String.IsNullOrEmpty(stateName) || !Enum.GetNames(typeof(States)).Contains(stateName))
             {
                 // Wenn stateName nicht enhält oder ein Wert enthelt der nicht im enum ist wird undefined zurückgegeben
                 return States.undefined;
