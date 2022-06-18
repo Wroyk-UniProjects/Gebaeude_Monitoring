@@ -31,40 +31,17 @@
 
 @code {
     [Parameter]
-    public Room Room { get; set; }
+    public Room Room { get; set; } = new Room();
 
-    private String statusColor = "bg-gray-400";
-    private String statusTextColor = "text-gray-400";
-    private String statusText = "Unknow";
+    private String statusColor = "roomStatusUndefined";
+    private String statusTextColor = "roomStatusTextUndefined";
+    private String statusText = "Not Loaded";
 
     protected override Task OnParametersSetAsync()
-    {   
-        switch (Room.Status){
-            case "ok":
-                statusColor = "bg-lime-500";
-                statusTextColor = "text-lime-500";
-                statusText = "OK";
-                break;
-
-            case "too high":
-                statusColor = "bg-red-600";
-                statusTextColor = "text-red-600";
-                statusText = "Exceeds target";
-                break;
-
-            case "too low":
-                statusColor = "bg-cyan-400";
-                statusTextColor = "text-cyan-400";
-                statusText = "Below target";
-                break;
-
-            default:
-                statusColor = "bg-gray-400";
-                statusTextColor = "test-gray-400";
-                statusText = "Unknow";
-                break;
-
-        }
+    {
+        statusColor = RoomStatus.getRoomStateCSS(Room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(Room.Status);
+        statusText = RoomStatus.getSimpelRoomStateText(Room.Status);
 
         return base.OnParametersSetAsync();
     }
