@@ -37,10 +37,11 @@ namespace BuildingMonitoringFunctionsapp
             {
                 //  Get current date
                 measurement.date = DateTime.Now;
-                string sqlFormattedDate = measurement.date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                //string sqlFormattedDate = measurement.date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
 
                 //  SQL query
-                var sql_query = "update measurement set [temper] = " + measurement.temper + ", [humid] = " + measurement.humid + ", [date] = '" + sqlFormattedDate + "' where roomId = @roomID";
+                //var sql_query = "update measurement set [temper] = " + measurement.temper + ", [humid] = " + measurement.humid + ", [date] = '" + sqlFormattedDate + "' where roomId = @roomID";
+                String sql_query = "update measurement set [temper] = @temper , [humid] = @humid, [date] = @date where roomId = @roomID";
                 String sql_getStatus = "select [global], [status] from room where id=@roomID";
                 String sql_setStatus = "update room set [status]=@status where id=@roomID";
                 //  Create command
@@ -50,7 +51,13 @@ namespace BuildingMonitoringFunctionsapp
 
                 //  Create parameter from Route
                 sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
-                sql_cmd.Parameters[sql_cmd.Parameters.Count - 1].Value = roomID;
+                sql_cmd.Parameters[0].Value = roomID;
+                sql_cmd.Parameters.Add("@temper", System.Data.SqlDbType.Float);
+                sql_cmd.Parameters[1].Value = measurement.temper;
+                sql_cmd.Parameters.Add("@humid", System.Data.SqlDbType.Float);
+                sql_cmd.Parameters[2].Value = measurement.humid;
+                sql_cmd.Parameters.Add("@date", System.Data.SqlDbType.DateTime);
+                sql_cmd.Parameters[3].Value = measurement.date;
 
                 cmd_getStatus.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
                 cmd_getStatus.Parameters[cmd_getStatus.Parameters.Count - 1].Value = roomID;
@@ -77,7 +84,9 @@ namespace BuildingMonitoringFunctionsapp
                     connection.Open();
                     cmd_setStatus.Parameters[1].Value = StatusUtil.GetStatus(measurement, rc, status);
                     var status_chnged = await cmd_setStatus.ExecuteNonQueryAsync();
+                    connection.Close();
 
+                    connection.Open();
                     var rows = await sql_cmd.ExecuteNonQueryAsync();
                     
                     connection.Close();
@@ -93,7 +102,8 @@ namespace BuildingMonitoringFunctionsapp
                             "Procedure: " + ex.Errors[i].Procedure + "\n");
                     }
                     _logger.LogError(ex.ToString());
-                    return new BadRequestResult();
+                    //return new BadRequestObjectResult(ex);
+                    //return new BadRequestResult();
                 }
             }
             return new OkResult();

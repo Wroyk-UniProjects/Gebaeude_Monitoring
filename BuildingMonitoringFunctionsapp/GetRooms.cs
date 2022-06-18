@@ -45,8 +45,8 @@ namespace BuildingMonitoringFunctionsapp
                         RoomConfig rc = RoomConfigsUtil.createRoomConfig((room.global ? 0 : room.id), connection);
                         room.targetHumid = rc.targetHumid;
                         room.targetTemper = rc.targetTemper;
-                        Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
-                        room.status = StatusUtil.GetStatus(m, rc, room.status);
+                        //Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
+                        //room.status = StatusUtil.GetStatus(m, rc, room.status);
                     }
                 }
                 catch (Exception es)

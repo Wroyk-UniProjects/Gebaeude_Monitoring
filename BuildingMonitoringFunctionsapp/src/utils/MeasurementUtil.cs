@@ -55,6 +55,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
         {
             Measurement measurement = new Measurement();
             //  Create SQL command based on connection
+            string query = "select [roomId],[temper],[humid],[date] from measurement where roomId=@roomID";
             SqlCommand sql_cmd = new SqlCommand(query, connection);
 
             sql_cmd.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
