@@ -1,0 +1,32 @@
+﻿@page "/listview"
+
+<PageTitle>Building Monitoring</PageTitle>
+<div class="w-full grid justify-center">
+
+    @if (RoomList.Count <= 0)
+    {
+        //Loding Text anzegen wenn noch keine Räume in der Liste sind.
+        <Loading/>
+    }
+
+    
+    @foreach (var room in RoomList)
+    {
+        <RoomListTile Room=room />
+    }
+    
+</div>
+
+@code{
+    public List<Room> RoomList { get; set; } = new List<Room>();
+
+    [Inject]
+    public IRoomService RoomServic { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+     RoomList = await RoomServic.GetRooms();
+
+    }
+}

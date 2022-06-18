@@ -1,0 +1,49 @@
+﻿<div class="mt-6 p-6 w-80 shadow-md bg-white text-gray-800">
+
+    <div class="flex flex-row justify-between">
+
+        <div>
+            <p class="text-4xl font-bold">@Room.Name</p>
+            <p class=" @statusTextColor">@statusText</p>
+        </div>
+
+        <div>
+            <div class="@statusColor text-center rounded-lg w-12 h-12 grid place-items-center">
+                @if (Room.Individual)
+                {
+                    <p class="font-bold">I</p>
+                }
+                else
+                {
+                    <p class="font-bold">G</p>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="flex flex-row justify-around">
+        <p class="font-bold">Temp.</p><p>@Room.Temper / @Room.TargetTemper</p>
+        <p class="font-bold">Humi.</p><p>@Room.Humid / @Room.TargetHumid</p>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public Room Room { get; set; } = new Room();
+
+    private String statusColor = "roomStatusUndefined";
+    private String statusTextColor = "roomStatusTextUndefined";
+    private String statusText = "Not Loaded";
+
+    protected override Task OnParametersSetAsync()
+    {
+        statusColor = RoomStatus.getRoomStateCSS(Room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(Room.Status);
+        statusText = RoomStatus.getSimpelRoomStateText(Room.Status);
+
+        return base.OnParametersSetAsync();
+    }
+
+}

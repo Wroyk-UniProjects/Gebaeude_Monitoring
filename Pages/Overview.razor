@@ -1,0 +1,71 @@
+﻿@page "/"
+
+<PageTitle>Building Monitoring</PageTitle>
+<div>
+    @if(RoomList.Count <= 0)
+    {
+        //Loding Text anzegen wenn noch keine Räume in der Liste sind.
+        <Loading/>
+    }
+    else
+    {
+        //Mobile
+        <div class="flex flex-row justify-center w-full lg:hidden">
+            <button @onclick="SubtractIndex" class="w-12">
+                <BackArrow/>
+            </button>
+
+            <div>
+                <RoomDetailTile RoomID=RoomList[roomIndex].Id />
+                <p class="grid place-items-center">@(roomIndex + 1) / @RoomList.Count</p>
+            </div>
+            
+
+            <button @onclick="IncrementIndex" class="w-12">
+                <ForwardArrow/>
+            </button>
+
+
+        </div>
+
+        //Desktop
+        <div class="flex flex-row flex-wrap justify-evenly w-full lgx:hidden">
+            @foreach(Room room in RoomList)
+            {
+                <RoomDetailTile RoomID=room.Id />
+            }
+        </div>
+    }
+</div>
+
+@code{
+    public List<Room> RoomList { get; set; } = new List<Room>();
+
+    [Inject]
+    public IRoomService RoomServic { get; set; }
+
+    private int roomIndex = 0;
+
+    private void IncrementIndex()
+    {
+        if( roomIndex < RoomList.Count - 1)
+        {
+            roomIndex++;
+        }
+    }
+
+    private void SubtractIndex()
+    {
+        if(roomIndex > 0)
+        {
+            roomIndex--;
+        }
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        RoomList = await RoomServic.GetRooms();
+
+    }
+}
