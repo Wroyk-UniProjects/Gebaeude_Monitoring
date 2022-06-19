@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
 using System.Data.SqlClient;
+using BuildingMonitoringFunctionsapp.src.utils;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -31,41 +32,29 @@ namespace BuildingMonitoringFunctionsapp
             ConnectionStringSetting = "sqlconnectionstring")]
         IEnumerable<Room> rooms)
         {
-            var connection_str = Environment.GetEnvironmentVariable("sqldb_connection");
+            var connection_str = Environment.GetEnvironmentVariable("sqlconnectionstring");
+
+            List<Measurement> l = new List<Measurement>();
 
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
-                foreach (var room in rooms)
+                try
                 {
-                    try
+                    foreach (Room room in rooms)
                     {
-                        //  Raumkonfiguration basierend auf der Raum-ID abrufen + RoomConfig-Objekt erzeugen
-                        /* RoomConfig roomConfig = new RoomConfig(room.id, connection);
-                         if (roomConfig != null)
-                         {
-                             //  Ist-Raumtemperatur is kleiner als Soll-Temperatur
-                             if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == -1)
-                             {
-                                 room.status = "too low";
-                             } //  Ist-Raumtemperatur is groeer als Soll-Temperatur
-                             else if (room.temper.CompareTo(roomConfig.targetTemper + roomConfig.upperToleranceTemper) == 1)
-                             {
-                                 room.status = "too high";
-                             } //  Ist-Raumtemperatur is gleich als Soll-Temperatur
-                             else
-                             {
-                                 room.status = "ok";
-                             }
-                         }*/
-                    }
-                    catch (Exception ex)
-                    {
-                        return new BadRequestObjectResult(ex); //http fehler zurückgeben
+                        RoomConfig rc = RoomConfigsUtil.createRoomConfig((room.global ? 0 : room.id), connection);
+                        room.targetHumid = rc.targetHumid;
+                        room.targetTemper = rc.targetTemper;
+                        //Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
+                        //room.status = StatusUtil.GetStatus(m, rc, room.status);
                     }
                 }
+                catch (Exception es)
+                {
+                    return new BadRequestObjectResult(es);
+                }
             }
-            return new OkObjectResult(rooms); //200 zurückgeben
+            return new OkObjectResult(rooms); //200 zurï¿½ckgeben
         }
     }
 }
-

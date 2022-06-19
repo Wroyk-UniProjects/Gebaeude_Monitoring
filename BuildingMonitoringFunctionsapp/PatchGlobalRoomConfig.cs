@@ -35,7 +35,7 @@ namespace BuildingMonitoringFunctionsapp
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
 
-                //  SQL query
+                //  SQL query //Funktionirt nicht lokal, es gibt sowas wie sql parameter wo man ein Typen mit angebenkan sehe PutMeasurments
                 var sql_query =
                     " update roomConfig set" +
                     " [targetTemper] = " + roomConfig.targetTemper +", " +
