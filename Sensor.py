@@ -7,7 +7,7 @@ import requests
 import configparser
 from datetime import datetime
 
-today_string = datetime.now().strftime("%d-%m-%Y")
+default_path = "/home/pi/.config"
 
 
 class ApiConnection:
@@ -18,7 +18,7 @@ class ApiConnection:
     rasp_id = None
 
     # path for debug option
-    debug_path = "etc/BuildingMonitoring/{}_debugInfo.txt".format(today_string)
+    debug_path = "{}/BuildingMonitoring/{}_debugInfo.txt".format(default_path, datetime.now().strftime("%d-%m-%Y"))
 
     def __init__(self, base_url, api_key, rasp_id):
         self.base_url = base_url
@@ -57,8 +57,8 @@ class Main:
     rasp_id = None
 
     # path to the config file and log file
-    config_path = r"/etc/BuildingMonitoring/config.ini"
-    log_file = "/etc/BuildingMonitoring/{}".format(today_string)
+    config_path = r"/home/pi/.config/BuildingMonitoring/config.ini"
+    log_file = "{}/BuildingMonitoring/{}".format(default_path, datetime.now().strftime("%d-%m-%Y"))
 
     # define sensor and data port
     # port GPIO23 (Pin 16 on Rasp 4)

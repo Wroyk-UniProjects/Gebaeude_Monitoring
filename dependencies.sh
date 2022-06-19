@@ -16,5 +16,5 @@ sudo apt-get install xrdp -y
 sudo systemctl enable xrdp
 pip3 install -r requirements.txt
 
-sudo mkdir /etc/BuildingMonitoring
-sudo mv config.ini /etc/BuildingMonitoring
+sudo mkdir /home/pi/.config/BuildingMonitoring
+sudo mv config.ini /home/pi/.config/BuildingMonitoring
