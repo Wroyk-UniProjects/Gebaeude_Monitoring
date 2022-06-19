@@ -44,6 +44,8 @@ class ApiConnection:
 
     def get_update_rate(self):
         self.response = requests.get(self.base_url + "rooms/config")
+        if self.response.status_code != 200:
+            return None
         return int(self.response.json()["updateRate"])
 
 
@@ -107,7 +109,7 @@ class Main:
     def _timeout_and_update(self):
         def _update_time():
             new_update_rate = self.api_connection.get_update_rate()
-            if new_update_rate != self.timeout:
+            if new_update_rate != self.timeout & new_update_rate is not None:
                 self.timeout = new_update_rate
                 self._update_config()
 
