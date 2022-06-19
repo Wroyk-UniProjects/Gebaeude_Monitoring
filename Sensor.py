@@ -5,6 +5,9 @@ import board
 import time
 import requests
 import configparser
+from datetime import datetime
+
+today_string = datetime.now().strftime("%d-%m-%Y")
 
 
 class ApiConnection:
@@ -14,6 +17,9 @@ class ApiConnection:
     response = None
     rasp_id = None
 
+    # path for debug option
+    debug_path = "etc/BuildingMonitoring/{}_debugInfo.txt".format(today_string)
+
     def __init__(self, base_url, api_key, rasp_id):
         self.base_url = base_url
         self.api_key = api_key
@@ -21,6 +27,14 @@ class ApiConnection:
 
     def send_measurements(self, humidity, temperature):
         payload = {"humid": humidity, "temper": temperature}
+
+        if sys.argv[0].lower() == "debug":
+            current_time_string = datetime.now().strftime("%H:%M:%S")
+            f = open(self.debug_path, "a+")
+            f.write("[{}] {}".format(current_time_string, payload))
+            f.close()
+            return True
+
         self.response = requests.put(self.base_url + "rooms/" + str(self.rasp_id) + "/measurement/", json=payload)
 
         if self.response.status_code == 200:
@@ -34,7 +48,6 @@ class ApiConnection:
 
 
 class Main:
-
     # variables
     # timeout is in minutes
     timeout = None
@@ -43,8 +56,9 @@ class Main:
     api_key = None
     rasp_id = None
 
-    # path to the config file
+    # path to the config file and log file
     config_path = r"/etc/BuildingMonitoring/config.ini"
+    log_file = "/etc/BuildingMonitoring/{}".format(today_string)
 
     # define sensor and data port
     # port GPIO23 (Pin 16 on Rasp 4)
@@ -69,7 +83,8 @@ class Main:
                 success = self.api_connection.send_measurements(humidity, temperature)
                 if not success:
                     print("Error at sending data to the API please contact the developer")
-                self._timeout_and_update()
+                if not sys.argv[1] == "debug":
+                    self._timeout_and_update()
 
             except RuntimeError:
                 # The DHT Device gives faulty errors. catch and try again in 2 sec
@@ -77,7 +92,10 @@ class Main:
                 continue
             except Exception as error:
                 # When other error occurs while reading terminate the script adn write to log file
-                # TODO: log error into file
+                current_time_string = datetime.now().strftime("%H:%M:%S")
+                f = open(self.log_file, "a+")
+                f.write("[{}] {}".format(current_time_string, repr(error)))
+                f.close()
                 self.dht_sensor.exit()
                 raise sys.exit(0)
 
