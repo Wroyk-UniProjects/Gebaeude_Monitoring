@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "183391bb-927c-4883-b3c8-cdb22c7473d6",
+		"name": "Building_Monitoring_Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9308000"
+	},
+	"item": [
+		{
+			"name": "Test-Get",
+			"item": [
+				{
+					"name": "getRooms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Test Status code\", pm.response.to.have.status(200));\r",
+									"\r",
+									"if(responseCode.code !==200){ return;}\r",
+									"        \r",
+									"pm.test(\"Return at least one Room\",pm.expect(jsonData.length).to.eql(5));\r",
+									"pm.test(\"Test Rooms\",testRooms(jsonData));\r",
+									"\r",
+									"function testRooms(){\r",
+									"    var roomData = arguments[0];\r",
+									"    for(var i = 0; i< roomData.length;i++){\r",
+									"        pm.test(\"Test room with id :\" + roomData[i].id, testRoom(roomData[i]))\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"function testRoom(){\r",
+									"    var roomData = arguments[0];\r",
+									"\r",
+									"    pm.expect(Number.isInteger(roomData.id)).to.be.true;\r",
+									"    pm.expect(roomData.name).to.be.a(\"string\");\r",
+									"    pm.expect(typeof roomData.global == 'boolean').to.be.true;\r",
+									"    pm.expect(typeof roomData.status == 'string' || roomData.status == null).to.be.true;\r",
+									"    pm.expect(typeof roomData.humid == 'number').to.be.true;\r",
+									"    pm.expect(typeof roomData.temper == 'number').to.be.true;\r",
+									"    pm.expect(typeof roomData.targetTemper == 'number').to.be.true;\r",
+									"    pm.expect(typeof roomData.targetHumid == 'number').to.be.true;\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rooms",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRoomById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Test Status code\", pm.response.to.have.status(200));\r",
+									"\r",
+									"if(responseCode.code !==200){ return;}\r",
+									"\r",
+									"pm.test(\"Test Id\",pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"test-id\"))));\r",
+									"pm.test(\"Test name\",pm.expect(jsonData.name).to.eql(\"room\"+ pm.environment.get(\"test-id\")));\r",
+									"pm.test(\"Test config\",pm.expect(typeof jsonData.global == 'boolean').to.be.true);\r",
+									"pm.test(\"Test status\", pm.expect(typeof jsonData.status == 'string' || roomData.status == null).to.be.true);\r",
+									"pm.test(\"Test humid\", pm.expect(typeof jsonData.humid == 'number').to.be.true);\r",
+									"pm.test(\"Test temper\", pm.expect(typeof jsonData.temper == 'number').to.be.true);\r",
+									"pm.test(\"Test targetTemper\", pm.expect(typeof jsonData.targetTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test targetHumid\", pm.expect(typeof jsonData.targetHumid == 'number').to.be.true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rooms/{{test-id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms",
+								"{{test-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGlobalConfig",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Test Status code\", pm.response.to.have.status(200));\r",
+									"\r",
+									"if(responseCode.code !==200){ return;}\r",
+									"\r",
+									"var upperToleranceTemper = jsonData.upperToleranceTemper;\r",
+									"var lowerToleranceTemper = jsonData.lowerToleranceTemper;\r",
+									"var upperToleranceHumid = jsonData.upperToleranceHumid;\r",
+									"var lowerToleranceHumid = jsonData.lowerToleranceHumid;\r",
+									"\r",
+									"pm.test(\"Test id\", pm.expect(jsonData.id).to.eq(0));\r",
+									"pm.test(\"Test targetTemper\", pm.expect(typeof jsonData.targetTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test targetHumid\", pm.expect(typeof jsonData.targetHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test updateRate\", pm.expect(typeof jsonData.updateRate == 'number').to.be.true);\r",
+									"pm.test(\"Test upperToleranceTemper\", pm.expect(typeof upperToleranceTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test lowerToleranceTemper\", pm.expect(typeof lowerToleranceTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test upper tolerance Temper is bigger\", pm.expect(upperToleranceTemper > lowerToleranceTemper).to.be.true);\r",
+									"pm.test(\"Test upperToleranceHumid\", pm.expect(typeof upperToleranceHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test lowerToleranceHumid\", pm.expect(typeof lowerToleranceHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test upper tolerance humid is bigger\", pm.expect(upperToleranceHumid > lowerToleranceHumid).to.be.true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rooms/config",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRoomConfigById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Test Status code\", pm.response.to.have.status(200));\r",
+									"\r",
+									"if(responseCode.code !==200){ return;}\r",
+									"\r",
+									"var upperToleranceTemper = jsonData.upperToleranceTemper;\r",
+									"var lowerToleranceTemper = jsonData.lowerToleranceTemper;\r",
+									"var upperToleranceHumid = jsonData.upperToleranceHumid;\r",
+									"var lowerToleranceHumid = jsonData.lowerToleranceHumid;\r",
+									"var id = parseInt(pm.environment.get(\"test-id\"))\r",
+									"\r",
+									"pm.test(\"Test id\", pm.expect(jsonData.id == id || jsonData.id == 0).to.be.true);\r",
+									"pm.test(\"Test targetTemper\", pm.expect(typeof jsonData.targetTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test targetHumid\", pm.expect(typeof jsonData.targetHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test updateRate\", pm.expect(typeof jsonData.updateRate == 'number').to.be.true);\r",
+									"pm.test(\"Test upperToleranceTemper\", pm.expect(typeof upperToleranceTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test lowerToleranceTemper\", pm.expect(typeof lowerToleranceTemper == 'number').to.be.true);\r",
+									"pm.test(\"Test upper tolerance Temper is bigger\", pm.expect(upperToleranceTemper > lowerToleranceTemper).to.be.true);\r",
+									"pm.test(\"Test upperToleranceHumid\", pm.expect(typeof upperToleranceHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test lowerToleranceHumid\", pm.expect(typeof lowerToleranceHumid == 'number').to.be.true);\r",
+									"pm.test(\"Test upper tolerance humid is bigger\", pm.expect(upperToleranceHumid > lowerToleranceHumid).to.be.true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rooms/1/config",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms",
+								"1",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
