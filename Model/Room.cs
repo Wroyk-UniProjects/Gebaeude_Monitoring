@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool Individual { get; set; }
+        public bool Global { get; set; }
         public string Status { get; set; }
         public double Humid { get; set; }
         public double Temper { get; set; }
