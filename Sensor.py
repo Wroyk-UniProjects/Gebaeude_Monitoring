@@ -63,7 +63,7 @@ class Main:
     # port GPIO23 (Pin 16 on Rasp 4)
     dht_sensor = adafruit_dht.DHT22(board.D23, use_pulseio=False)
 
-    # create instance for teh api connection
+    # create instance for the api connection
     api_connection = None
 
     def main(self):
@@ -74,7 +74,7 @@ class Main:
         # read sensor data
         while self.running:
             # logfile for storing errors
-            log_file = "{}/BuildingMonitoring/{}".format(default_path, datetime.now().strftime("%d-%m-%Y"))
+            log_file = "{}/BuildingMonitoring/{}_logInfo.txt".format(default_path, datetime.now().strftime("%d-%m-%Y"))
             try:
                 self.dht_sensor.measure()
                 humidity = self.dht_sensor.humidity
