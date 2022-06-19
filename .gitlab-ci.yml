@@ -1,0 +1,10 @@
+stages:
+    - test
+
+postman_tests:
+    stage: test
+    image: 
+        name: postman/newman:alpine
+        entrypoint: [""]
+    script:
+        - newman run Building_Monitoring_Backend.postman_collection.json -e backend.postman_environment.json
