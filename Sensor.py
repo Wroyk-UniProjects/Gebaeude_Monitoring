@@ -56,9 +56,8 @@ class Main:
     api_key = None
     rasp_id = None
 
-    # path to the config file and log file
+    # path to the config file
     config_path = r"/home/pi/.config/BuildingMonitoring/config.ini"
-    log_file = "{}/BuildingMonitoring/{}".format(default_path, datetime.now().strftime("%d-%m-%Y"))
 
     # define sensor and data port
     # port GPIO23 (Pin 16 on Rasp 4)
@@ -74,6 +73,8 @@ class Main:
 
         # read sensor data
         while self.running:
+            # logfile for storing errors
+            log_file = "{}/BuildingMonitoring/{}".format(default_path, datetime.now().strftime("%d-%m-%Y"))
             try:
                 self.dht_sensor.measure()
                 humidity = self.dht_sensor.humidity
@@ -82,11 +83,11 @@ class Main:
                 print(str(humidity) + "%")
                 success = self.api_connection.send_measurements(humidity, temperature)
                 if not success:
-                    print("Error at sending data to the API please contact the developer")
+                    raise Exception("Error at sending data to the API please contact the developer")
                 if not sys.argv[1] == "debug":
                     self._timeout_and_update()
                 else:
-                    time.sleep(self.timeout);
+                    time.sleep(self.timeout)
 
             except RuntimeError:
                 # The DHT Device gives faulty errors. catch and try again in 2 sec
@@ -95,10 +96,12 @@ class Main:
             except Exception as error:
                 # When other error occurs while reading terminate the script adn write to log file
                 current_time_string = datetime.now().strftime("%H:%M:%S")
-                f = open(self.log_file, 'a+')
+                f = open(log_file, 'a+')
                 f.write("[{}] {}\r\n".format(current_time_string, repr(error)))
                 f.close()
                 self.dht_sensor.exit()
+                print("Error occurred Look at the logfiles at " + log_file)
+                input("Press Enter to continue...")
                 raise sys.exit(0)
 
     def _timeout_and_update(self):
@@ -127,16 +130,18 @@ class Main:
         temp_timeout = config_parser.get("Default", "UPDATE-RATE")
         temp_rasp_id = config_parser.get("Default", "RASP-ID")
 
-        not_int_msg = "is not an int.\r\n" + "Please check the config file.\r\n" + "Exiting script"
+        not_int_msg = "is not an int.\r\n" + "Please check the config file.\r\n" + "Exiting script\r\n"
         try:
             self.timeout = int(temp_timeout)
         except ValueError:
             print("update rate" + not_int_msg)
+            input("Press Enter to continue...")
             sys.exit(1)
         try:
             self.rasp_id = int(temp_rasp_id)
         except ValueError:
             print("rasp-id " + not_int_msg)
+            input("Press Enter to continue...")
             sys.exit(1)
 
         self.api_connection = ApiConnection(self.api_url, self.api_key, self.rasp_id)
