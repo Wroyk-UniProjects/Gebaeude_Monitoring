@@ -40,15 +40,15 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             {
                 status = Status.tooHighTemp;
             }
-            else if (measurement.temper < (roomConfig.targetTemper + toleranceTemp))
+            if (measurement.temper < (roomConfig.targetTemper + toleranceTemp))
             {
                 status = Status.ok;
             }
-            else if (measurement.temper < (roomConfig.lowerToleranceTemper))
+            if (measurement.temper < (roomConfig.lowerToleranceTemper))
             {
                 status = Status.tooLowTemp;
             }
-            else if (measurement.temper > (roomConfig.targetTemper - toleranceTemp))
+            if (measurement.temper > (roomConfig.targetTemper - toleranceTemp))
             {
                 status = Status.ok;
             }
@@ -62,19 +62,19 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             {
                 status = Status.ok;
             }
-            else if (measurement.humid < roomConfig.lowerToleranceHumid && status.Equals(Status.tooLow))
+            if (measurement.humid < roomConfig.lowerToleranceHumid && status.Equals(Status.tooLow))
             {
                 status = Status.tooLow;
             }
-            else if (measurement.humid > (roomConfig.targetHumid + toleranceHum) && status.Equals(Status.ok))
+            if (measurement.humid > (roomConfig.targetHumid + toleranceHum) && status.Equals(Status.ok))
             {
                 status = Status.ok;
             }
-            else if ((measurement.temper > roomConfig.upperToleranceTemper) && (measurement.humid < roomConfig.lowerToleranceHumid))
+            if ((measurement.temper > roomConfig.upperToleranceTemper) && (measurement.humid < roomConfig.lowerToleranceHumid))
             {
                 status = Status.tooHighTemptooLowHum;
             }
-            else if ((measurement.temper < (roomConfig.lowerToleranceTemper)) && (measurement.humid > roomConfig.upperToleranceHumid))
+            if ((measurement.temper < (roomConfig.lowerToleranceTemper)) && (measurement.humid > roomConfig.upperToleranceHumid))
             {
                 status = Status.tooLowTemptooHighHum;
             }
