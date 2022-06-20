@@ -1,49 +1,51 @@
 ﻿@page "/globalsettings"
 
 <div class="flex w-full justify-center">
-	<div class="w-60">
-		<h1 class="text-center font-bold text-xl my-5">Global Settings</h1>
+	<div class="lg:px-12 lg:pb-4 lg:shadow-md lg:bg-white lg:mt-4">
+		<div class="w-60">
+			<h1 class="text-center font-bold text-xl my-5">Global Settings</h1>
 
-		<!-- Temperature -->
-		<p class="text-center text-xl">Target Temperature:</p>
-		<div class="flex items-center mb-4">
-			<button @onclick="decrementTemp" class="minus-btn">-</button>
-			<p class="settings-values">@cnfg.TargetTemper</p>
-			<button @onclick="incrementTemp" class="plus-btn">+</button>
-			<span class="mx-auto w-12 text-xl font-bold">°C</span>
-		</div>
+			<!-- Temperature -->
+			<p class="text-center text-xl">Target Temperature:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementTemp" class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.TargetTemper</p>
+				<button @onclick="incrementTemp" class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">°C</span>
+			</div>
 
-		<!-- Humidity -->
-		<p class="text-center text-xl">Target Humidity:</p>
-		<div class="flex items-center mb-4">
-			<button @onclick="decrementHumi" class="minus-btn">-</button>
-			<p class="settings-values">@cnfg.TargetHumid</p>
-			<button @onclick="incrementHumi" class="plus-btn">+</button>
-			<span class="mx-auto w-12 text-xl font-bold">%</span>
-		</div>
+			<!-- Humidity -->
+			<p class="text-center text-xl">Target Humidity:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementHumi" class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.TargetHumid</p>
+				<button @onclick="incrementHumi" class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">%</span>
+			</div>
 
-		<!-- Update Rate -->
-		<p class="text-center text-xl">Update Rate:</p>
-		<div class="flex items-center mb-4">
-			<button @onclick="decrementUpdate" class="minus-btn">-</button>
-			<p class="settings-values">@cnfg.UpdateRate</p>
-			<button @onclick="incrementUpdate" class="plus-btn">+</button>
-			<span class="mx-auto w-12 text-xl font-bold">Sec.</span>
-		</div>
+			<!-- Update Rate -->
+			<p class="text-center text-xl">Update Rate:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementUpdate" class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.UpdateRate</p>
+				<button @onclick="incrementUpdate" class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">Sec.</span>
+			</div>
 
-		<!-- Tolerance -->
-		<p class="text-center text-xl">Tolerance:</p>
-		<div class="flex items-center mb-4">
-			<button @onclick="decrementTole" class="minus-btn">-</button>
-			<p class="settings-values">@tolerance</p>
-			<button @onclick="incrementTole" class="plus-btn">+</button>
-			<span class="mx-auto w-12 text-xl font-bold">+/-</span>
-		</div>
+			<!-- Tolerance -->
+			<p class="text-center text-xl">Tolerance:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementTole" class="minus-btn">-</button>
+				<p class="settings-values">@tolerance</p>
+				<button @onclick="incrementTole" class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">+/-</span>
+			</div>
 
-		<!-- Save and Cancel Buttons -->
-		<div class="flex flex-col justify-center">
-			<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">Save</button>
-			<NavLink @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full text-center" href=""><button>Cancel</button></NavLink>
+			<!-- Save and Cancel Buttons -->
+			<div class="flex flex-col justify-center">
+				<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">Save</button>
+				<NavLink @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full text-center" href=""><button>Cancel</button></NavLink>
+			</div>
 		</div>
 	</div>
 </div>

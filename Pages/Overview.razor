@@ -52,6 +52,10 @@
         {
             roomIndex++;
         }
+        else
+        {
+            roomIndex = 0;
+        }
     }
 
     private void SubtractIndex()
@@ -59,6 +63,10 @@
         if(roomIndex > 0)
         {
             roomIndex--;
+        }
+        else
+        {
+            roomIndex = RoomList.Count - 1;
         }
     }
 
