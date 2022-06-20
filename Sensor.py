@@ -51,7 +51,7 @@ class ApiConnection:
 
 class Main:
     # variables
-    # timeout is in minutes
+    # timeout is in seconds
     timeout = None
     running = True
     api_url = None
@@ -113,16 +113,11 @@ class Main:
                 self.timeout = new_update_rate
                 self._update_config()
 
-        residual_time = self.timeout % 1
-        if self.timeout < 1:
-            _update_time()
-        else:
-            waiting_interval = self.timeout // 1
-            while waiting_interval:
+        for x in range(self.timeout):
+            time.sleep(1)
+            if x % 5 == 0:
                 _update_time()
-                waiting_interval -= 1
-                time.sleep(60)
-        time.sleep(residual_time)
+        _update_time()
 
     def _init_config(self):
         config_parser = configparser.RawConfigParser()
