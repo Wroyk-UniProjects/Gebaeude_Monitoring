@@ -25,7 +25,7 @@
 			}
 		</div>
 		<div class="flex items-center mb-4">
-			<p class="text-center text-md">Uses Gloabal Settings</p>
+			<p class="text-center text-l">Uses Gloabal Settings</p>
 			<input type="checkbox" @onchange="toggleRoomGlobal" checked=@global disabled=@disableGlobalCheck>
 		</div>
 
@@ -69,7 +69,7 @@
 		<!-- Save and Cancel Buttons -->
 		<div class="flex flex-col justify-center">
 			<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">Save</button>
-			<button @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full">Cancel</button>
+			<NavLink @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full text-center" href=""><button>Cancel</button></NavLink>
 		</div>
 	</div>
 </div>
@@ -83,7 +83,6 @@
 	private bool global, oldGlobal = true;
 	private bool disableGlobalCheck, disableInput = true;
 	private Room activeRoom = new Room();
-
 
 	[Inject]
 	public IConfigService CnfgService { get; set; }
