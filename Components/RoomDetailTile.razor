@@ -10,11 +10,11 @@
         @if (room.Global)
         {
            
-            <p class="font-bold">I</p>
+            <p class="font-bold">G</p>
         }
         else
         {
-            <p class="font-bold">G</p>
+            <p class="font-bold">I</p>
         }
     </div>
 
@@ -23,7 +23,7 @@
         <img src="@room.ImageUrl" alt="Floorplan of @room.Name"/>
     </div>
     
-    <!--Temeratur-->
+    <!--Temerature-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
         <p class="font-bold col-span-2">Temperatur</p>
         <p>Measured:</p> <p class="text-center">@room.Temper</p>
