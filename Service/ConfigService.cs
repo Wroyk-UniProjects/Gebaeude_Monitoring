@@ -16,12 +16,13 @@ namespace Building_Monitoring_WebApp.Service
             this.jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive  = true };
         }
 
-		public async Task deleteIndvidualConfigByID(int id)
+		public async Task<bool> deleteIndvidualConfigByID(int id)
 		{
             var response = await client.DeleteAsync(urlBase + $"/{id}/config/");
 
             response.EnsureSuccessStatusCode();
 
+            return response.IsSuccessStatusCode;
         }
 
 		public async Task<Config> GetConfig()
@@ -30,10 +31,7 @@ namespace Building_Monitoring_WebApp.Service
 
             var content = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content);
-            }
+            response.EnsureSuccessStatusCode();
 
             var config = JsonSerializer.Deserialize<Config>(content, jsonSerializerOptions);
             return config;
@@ -45,27 +43,28 @@ namespace Building_Monitoring_WebApp.Service
 
             var content = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content);
-            }
+            response.EnsureSuccessStatusCode();
 
             var config = JsonSerializer.Deserialize<Config>(content, jsonSerializerOptions);
             return config;
         }
 
-		public async Task PatchConfig(Config newConfig)
+		public async Task<bool> PatchConfig(Config newConfig)
         {
             var jsonContent = JsonContent.Create(newConfig);
             var response = await client.PatchAsync(urlBase + "/config/", jsonContent);
             response.EnsureSuccessStatusCode();
+
+            return response.IsSuccessStatusCode;
         }
 
-		public async Task putIndividualConfigByID(int id, Config config)
+		public async Task<bool> putIndividualConfigByID(int id, Config config)
 		{
             var jsonContent = JsonContent.Create(config);
             var response = await client.PutAsync(urlBase + $"/{id}/config/", jsonContent);
             response.EnsureSuccessStatusCode();
+
+            return response.IsSuccessStatusCode;
         }
 	}
 }

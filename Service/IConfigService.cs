@@ -11,12 +11,12 @@ namespace Building_Monitoring_WebApp.Service
         Task<Config> GetConfigByID(int id);
         
         // Sets global-config
-        Task PatchConfig(Config newConfig);
+        Task<bool> PatchConfig(Config newConfig);
 
         // Sets individual config for on room
-        Task putIndividualConfigByID(int id, Config config);
+        Task<bool> putIndividualConfigByID(int id, Config config);
         
         // Sets Room to use global-config
-        Task deleteIndvidualConfigByID(int id);
+        Task<bool> deleteIndvidualConfigByID(int id);
     }
 }

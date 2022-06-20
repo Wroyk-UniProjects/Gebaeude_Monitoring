@@ -69,7 +69,7 @@
 
 			<!-- Save and Cancel Buttons -->
 			<div class="flex flex-col justify-center">
-				<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">Save</button>
+				<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">@saveButtonText</button>
 				<NavLink @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full text-center" href=""><button>Cancel</button></NavLink>
 			</div>
 		</div>
@@ -84,6 +84,8 @@
 	private double tolerance, oldTolerance;
 	private bool global, oldGlobal = true;
 	private bool disableGlobalCheck, disableInput = true;
+	private bool saveing = false;
+	private string saveButtonText = "Save";
 	private Room activeRoom = new Room();
 
 	[Inject]
@@ -168,22 +170,54 @@
 	}
 
 	// Save and Cancel Button - functionallity
-	private void saveChanges() 
-	{ 
+	private async void saveChanges() 
+	{
+		bool success = false;
 		if(activeRoom == null){ return; }
 
-		if(global)
-		{ 
-			CnfgService.deleteIndvidualConfigByID(activeRoom.Id);
-			Console.WriteLine("G");
-		}
-		else
+		if(global && !saveing)
 		{
-			CnfgService.putIndividualConfigByID(activeRoom.Id, cnfg);
-			Console.WriteLine("I");
+			saveing = true;
+			disableInput = true;
+			disableGlobalCheck = true;
+			saveButtonText = "... Saveing";
+			StateHasChanged();
+
+			success = await CnfgService.deleteIndvidualConfigByID(activeRoom.Id);
+
+			saveing = false;
+			disableInput = activeRoom.Global;
+			disableGlobalCheck = false;
+		}
+		else if(!saveing)
+		{
+			saveing = true;
+			disableInput = true;
+			disableGlobalCheck = true;
+			saveButtonText = "... Saveing";
+			StateHasChanged();
+
+			success = await CnfgService.putIndividualConfigByID(activeRoom.Id, cnfg);
+
+			saveing = false;
+			disableInput = activeRoom.Global;
+			disableGlobalCheck = false;
+		}
+
+		if (success)
+		{
+			saveButtonText = "Success";
+			StateHasChanged();
+			await Task.Delay(1000);
+		}
+
+		if (!saveing)//Wenn jemand weredn dem timer schon den butten drückt
+		{
+			saveButtonText = "Save";
+			StateHasChanged();
 		}
 	}
-	private async void undoChanges() 
+	private void undoChanges() 
 	{ 
 		cnfg = new Config(oldCnfg); 
 		tolerance = oldTolerance; 
