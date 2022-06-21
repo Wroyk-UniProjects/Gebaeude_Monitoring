@@ -8,6 +8,7 @@ import configparser
 from datetime import datetime
 
 default_path = "/home/pi/.config"
+debug = False
 
 
 class ApiConnection:
@@ -28,7 +29,7 @@ class ApiConnection:
     def send_measurements(self, humidity, temperature):
         payload = {"humid": humidity, "temper": temperature}
 
-        if sys.argv[1].lower() == "debug":
+        if debug:
             current_time_string = datetime.now().strftime("%H:%M:%S")
             f = open(self.debug_path, 'a+')
             f.write("[{}] {}\r\n".format(current_time_string, payload))
@@ -51,7 +52,7 @@ class ApiConnection:
 
 class Main:
     # variables
-    # timeout is in minutes
+    # timeout is in seconds
     timeout = None
     running = True
     api_url = None
@@ -86,7 +87,7 @@ class Main:
                 success = self.api_connection.send_measurements(humidity, temperature)
                 if not success:
                     raise Exception("Error at sending data to the API please contact the developer")
-                if not sys.argv[1] == "debug":
+                if debug:
                     self._timeout_and_update()
                 else:
                     time.sleep(self.timeout)
@@ -113,16 +114,11 @@ class Main:
                 self.timeout = new_update_rate
                 self._update_config()
 
-        residual_time = self.timeout % 1
-        if self.timeout < 1:
-            _update_time()
-        else:
-            waiting_interval = self.timeout // 1
-            while waiting_interval:
+        for x in range(self.timeout):
+            time.sleep(1)
+            if x % 5 == 0:
                 _update_time()
-                waiting_interval -= 1
-                time.sleep(60)
-        time.sleep(residual_time)
+        _update_time()
 
     def _init_config(self):
         config_parser = configparser.RawConfigParser()
@@ -156,3 +152,6 @@ class Main:
 
 if __name__ == "__main__":
     Main.main(Main())
+    if len(sys.argv) >1:
+        if sys.argv[1].lower() == "debug":
+            debug = True
