@@ -1,4 +1,7 @@
-﻿<div class="my-8 md:mx-8 p-6 mdx:px-2 max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-5">
+﻿@using System.Timers
+@implements IDisposable
+
+<div class="my-8 md:mx-8 p-6 mdx:px-2 max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-5">
 
     <div class="col-span-2 mdx:px-4 w-48">
         <p class="text-5xl font-bold">@room.Name</p>
@@ -46,6 +49,7 @@
     [Inject]
     public IRoomService RoomServic { get; set; }
 
+    private Timer timer = new(2000);//Zewi Secunde
     private RoomDetail room = new RoomDetail();
     private String statusColor = "roomStatusUndefined";
     private String statusTextColor = "roomStatusTextUndefined";
@@ -62,7 +66,8 @@
 
         await Task.Delay(2000);
 
-        autoRefechData();
+        timer.Elapsed += (sender, eventArgs) => autoRefechData();
+        timer.Start();
 
     }
 
@@ -71,7 +76,8 @@
         return Math.Truncate(number * 100) / 100;
     }
 
-    private async void autoRefechData(){
+    private async void autoRefechData()
+    {
 
         room = await RoomServic.GetRoom(RoomID);
 
@@ -80,9 +86,7 @@
         statusText = RoomStatus.getDetailedRoomStateText(room.Status);
 
         StateHasChanged();
-
-        await Task.Delay(2000); //Eine Secunde Warten
-
-        autoRefechData();
     }
+
+    public void Dispose() => timer.Dispose();
 }
