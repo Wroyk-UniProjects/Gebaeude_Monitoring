@@ -1,8 +1,8 @@
-﻿<div class="my-8 md:mx-8 p-6 mdx:px-2 min-w-max max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-6">
+﻿<div class="my-8 md:mx-8 p-6 mdx:px-2 max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-5">
 
-    <div class="col-span-2 mdx:px-4">
+    <div class="col-span-2 mdx:px-4 w-48">
         <p class="text-5xl font-bold">@room.Name</p>
-        <p class="col-span-3 font-bold @statusTextColor">@statusText</p>
+        <p class="col-span-3 text-sm font-bold break-words @statusTextColor over">@statusText</p>
     </div>
     
 
@@ -19,22 +19,22 @@
     </div>
 
     <!--Floorplan-->
-    <div class="col-span-3 row-span-3 w-72 h-72">
-        <img src="@room.ImageUrl" alt="Floorplan of @room.Name"/>
+    <div class="col-span-3 row-span-2 w-72 h-48">
+        <img class="w-72 h-48" src="@room.ImageUrl" alt="Floorplan of @room.Name"/>
     </div>
     
     <!--Temerature-->
-    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
+    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3 ">
         <p class="font-bold col-span-2">Temperatur</p>
-        <p>Measured:</p> <p class="text-center">@room.Temper</p>
-        <p>Target:</p> <p class="text-center">@room.TargetTemper</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Temper)</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetTemper)</p>
     </div>
 
     <!--Humiditi-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
         <p class="font-bold col-span-2">Humidity</p>
-        <p>Measured:</p> <p class="text-center">@room.Humid</p>
-        <p>Target:</p> <p class="text-center">@room.TargetHumid</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Humid)</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetHumid)</p>
     </div>
     
 </div>
@@ -52,14 +52,18 @@
     private String statusText = "Not Loaded";
 
 
-
     protected override async Task OnParametersSetAsync()
     {
         room = await RoomServic.GetRoom(RoomID);
 
         statusColor = RoomStatus.getRoomStateCSS(room.Status);
         statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
-        statusText = RoomStatus.getSimpelRoomStateText(room.Status);
+        statusText = RoomStatus.getDetailedRoomStateText(room.Status);
 
+    }
+
+    private double roundToTwoDecimals(double number)
+    {
+        return Math.Truncate(number * 100) / 100;
     }
 }
