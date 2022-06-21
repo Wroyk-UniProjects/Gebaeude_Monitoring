@@ -73,7 +73,17 @@
     protected async override Task OnInitializedAsync()
     {
 
-        RoomList = await RoomServic.GetRooms();
+        autoRefechData();
 
+    }
+
+    private async void autoRefechData(){
+
+        RoomList = await RoomServic.GetRooms();
+        StateHasChanged();
+
+        await Task.Delay(1000); //Eine Secunde Warten
+
+        autoRefechData();
     }
 }

@@ -60,10 +60,29 @@
         statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
         statusText = RoomStatus.getDetailedRoomStateText(room.Status);
 
+        await Task.Delay(2000);
+
+        autoRefechData();
+
     }
 
     private double roundToTwoDecimals(double number)
     {
         return Math.Truncate(number * 100) / 100;
+    }
+
+    private async void autoRefechData(){
+
+        room = await RoomServic.GetRoom(RoomID);
+
+        statusColor = RoomStatus.getRoomStateCSS(room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
+        statusText = RoomStatus.getDetailedRoomStateText(room.Status);
+
+        StateHasChanged();
+
+        await Task.Delay(2000); //Eine Secunde Warten
+
+        autoRefechData();
     }
 }
