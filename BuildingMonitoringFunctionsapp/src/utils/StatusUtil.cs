@@ -33,22 +33,57 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                 status = (Status)Enum.Parse(typeof(Status), currentStatus);
             }
 
-            double toleranceTemp = (Math.Abs(roomConfig.upperToleranceTemper-roomConfig.targetTemper) / 2);
-            double toleranceHum = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
+            Status tempStatus = getTempStatus(measurement, roomConfig, status);
+            Status humidStatus = getHumidStatus(measurement, roomConfig, status);
 
-            if (measurement.temper > roomConfig.upperToleranceTemper)
-            {
-                status = Status.tooHighTemp;
-            }
-            if (measurement.temper < (roomConfig.targetTemper + toleranceTemp))
+
+            //Beide gleich
+            if(tempStatus == Status.ok && humidStatus == Status.ok)
             {
                 status = Status.ok;
             }
-            if (measurement.temper < (roomConfig.lowerToleranceTemper))
+            if (tempStatus == Status.tooHighTemp && humidStatus == Status.tooHighHum)
+            {
+                tempStatus = Status.tooHigh;
+            }
+            if (humidStatus == Status.tooLowTemp && humidStatus == Status.tooLowHum)
+            {
+                humidStatus = Status.tooLow;
+            }
+
+            //Temberatur
+            if (tempStatus == Status.tooHighTemp && humidStatus == Status.ok)
+            {
+                status = Status.tooHighTemp;
+            }
+            if (tempStatus == Status.tooLowTemp && humidStatus == Status.ok)
             {
                 status = Status.tooLowTemp;
             }
-            if (measurement.temper > (roomConfig.targetTemper - toleranceTemp))
+
+            //Luftfeuchtigkeit
+            if (tempStatus == Status.ok && humidStatus == Status.tooHighHum)
+            {
+                status = Status.tooHighHum;
+            }
+            if(tempStatus == Status.ok && humidStatus == Status.tooLowHum)
+            {
+                status=Status.tooLowHum;
+            }
+
+            //Gemister Status
+            if (tempStatus == Status.tooHighTemp && humidStatus == Status.tooLowHum)
+            {
+                status = Status.tooHighTemptooLowHum;
+            }
+            if (tempStatus == Status.tooLowTemp && humidStatus == Status.tooHighHum)
+            {
+                status = Status.tooLowTemptooHighHum;
+            }
+
+            return status.ToString();
+        }
+
         private static Status getHumidStatus(Measurement measurement, RoomConfig roomConfig, Status currentStatus)
         {
             Status status = currentStatus;
@@ -97,6 +132,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
 
             return status;
         }
+
         private static Status getTempStatus(Measurement measurement, RoomConfig roomConfig, Status currentStatus)
         {
             Status status = currentStatus;
