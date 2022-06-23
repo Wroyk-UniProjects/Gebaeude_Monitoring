@@ -36,7 +36,7 @@ namespace BuildingMonitoringFunctionsapp
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
                 //  Get current date
-                measurement.date = DateTime.Now;
+                measurement.date = DateTime.UtcNow;
                 //string sqlFormattedDate = measurement.date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
 
                 //  SQL query
