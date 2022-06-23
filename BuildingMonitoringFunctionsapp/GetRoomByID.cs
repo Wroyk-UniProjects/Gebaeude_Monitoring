@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Data.SqlClient;
+using BuildingMonitoringFunctionsapp.src.utils;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -32,9 +34,44 @@ namespace BuildingMonitoringFunctionsapp
                 CommandType = System.Data.CommandType.Text,
                 Parameters = "@ID={iD}",
                 ConnectionStringSetting = "sqlconnectionstring")]
-            IEnumerable<RoomDetail> room)
+            IEnumerable<RoomDetail> roomIE)
         {
-            return new OkObjectResult(room.FirstOrDefault());
+            RoomDetail room = roomIE.FirstOrDefault();
+
+            String sql_setStatus = "update room set [status]=@status where id=@roomID";
+           
+
+            try
+            {
+                var connection_str = Environment.GetEnvironmentVariable("sqlconnectionstring");
+
+                using (SqlConnection connection = new SqlConnection(connection_str))
+                {
+                    SqlCommand cmd_setStatus = new SqlCommand(sql_setStatus, connection);
+
+                    cmd_setStatus.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+                    cmd_setStatus.Parameters.Add("@status", System.Data.SqlDbType.VarChar);
+                    cmd_setStatus.Parameters[0].Value = room.id;
+
+                    RoomConfig rc = RoomConfigsUtil.createRoomConfig((room.global ? 0 : room.id), connection);
+                    room.targetHumid = rc.targetHumid;
+                    room.targetTemper = rc.targetTemper;
+                    Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
+                    room.status = StatusUtil.GetStatus(m, rc, room.status);
+
+                    cmd_setStatus.Parameters[1].Value = StatusUtil.GetStatus(m, rc, room.status);
+
+                    connection.Open();
+                    cmd_setStatus.ExecuteNonQueryAsync();
+                    connection.Close();
+                }
+            }
+            catch (Exception es)
+            {
+                return new BadRequestObjectResult(es);
+            }
+
+            return new OkObjectResult(room);
         }
     }
 }

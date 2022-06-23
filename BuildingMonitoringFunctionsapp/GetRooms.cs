@@ -33,8 +33,7 @@ namespace BuildingMonitoringFunctionsapp
         IEnumerable<Room> rooms)
         {
             var connection_str = Environment.GetEnvironmentVariable("sqlconnectionstring");
-
-            List<Measurement> l = new List<Measurement>();
+            String sql_setStatus = "update room set [status]=@status where id=@roomID";
 
             using (SqlConnection connection = new SqlConnection(connection_str))
             {
@@ -42,17 +41,30 @@ namespace BuildingMonitoringFunctionsapp
                 {
                     foreach (Room room in rooms)
                     {
+                        SqlCommand cmd_setStatus = new SqlCommand(sql_setStatus, connection);
+
+                        cmd_setStatus.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+                        cmd_setStatus.Parameters.Add("@status", System.Data.SqlDbType.VarChar);
+                        cmd_setStatus.Parameters[0].Value = room.id;
+
                         RoomConfig rc = RoomConfigsUtil.createRoomConfig((room.global ? 0 : room.id), connection);
                         room.targetHumid = rc.targetHumid;
                         room.targetTemper = rc.targetTemper;
-                        //Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
-                        //room.status = StatusUtil.GetStatus(m, rc, room.status);
+                        Measurement m = MeasurementUtil.createMeasurement(room.id, connection);
+                        room.status = StatusUtil.GetStatus(m, rc, room.status);
+
+                        cmd_setStatus.Parameters[1].Value = StatusUtil.GetStatus(m, rc, room.status);
+
+                        connection.Open();
+                        cmd_setStatus.ExecuteNonQueryAsync();
+                        connection.Close();
                     }
                 }
                 catch (Exception es)
                 {
                     return new BadRequestObjectResult(es);
                 }
+
             }
             return new OkObjectResult(rooms); //200 zur�ckgeben
         }
