@@ -87,7 +87,7 @@ class Main:
                 success = self.api_connection.send_measurements(humidity, temperature)
                 if not success:
                     raise Exception("Error at sending data to the API please contact the developer")
-                if debug:
+                if not debug:
                     self._timeout_and_update()
                 else:
                     time.sleep(self.timeout)
@@ -110,7 +110,7 @@ class Main:
     def _timeout_and_update(self):
         def _update_time():
             new_update_rate = self.api_connection.get_update_rate()
-            if new_update_rate != self.timeout & new_update_rate is not None:
+            if new_update_rate != self.timeout and new_update_rate is not None:
                 self.timeout = new_update_rate
                 self._update_config()
 
@@ -148,10 +148,12 @@ class Main:
         config_parser = configparser.RawConfigParser()
         config_parser.read(self.config_path)
         config_parser.set("Default", "UPDATE-RATE", str(self.timeout))
+        with open(self.config_path, 'w') as configfile:
+            config_parser.write(configfile)
 
 
 if __name__ == "__main__":
     Main.main(Main())
-    if len(sys.argv) >1:
+    if len(sys.argv) > 1:
         if sys.argv[1].lower() == "debug":
             debug = True
