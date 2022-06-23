@@ -49,20 +49,54 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                 status = Status.tooLowTemp;
             }
             if (measurement.temper > (roomConfig.targetTemper - toleranceTemp))
+        private static Status getHumidStatus(Measurement measurement, RoomConfig roomConfig, Status currentStatus)
+        {
+            Status status = currentStatus;
+
+            switch (status)// den kombinirten status zu nur Lufeuchtigkeits status convertiren
+            {
+                case Status.tooHigh:
+                case Status.tooLowTemptooHighHum:
+                    status = Status.tooHighHum;
+                    break;
+                case Status.tooLow:
+                case Status.tooHighTemptooLowHum:
+                    status = Status.tooLowHum;
+                    break;
+                case Status.tooHighTemp:
+                case Status.tooLowTemp:
+                    status = Status.ok;
+                    break;
+            }
+
+            double upperTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
+            double lowerTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
+
+            //Es werden nur Status�nderungen erkant.
+            //Ist keine Status�nderung aufgetreten wird currentStatus bei behalten
+
+            if (measurement.humid > (roomConfig.targetHumid - lowerTolerance))//muss vor tooHighHum kommen da im fall von tooHighHum auch true ist
             {
                 status = Status.ok;
             }
 
-
-            if (measurement.humid > roomConfig.upperToleranceHumid && status.Equals(Status.tooHighTemp))
+            if (measurement.humid > roomConfig.upperToleranceHumid)
             {
-                status = Status.tooHigh;
+                status = Status.tooHighHum;
             }
-            else if (measurement.humid < (roomConfig.targetHumid + toleranceHum) && status.Equals(Status.ok))
+
+            if (measurement.humid < (roomConfig.targetHumid + upperTolerance))//muss vor tooLowHum kommen da im fall von tooLowHum auch true ist
             {
                 status = Status.ok;
             }
-            if (measurement.humid < roomConfig.lowerToleranceHumid && status.Equals(Status.tooLow))
+
+            if (measurement.humid < (roomConfig.upperToleranceHumid))
+            {
+                status = Status.tooLowHum;
+            }
+
+            return status;
+        }
         private static Status getTempStatus(Measurement measurement, RoomConfig roomConfig, Status currentStatus)
         {
             Status status = currentStatus;
