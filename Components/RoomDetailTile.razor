@@ -4,7 +4,7 @@
 <div class="my-8 md:mx-8 p-6 mdx:px-2 max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-5">
 
     <div class="col-span-2 mdx:px-4 w-48">
-        <p class="text-5xl font-bold">@room.Name</p>
+        <p class="text-4xl font-bold">@room.Name</p>
         <p class="col-span-3 text-sm font-bold break-words @statusTextColor over">@statusText</p>
     </div>
     
@@ -28,16 +28,16 @@
     
     <!--Temerature-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3 ">
-        <p class="font-bold col-span-2">Temperatur</p>
-        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Temper)</p>
-        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetTemper)</p>
+        <p class="font-bold col-span-2">Temperature</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Temper) c°</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetTemper) c°</p>
     </div>
 
     <!--Humiditi-->
     <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
         <p class="font-bold col-span-2">Humidity</p>
-        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Humid)</p>
-        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetHumid)</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Humid) %</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetHumid) %</p>
     </div>
     
 </div>
