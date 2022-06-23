@@ -72,8 +72,8 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                         while (measurement_var.Read())
                         {
                             measurement.roomId = measurement_var.GetInt32(measurement_var.GetOrdinal("roomId"));
-                            measurement.humid = measurement_var.GetDouble(measurement_var.GetOrdinal("temper"));
-                            measurement.temper = measurement_var.GetDouble(measurement_var.GetOrdinal("humid"));
+                            measurement.humid = measurement_var.GetDouble(measurement_var.GetOrdinal("humid"));
+                            measurement.temper = measurement_var.GetDouble(measurement_var.GetOrdinal("temper"));
                             measurement.date = measurement_var.GetDateTime(measurement_var.GetOrdinal("date"));
                         }
                     }
