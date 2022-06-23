@@ -9,6 +9,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
     enum Status
     {
         undefined,
+        noUpdateReceived,
         ok,
         tooHigh,
         tooLow,
@@ -21,6 +22,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
     }
     internal class StatusUtil
     {
+        private static int timeoutScale = 3;
         public static string GetStatus(Measurement measurement, RoomConfig roomConfig, string currentStatus)
         {
             Status status;
@@ -81,6 +83,15 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                 status = Status.tooLowTemptooHighHum;
             }
 
+            // Rasberry not sending updats
+            DateTime now = DateTime.UtcNow;
+            TimeSpan differenz = now - measurement.date;
+            TimeSpan timeout = TimeSpan.FromSeconds(roomConfig.updateRate * timeoutScale);
+            if (differenz > timeout)
+            {
+                status = Status.noUpdateReceived;
+            }
+
             return status.ToString();
         }
 
@@ -107,8 +118,8 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             double upperTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
             double lowerTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
 
-            //Es werden nur Statusï¿½nderungen erkant.
-            //Ist keine Statusï¿½nderung aufgetreten wird currentStatus bei behalten
+            //Es werden nur Statusänderungen erkant.
+            //Ist keine Statusänderung aufgetreten wird currentStatus bei behalten
 
             if (measurement.humid > (roomConfig.targetHumid - lowerTolerance))//muss vor tooHighHum kommen da im fall von tooHighHum auch true ist
             {
@@ -156,8 +167,8 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             double upperTolerance = (Math.Abs(roomConfig.upperToleranceTemper - roomConfig.targetTemper) / 2);
             double lowerTolerance = (Math.Abs(roomConfig.lowerToleranceTemper - roomConfig.targetTemper) / 2);
 
-            //Es werden nur Statusï¿½nderungen erkant.
-            //Ist keine Statusï¿½nderung aufgetreten wird currentStatus bei behalten
+            //Es werden nur Statusänderungen erkant.
+            //Ist keine Statusänderung aufgetreten wird currentStatus bei behalten
 
             if (measurement.temper > (roomConfig.targetTemper - lowerTolerance))//muss vor tooHighTemp kommen da im fall von tooHighTemp auch true ist
             {
