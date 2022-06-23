@@ -46,11 +46,11 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             }
             if (tempStatus == Status.tooHighTemp && humidStatus == Status.tooHighHum)
             {
-                tempStatus = Status.tooHigh;
+                status = Status.tooHigh;
             }
-            if (humidStatus == Status.tooLowTemp && humidStatus == Status.tooLowHum)
+            if (tempStatus == Status.tooLowTemp && humidStatus == Status.tooLowHum)
             {
-                humidStatus = Status.tooLow;
+                status = Status.tooLow;
             }
 
             //Temberatur
@@ -116,7 +116,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
             }
 
             double upperTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
-            double lowerTolerance = (Math.Abs(roomConfig.upperToleranceHumid - roomConfig.targetHumid) / 2);
+            double lowerTolerance = (Math.Abs(roomConfig.lowerToleranceHumid - roomConfig.targetHumid) / 2);
 
             //Es werden nur Statusänderungen erkant.
             //Ist keine Statusänderung aufgetreten wird currentStatus bei behalten
@@ -136,7 +136,7 @@ namespace BuildingMonitoringFunctionsapp.src.utils
                 status = Status.ok;
             }
 
-            if (measurement.humid < (roomConfig.upperToleranceHumid))
+            if (measurement.humid < (roomConfig.lowerToleranceHumid))
             {
                 status = Status.tooLowHum;
             }
