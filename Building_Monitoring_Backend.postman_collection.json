@@ -79,7 +79,7 @@
 									"if(responseCode.code !==200){ return;}\r",
 									"\r",
 									"pm.test(\"Test Id\",pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"test-id\"))));\r",
-									"pm.test(\"Test name\",pm.expect(jsonData.name).to.eql(\"room\"+ pm.environment.get(\"test-id\")));\r",
+									"pm.test(\"Test name\",pm.expect(jsonData.name).to.eql(\"Room \"+ pm.environment.get(\"test-id\")));\r",
 									"pm.test(\"Test config\",pm.expect(typeof jsonData.global == 'boolean').to.be.true);\r",
 									"pm.test(\"Test status\", pm.expect(typeof jsonData.status == 'string' || roomData.status == null).to.be.true);\r",
 									"pm.test(\"Test humid\", pm.expect(typeof jsonData.humid == 'number').to.be.true);\r",
