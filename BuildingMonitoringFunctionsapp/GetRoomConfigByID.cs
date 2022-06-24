@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
+using BuildingMonitoringFunctionsapp.src.utils;
 
 namespace BuildingMonitoringFunctionsapp
 {
@@ -14,8 +15,9 @@ namespace BuildingMonitoringFunctionsapp
     {
         [FunctionName("getRoomConfigByID")]
         public static IActionResult Run(
+
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "rooms/{roomID}/config")]
-            HttpRequest req,
+            HttpRequest req, int roomID,
             [Sql("select " +
                  "r.id," +
                  "rc.[targetTemper]," +
@@ -35,7 +37,32 @@ namespace BuildingMonitoringFunctionsapp
                 ConnectionStringSetting = "sqlconnectionstring")]
             IEnumerable<RoomConfig> roomConfig)
         {
-            return new OkObjectResult(roomConfig.FirstOrDefault());
+            try
+            {
+                var connection_str = Environment.GetEnvironmentVariable("sqlconnectionstring");
+
+                using (SqlConnection connection = new SqlConnection(connection_str))
+                {
+                    SqlCommand isGlobal = new SqlCommand("SELECT global FROM room where id = @roomID", connection);
+                    isGlobal.Parameters.Add("@roomID", System.Data.SqlDbType.Int);
+                    isGlobal.Parameters[0].Value = roomID;
+                    connection.Open();
+                    SqlDataReader reader = isGlobal.ExecuteReader();
+                    reader.Read();
+                    bool globalBool = reader.GetBoolean(reader.GetOrdinal("global"));
+                    connection.Close();
+                    if (globalBool)
+                    {
+                        RoomConfig rc = RoomConfigsUtil.createRoomConfig(0, connection);
+                        return new OkObjectResult(rc);
+                    };
+                    return new OkObjectResult(roomConfig);
+                }
+            }
+            catch (Exception es)
+            {
+                return new BadRequestObjectResult(es);
+            }
         }
     }
 }
