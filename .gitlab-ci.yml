@@ -1,11 +1,15 @@
 default:
   image: mcr.microsoft.com/dotnet/sdk:6.0
+ 
 
 stages:
   - test
 
 test:
   stage: test
+  services:
+    - name: docker:dind
+      alias: localhost
   script: 
     - cd Building_Monitoring_WebApp
     - dotnet run &
