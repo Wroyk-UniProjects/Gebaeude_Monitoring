@@ -1,15 +1,12 @@
 #!/bin/sh
 apt-get wget -y
-wget https://packages.microsoft.com/config/ubuntu/21.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-apt-get update; \
-apt-get install -y apt-transport-https && \
-apt-get update && \
-apt-get install -y dotnet-sdk-6.0
-apt-get update; \
-apt-get install -y apt-transport-https && \
-apt-get update && \
-apt-get install -y aspnetcore-runtime-6.0
+wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb 
+apt install apt-transport-https -y
+apt update
+apt install dotnet-sdk-6.0 -y 
+apt install apt-transport-https -y
+apt update 
+apt install dotnet-runtime-6.0 -y
+dotnet --version
 apt-get install unzip -y
 apt-get install curl -y
