@@ -7,3 +7,4 @@ stages:
 test:
   stage: test
   script: 
+    - Runtest.bat
