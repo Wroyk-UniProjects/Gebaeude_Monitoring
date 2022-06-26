@@ -11,6 +11,7 @@ test:
     - name: docker:dind
       alias: localhost
   script: 
+    - apt install chromium-chromedriver
     - cd Building_Monitoring_WebApp
     - dotnet run &
     - sleep 8
