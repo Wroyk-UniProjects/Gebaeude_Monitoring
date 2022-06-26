@@ -12,7 +12,7 @@ test:
     - name: docker:dind
       alias: localhost
   script:
-    - sudo chmod +x setup.sh
+    - chmod +x setup.sh
     - ./sh setup.sh
     - echo ls
     - curl "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_linux64.zip" --output chrome.zip
