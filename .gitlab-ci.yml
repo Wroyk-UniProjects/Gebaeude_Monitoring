@@ -7,4 +7,9 @@ stages:
 test:
   stage: test
   script: 
-    - Runtest.bat
+    - cd Building_Monitoring_WebApp
+    - nohub dotnet run
+    - sleep 8
+    - cd ..
+    - cd Building_Monitoring_WebApp.Tests
+    - dotnet test
