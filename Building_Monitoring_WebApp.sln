@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Building_Monitoring_WebApp", "Building_Monitoring_WebApp/Building_Monitoring_WebApp.csproj", "{03109075-33DB-4A74-BDF1-DA6DDC6B5D42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Building_Monitoring_WebApp", "Building_Monitoring_WebApp\Building_Monitoring_WebApp.csproj", "{03109075-33DB-4A74-BDF1-DA6DDC6B5D42}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Building_Monitoring_WebApp.Tests", "Building_Monitoring_WebApp.Tests\Building_Monitoring_WebApp.Tests.csproj", "{B35F9B0A-BEDC-4C65-A0C8-C2E410573593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{03109075-33DB-4A74-BDF1-DA6DDC6B5D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03109075-33DB-4A74-BDF1-DA6DDC6B5D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03109075-33DB-4A74-BDF1-DA6DDC6B5D42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B35F9B0A-BEDC-4C65-A0C8-C2E410573593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B35F9B0A-BEDC-4C65-A0C8-C2E410573593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B35F9B0A-BEDC-4C65-A0C8-C2E410573593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B35F9B0A-BEDC-4C65-A0C8-C2E410573593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

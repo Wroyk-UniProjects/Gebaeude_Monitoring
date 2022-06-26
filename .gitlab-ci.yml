@@ -1,0 +1,9 @@
+default:
+  image: https://mcr.microsoft.com/dotnet/aspnet:6.0
+
+stages:
+  - test
+
+test:
+  stage: test
+  script: 
