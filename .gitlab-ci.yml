@@ -8,7 +8,7 @@ test:
   stage: test
   script: 
     - cd Building_Monitoring_WebApp
-    - nohub dotnet run
+    - dotnet run &
     - sleep 8
     - cd ..
     - cd Building_Monitoring_WebApp.Tests
