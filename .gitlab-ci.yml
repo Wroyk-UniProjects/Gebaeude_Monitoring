@@ -12,8 +12,9 @@ test:
     - name: docker:dind
       alias: localhost
   script:
-    - chmod +x setup.sh
-    - ./setup.sh
+    - sudo chmod +x setup.sh
+    - ./sh setup.sh
+    - echo ls
     - curl "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_linux64.zip" --output chrome.zip
     - unzip chrome.zip
     - mv chromedriver chrome/usr/bin/google-chrome/chromedriver
