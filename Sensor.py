@@ -5,6 +5,7 @@ import board
 import time
 import requests
 import configparser
+from os import system
 from datetime import datetime
 
 default_path = "/home/pi/.config"
@@ -79,6 +80,7 @@ class Main:
             # logfile for storing errors
             log_file = "{}/BuildingMonitoring/{}_logInfo.txt".format(default_path, datetime.now().strftime("%d-%m-%Y"))
             try:
+                system("clear")
                 self.dht_sensor.measure()
                 humidity = self.dht_sensor.humidity
                 temperature = self.dht_sensor.temperature
