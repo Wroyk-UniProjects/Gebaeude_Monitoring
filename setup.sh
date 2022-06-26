@@ -1,6 +1,6 @@
 #!/bin/sh
-sudo apt-get update
-sudo apt-get install -y apt-transport-https && 
-sudo apt-get update && 
-sudo apt-get install -y dotnet-sdk-6.0
-sudo apt-get install unzip -y
+apt-get update
+apt-get install -y apt-transport-https && 
+apt-get update && 
+apt-get install -y dotnet-sdk-6.0
+apt-get install unzip -y
