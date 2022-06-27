@@ -16,8 +16,8 @@ test:
     - apt-get install wget -y
     - apt-get install unzip -y
     - apt-get install curl -y
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt install ./google-chrome-stable_current_amd64.deb -y
+    #- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    #- apt install ./google-chrome-stable_current_amd64.deb -y
     - wget https://dot.net/v1/dotnet-install.sh
     - chmod +x dotnet-install.sh
     - ./dotnet-install.sh -c Current
@@ -29,6 +29,8 @@ test:
     - dotnet run &
     - sleep 8
     - cd ..
-    - curl https://localhost:7036
+    - hostname -a
+    - hostname -i 
+    - hostname -d 
     - cd Building_Monitoring_WebApp.Tests
     - dotnet test
