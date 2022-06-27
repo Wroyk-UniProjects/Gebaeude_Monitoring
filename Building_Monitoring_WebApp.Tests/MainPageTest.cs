@@ -1,13 +1,15 @@
+
 namespace SeleniumTest
 {
     public class MainPageTest
     {
-        String Url = "https://docker:7036/";
+        String Url = "https://localhost:7036/";
         IWebDriver driver;
 
         [SetUp]
         public void Start_Browser()
         {
+            new DriverManager().SetUpDriver(new ChromeConfig());
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless");
             chromeOptions.AddArguments("--disable-gpu");
