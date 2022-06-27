@@ -8,9 +8,6 @@ stages:
 
 test:
   stage: test
-  services:
-    - name: docker:dind
-      alias: localhost
   script:
     - apt-get update
     - apt-get install wget -y
