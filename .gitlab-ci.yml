@@ -26,11 +26,12 @@ test:
     - source ~/.bash_profile
     - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
     - cd Building_Monitoring_WebApp
-    - dotnet run
+    - dotnet run &
     - sleep 8
     - cd ..
     - hostname -a
     - hostname -i 
     - hostname -d 
+    - curl https://localhost:7036
     - cd Building_Monitoring_WebApp.Tests
     - dotnet test
