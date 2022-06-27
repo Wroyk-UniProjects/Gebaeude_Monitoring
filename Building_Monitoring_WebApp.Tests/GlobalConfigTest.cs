@@ -13,6 +13,8 @@ namespace SeleniumTest
             chromeOptions.AddArguments("--disable-gpu");
             chromeOptions.AddArguments("--window-size=1280,800");
             chromeOptions.AddArguments("--allow-insecure-localhost");
+            chromeOptions.AddArguments("--no-sandbox");
+            chromeOptions.AddArguments("--disable-dev-shm-usage");
             driver = new ChromeDriver(chromeOptions);
             driver.Manage().Window.Maximize();
         }
