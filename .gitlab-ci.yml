@@ -23,12 +23,12 @@ test:
     - curl "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_linux64.zip" --output chrome.zip
     - mkdir /usr/bin/google-chrome/
     - unzip chrome.zip -d /usr/bin/google-chrome/
-    - echo 'export PATH=$PATH:/root/.donet/' >> ~/.bash_profile
+    - echo 'export PATH=$PATH:/root/.dotnet/' >> ~/.bash_profile
     - source ~/.bash_profile
     - echo 'export PATH=$PATH:/usr/bin/google-chrome/' >> ~/.bash_profile
     - source ~/.bash_profile
     - cd Building_Monitoring_WebApp
-    - dotnet run &
+    - /root/.dotnet run &
     - sleep 8
     - cd ..
     - cd Building_Monitoring_WebApp.Tests
