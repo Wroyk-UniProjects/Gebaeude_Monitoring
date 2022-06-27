@@ -12,6 +12,7 @@ test:
     - name: docker:dind
       alias: localhost
   script:
+    - apt-get update
     - apt install wget -y
     - chmod +x setup.sh
     - ./setup.sh
