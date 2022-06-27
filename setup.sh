@@ -1,5 +1,5 @@
 #!/bin/sh
-apt-get wget -y
+apt-get install wget -y
 wget https://dot.net/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
 ./dotnet-install.sh -c Current
