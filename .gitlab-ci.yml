@@ -32,6 +32,6 @@ test:
     - hostname -a
     - hostname -i 
     - hostname -d 
-    - curl https://localhost:7036
+    - curl https://localhost:8090
     - cd Building_Monitoring_WebApp.Tests
     - dotnet test
