@@ -24,7 +24,8 @@ test:
     - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
     - cd Building_Monitoring_WebApp
     - dotnet run &
-    - sleep 8
+    - sleep 15
+    - curl https://172.17.0.3:7046;
     - cd ..
     - cd Building_Monitoring_WebApp.Tests
     - dotnet test
