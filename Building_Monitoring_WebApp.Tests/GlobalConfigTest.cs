@@ -15,6 +15,8 @@ namespace SeleniumTest
             chromeOptions.AddArguments("--allow-insecure-localhost");
             chromeOptions.AddArguments("--no-sandbox");
             chromeOptions.AddArguments("--disable-dev-shm-usage");
+            chromeOptions.AddArguments("--ignore-ssl-errors=yes");
+            chromeOptions.AddArguments("--ignore-certificate-errors");
             driver = new ChromeDriver(chromeOptions);
             driver.Manage().Window.Maximize();
         }
