@@ -16,6 +16,9 @@ test:
     - apt install wget -y
     - chmod +x setup.sh
     - ./setup.sh
+    - wget https://dot.net/v1/dotnet-install.sh
+    - chmod +x dotnet-install.sh
+    - ./dotnet-install.sh -c Current
     - whereis dotnet
     - curl "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_linux64.zip" --output chrome.zip
     - mkdir /usr/bin/google-chrome/
