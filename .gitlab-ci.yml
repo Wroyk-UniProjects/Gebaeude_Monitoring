@@ -17,8 +17,7 @@ test:
     - curl "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_linux64.zip" --output chrome.zip
     - mkdir /usr/bin/google-chrome/
     - unzip chrome.zip -d /usr/bin/google-chrome/
-    - find $HOME -type d -name dotnet
-    - echo 'export PATH="$PATH:/home/$USER/.dotnet/"' >> ~/..bash_profile
+    - echo 'export PATH=$PATH:/share/dotnet/dotnet' >> ~/.bash_profile
     - source ~/.bash_profile
     - echo 'export PATH=$PATH:/usr/bin/google-chrome/' >> ~/.bash_profile
     - source ~/.bash_profile
