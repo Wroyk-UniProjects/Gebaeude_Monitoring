@@ -29,5 +29,6 @@ test:
     - dotnet run &
     - sleep 8
     - cd ..
+    - curl https://localhost:7036
     - cd Building_Monitoring_WebApp.Tests
     - dotnet test
