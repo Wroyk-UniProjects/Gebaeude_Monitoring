@@ -2,7 +2,7 @@ namespace SeleniumTest
 {
     public class MainPageTest
     {
-        String Url = "https://localhost:7036/";
+        String Url = "https://docker:7036/";
         IWebDriver driver;
 
         [SetUp]
