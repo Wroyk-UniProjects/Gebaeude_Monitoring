@@ -2,7 +2,7 @@ namespace SeleniumTest
 {
     public class ClobalConfigTest
     {
-        String Url = "https://172.17.0.4:7036/";
+        String Url = "https://172.17.0.3:7036/";
         IWebDriver driver;
 
         [SetUp]
