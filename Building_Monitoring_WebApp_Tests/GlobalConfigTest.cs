@@ -2,7 +2,7 @@ namespace SeleniumTest
 {
     public class ClobalConfigTest
     {
-        String Url = "https://172.17.0.4:7036/";
+        String Url = "https://localhost:8080/";
         IWebDriver driver;
 
         [SetUp]
@@ -24,7 +24,7 @@ namespace SeleniumTest
         [Test]
         public void Test_Main_Page()
         {
-            driver.Url = "https://www.google.de";
+            driver.Url = Url;
             Thread.Sleep(10000); // wait time for site to load
 
             // click on global
