@@ -20,7 +20,7 @@ namespace SeleniumTest
         [Test]
         public void Test_Main_Page()
         {
-            driver.Url = "https://www.google.de";
+            driver.Url = Url;
             Thread.Sleep(10000); // wait time for site to load
 
             // click on global
