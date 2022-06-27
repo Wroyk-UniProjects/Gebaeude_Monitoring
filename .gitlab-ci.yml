@@ -26,9 +26,10 @@ test:
     - echo 'export PATH=$PATH:/root/.dotnet/' >> ~/.bash_profile
     - source ~/.bash_profile
     - echo 'export PATH=$PATH:/usr/bin/google-chrome/' >> ~/.bash_profile
+    - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
     - source ~/.bash_profile
     - cd Building_Monitoring_WebApp
-    - /root/.dotnet run &
+    - dotnet run &
     - sleep 8
     - cd ..
     - cd Building_Monitoring_WebApp.Tests
