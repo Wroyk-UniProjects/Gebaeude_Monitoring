@@ -16,7 +16,8 @@ test:
     - apt install wget -y
     - chmod +x setup.sh
     - ./setup.sh
-    - apt-get install google-chrome-stable -y
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt install ./google-chrome-stable_current_amd64.deb
     - wget https://dot.net/v1/dotnet-install.sh
     - chmod +x dotnet-install.sh
     - ./dotnet-install.sh -c Current
