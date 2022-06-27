@@ -3,7 +3,7 @@ namespace SeleniumTest
 {
     public class MainPageTest
     {
-        String Url = "https://172.17.0.3:7036/";
+        String Url = "https://localhost:8080/";
         IWebDriver driver;
 
         [SetUp]

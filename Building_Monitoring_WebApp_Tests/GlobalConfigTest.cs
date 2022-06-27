@@ -1,8 +1,8 @@
 namespace SeleniumTest
 {
-    public class IndividualConfigTest
+    public class ClobalConfigTest
     {
-        String Url = "https://172.17.0.3:7036/";
+        String Url = "https://localhost:8080/";
         IWebDriver driver;
 
         [SetUp]
@@ -13,6 +13,10 @@ namespace SeleniumTest
             chromeOptions.AddArguments("--disable-gpu");
             chromeOptions.AddArguments("--window-size=1280,800");
             chromeOptions.AddArguments("--allow-insecure-localhost");
+            chromeOptions.AddArguments("--no-sandbox");
+            chromeOptions.AddArguments("--disable-dev-shm-usage");
+            chromeOptions.AddArguments("--ignore-ssl-errors=yes");
+            chromeOptions.AddArguments("--ignore-certificate-errors");
             driver = new ChromeDriver(chromeOptions);
             driver.Manage().Window.Maximize();
         }
@@ -25,7 +29,7 @@ namespace SeleniumTest
 
             // click on global
 
-            var GlobalConfigButton = driver.FindElement(By.XPath("//li[text()=\"Individual Config\"]/.."));
+            var GlobalConfigButton = driver.FindElement(By.XPath("//li[text()=\"Global Config\"]/.."));
             GlobalConfigButton.Click();
             Thread.Sleep(3000);
 
@@ -38,25 +42,17 @@ namespace SeleniumTest
 
             // check setting options
 
-            String XPathIndividual = "//h1[text()=\"Individual Settings\"]";
+            String XPathGlobal = "//h1[text()=\"Global Settings\"]";
             String XPathTargetTemp = "//p[text()=\"Target Temperature:\"]";
             String XPathTargetHumid = "//p[text()=\"Target Humidity:\"]";
             String XPathUpdateRate = "//p[text()=\"Update Rate:\"]";
             String XPathTolerance = "//p[text()=\"Tolerance:\"]";
-            String XPathRoomSelection = "//p[text()=\"Room Selection:\"]";
-            String XPathDropDownRoom = "//p[text()=\"Room Selection:\"]/../div/select";
-            String XPathCheckBoxText = "//p[text()=\"Uses Gloabal Settings\"]";
-            String XPathCheckBox = XPathCheckBoxText + "/following-sibling::input";
 
-            bool GlobalHeadLine = driver.FindElement(By.XPath(XPathIndividual)).Displayed;
+            bool GlobalHeadLine = driver.FindElement(By.XPath(XPathGlobal)).Displayed;
             bool TargetTempText = driver.FindElement(By.XPath(XPathTargetTemp)).Displayed;
             bool TargetHumidText = driver.FindElement(By.XPath(XPathTargetHumid)).Displayed;
             bool UpdateRateText = driver.FindElement(By.XPath(XPathUpdateRate)).Displayed;
             bool ToleranceText = driver.FindElement(By.XPath(XPathTolerance)).Displayed;
-            bool RoomSelectionText = driver.FindElement(By.XPath(XPathRoomSelection)).Displayed;
-            bool DropDownRoom = driver.FindElement(By.XPath(XPathDropDownRoom)).Displayed;
-            bool SettingCheckBoxText = driver.FindElement(By.XPath(XPathCheckBoxText)).Displayed;
-            bool XPathCheckBoxVisible = driver.FindElement(By.XPath(XPathCheckBox)).Displayed;
 
             String MinusButton = "/following-sibling::div/button[@class = \"minus-btn\"]";
             String PlusButton = "/following-sibling::div/button[@class = \"plus-btn\"]";
@@ -104,12 +100,7 @@ namespace SeleniumTest
                 Assert.That(RoleranceBtnM, Is.True);
                 Assert.That(ToleranceBtnP, Is.True);
                 Assert.That(ToleranceValues, Is.True);
-                Assert.That(SaveBtn, Is.True);
-                Assert.That(CloseBtn, Is.True);
-                Assert.That(RoomSelectionText, Is.True);
-                Assert.That(DropDownRoom, Is.True);
-                Assert.That(SettingCheckBoxText, Is.True);
-                Assert.That(XPathCheckBoxVisible, Is.True);
+
             });
         }
 
