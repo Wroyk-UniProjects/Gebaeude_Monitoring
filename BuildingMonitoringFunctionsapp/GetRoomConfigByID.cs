@@ -54,9 +54,10 @@ namespace BuildingMonitoringFunctionsapp
                     if (globalBool)
                     {
                         RoomConfig rc = RoomConfigsUtil.createRoomConfig(0, connection);
+                        rc.id = roomID;
                         return new OkObjectResult(rc);
                     };
-                    return new OkObjectResult(roomConfig);
+                    return new OkObjectResult(roomConfig.FirstOrDefault());
                 }
             }
             catch (Exception es)
