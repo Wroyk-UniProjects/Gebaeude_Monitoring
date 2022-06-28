@@ -48,7 +48,7 @@ class ApiConnection:
         self.response = requests.get(self.base_url + "rooms/" + str(self.rasp_id) + "/config")
         if self.response.status_code != 200:
             return None
-        return int(self.response.json()["updateRate"])
+        return int(self.response.json()['updateRate'])
 
 
 class Main:
