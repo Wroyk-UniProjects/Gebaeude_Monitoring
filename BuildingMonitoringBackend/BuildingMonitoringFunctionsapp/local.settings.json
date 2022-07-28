@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "sqlconnectionstring": "Server=tcp:monitoring-aarrs.database.windows.net,1433;Initial Catalog=bm-sql-db;Persist Security Info=False;User ID=bigBoss;Password=iLBd2NhoL379YGDzyChW01FymPoCnRFt;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "sqldb_connection": "Server=tcp:monitoring-aarrs.database.windows.net,1433;Initial Catalog=bm-sql-db;Persist Security Info=False;User ID=bigBoss;Password=iLBd2NhoL379YGDzyChW01FymPoCnRFt;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  
+  }
+
+}
