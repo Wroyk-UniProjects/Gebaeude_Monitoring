@@ -1,0 +1,48 @@
+default:
+  image:
+    name: ubuntu:latest
+    entrypoint: [ '/bin/bash', '-c', 'ln -snf /bin/bash /bin/sh && /bin/bash -c $0' ]
+
+stages:
+  - create-zip
+  - create-release
+
+create-zip:
+  stage: create-zip
+  except:
+    - tags
+  script:
+    - echo "creating development zip"
+    - apt-get update -y
+    - apt-get install zip unzip -y
+    - apt-get install curl -y
+    - chmod +x dependencies.sh
+    - chmod +x run.sh
+    - zip monitoring_$CI_COMMIT_BRANCH.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
+    - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_$CI_COMMIT_BRANCH.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/test/"
+  artifacts:
+    name: $CI_COMMIT_BRANCH
+    paths:
+      - monitoring_$CI_COMMIT_BRANCH.zip
+    expire_in: 1 week
+
+create-release:
+  stage: create-release
+  only:
+    - tags
+  script:
+    - echo "creating release zip"
+    - apt-get update -y
+    - apt-get install zip unzip -y
+    - apt-get install curl -y
+    - chmod +x dependencies.sh
+    - chmod +x run.sh
+    - zip monitoring_v$CI_COMMIT_TAG.zip config.ini Sensor.py run.sh requirements.txt dependencies.sh
+    - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_v$CI_COMMIT_TAG.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/releases/"
+    - mv monitoring_v$CI_COMMIT_TAG.zip monitoring_latest.zip
+    - curl -uarmin_lezic@live.de:APADz656jsiyKxGFfKWBUPPfJUZ -T monitoring_latest.zip "https://pswtm.jfrog.io/artifactory/default-generic-local/build-monitoring/releases/" 
+  artifacts:
+    name: $CI_COMMIT_TAG
+    paths:
+      - monitoring_v$CI_COMMIT_TAG.zip
+    expire_in: 3 mos

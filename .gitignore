@@ -1,4 +1,3 @@
-
-SingelRepos/
-
-Tutorial_Uebungen/
+# IntelliJ
+.idea
+venv/
