@@ -1,0 +1,92 @@
+﻿@using System.Timers
+@implements IDisposable
+
+<div class="my-8 md:mx-8 p-6 mdx:px-2 max-w-sm shadow-md bg-white text-gray-800 grid gap-2 grid-cols-3 grid-rows-5">
+
+    <div class="col-span-2 mdx:px-4 w-48">
+        <p class="text-4xl font-bold">@room.Name</p>
+        <p class="col-span-3 text-sm font-bold break-words @statusTextColor over">@statusText</p>
+    </div>
+    
+
+    <div class="@statusColor text-center rounded-lg w-12 h-12 place-self-center grid place-items-center">
+        @if (room.Global)
+        {
+           
+            <p class="font-bold">G</p>
+        }
+        else
+        {
+            <p class="font-bold">I</p>
+        }
+    </div>
+
+    <!--Floorplan-->
+    <div class="col-span-3 row-span-2 w-72 h-48">
+        <img class="w-72 h-48" src="@room.ImageUrl" alt="Floorplan of @room.Name"/>
+    </div>
+    
+    <!--Temerature-->
+    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3 ">
+        <p class="font-bold col-span-2">Temperature</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Temper) c°</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetTemper) c°</p>
+    </div>
+
+    <!--Humiditi-->
+    <div class="col-span-3 mdx:px-4 grid grid-cols-2 grid-rows-3">
+        <p class="font-bold col-span-2">Humidity</p>
+        <p>Measured:</p> <p class="text-center">@roundToTwoDecimals(room.Humid) %</p>
+        <p>Target:</p> <p class="text-center">@roundToTwoDecimals(room.TargetHumid) %</p>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public int RoomID { get; set; }
+
+    [Inject]
+    public IRoomService RoomServic { get; set; }
+
+    private Timer timer = new(2000);//Zewi Secunde
+    private RoomDetail room = new RoomDetail();
+    private String statusColor = "roomStatusUndefined";
+    private String statusTextColor = "roomStatusTextUndefined";
+    private String statusText = "Not Loaded";
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        room = await RoomServic.GetRoom(RoomID);
+
+        statusColor = RoomStatus.getRoomStateCSS(room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
+        statusText = RoomStatus.getDetailedRoomStateText(room.Status);
+
+        await Task.Delay(2000);
+
+        timer.Elapsed += (sender, eventArgs) => autoRefechData();
+        timer.Start();
+
+    }
+
+    private double roundToTwoDecimals(double number)
+    {
+        return Math.Truncate(number * 100) / 100;
+    }
+
+    private async void autoRefechData()
+    {
+
+        room = await RoomServic.GetRoom(RoomID);
+
+        statusColor = RoomStatus.getRoomStateCSS(room.Status);
+        statusTextColor = RoomStatus.getRoomStateTextCSS(room.Status);
+        statusText = RoomStatus.getDetailedRoomStateText(room.Status);
+
+        StateHasChanged();
+    }
+
+    public void Dispose() => timer.Dispose();
+}

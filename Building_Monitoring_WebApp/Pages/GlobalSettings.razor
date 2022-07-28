@@ -1,0 +1,131 @@
+﻿@page "/globalsettings"
+
+<div class="flex w-full justify-center">
+	<div class="lg:px-12 lg:pb-4 lg:shadow-md lg:bg-white lg:mt-4">
+		<div class="w-60">
+			<h1 class="text-center font-bold text-xl my-5">Global Settings</h1>
+
+			<!-- Temperature -->
+			<p class="text-center text-xl">Target Temperature:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementTemp" disabled=@disableInput class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.TargetTemper</p>
+				<button @onclick="incrementTemp" disabled=@disableInput class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">°C</span>
+			</div>
+
+			<!-- Humidity -->
+			<p class="text-center text-xl">Target Humidity:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementHumi" disabled=@disableInput class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.TargetHumid</p>
+				<button @onclick="incrementHumi" disabled=@disableInput class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">%</span>
+			</div>
+
+			<!-- Update Rate -->
+			<p class="text-center text-xl">Update Rate:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementUpdate" disabled=@disableInput class="minus-btn">-</button>
+				<p class="settings-values">@cnfg.UpdateRate</p>
+				<button @onclick="incrementUpdate" disabled=@disableInput class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">Sec.</span>
+			</div>
+
+			<!-- Tolerance -->
+			<p class="text-center text-xl">Tolerance:</p>
+			<div class="flex items-center mb-4">
+				<button @onclick="decrementTole" disabled=@disableInput class="minus-btn">-</button>
+				<p class="settings-values">@tolerance</p>
+				<button @onclick="incrementTole" disabled=@disableInput class="plus-btn">+</button>
+				<span class="mx-auto w-12 text-xl font-bold">+/-</span>
+			</div>
+
+			<!-- Save and Cancel Buttons -->
+			<div class="flex flex-col justify-center">
+				<button @onclick="saveChanges" class="m-3 py-1 bg-sky-500 border-2 rounded-full text-center font-bold hover:text-gray-700 focus:text-gray-700">@saveButtonText</button>
+				<NavLink @onclick="undoChanges" class="mx-6 py-1 bg-gray-200 rounded-full text-center" href=""><button>Cancel</button></NavLink>
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	public Config oldCnfg { get; set; } = new Config();
+	public Config cnfg { get; set; } = new Config();
+	private double tolerance, oldTolerance;
+	private bool saveing, disableInput = false;
+	private string saveButtonText = "Save";
+
+	[Inject]
+	public IConfigService CnfgService { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+
+		oldCnfg = await CnfgService.GetConfig();
+		cnfg = await CnfgService.GetConfig();
+		oldTolerance = Math.Abs(Math.Truncate((cnfg.UpperToleranceTemper-cnfg.TargetTemper) * 100) / 100);
+		tolerance = Math.Abs(Math.Truncate((cnfg.UpperToleranceTemper-cnfg.TargetTemper) * 100) / 100);
+
+	}
+	// Temperature Buttons - functionallity
+	private void decrementTemp() { cnfg.TargetTemper -= 0.5; }
+	private void incrementTemp() { cnfg.TargetTemper += 0.5; }
+
+	// Humidity Buttons - functionallity
+	private void decrementHumi() { cnfg.TargetHumid -= 0.5; }
+	private void incrementHumi() { cnfg.TargetHumid += 0.5; }
+
+	// Update Rate Buttons - functionallity
+	private void decrementUpdate() { cnfg.UpdateRate -= 1; }
+	private void incrementUpdate() { cnfg.UpdateRate += 1; }
+
+	// Tolerance Buttons - functionallity
+	private void decrementTole() { updateCnfg(false); }
+	private void incrementTole() { updateCnfg(true); }
+
+	private void updateCnfg(bool decInc)
+	{
+		if (decInc) { tolerance = Math.Truncate((tolerance + 0.5) * 100) / 100; }
+		else tolerance = Math.Truncate((tolerance - 0.5) * 100) / 100;
+
+		cnfg.UpperToleranceTemper = Math.Truncate((cnfg.TargetTemper + tolerance) * 100) / 100;
+		cnfg.LowerToleranceTemper = Math.Truncate((cnfg.TargetTemper - tolerance) * 100) / 100;
+		cnfg.UpperToleranceHumid = Math.Truncate((cnfg.TargetHumid + tolerance) * 100) / 100;
+		cnfg.LowerToleranceHumid = Math.Truncate((cnfg.TargetHumid - tolerance) * 100) / 100;
+	}
+
+	// Save and Cancel Button - functionallity
+	private async void saveChanges() 
+	{
+		bool success = false;
+
+		if(!saveing)
+		{
+			saveing = true;
+			disableInput = true;
+			saveButtonText = "... Saveing";
+			StateHasChanged();
+
+			success = await CnfgService.PatchConfig(cnfg);
+
+			saveing = false;
+			disableInput = false;
+		}
+
+		if (success)
+		{
+			saveButtonText = "Success";
+			StateHasChanged();
+			await Task.Delay(1000);
+		}
+
+		if (!saveing)//Wenn jemand weredn dem timer schon den butten drückt
+		{
+			saveButtonText = "Save";
+			StateHasChanged();
+		}
+	}
+	private async void undoChanges() { cnfg = new Config(oldCnfg); tolerance = oldTolerance; }
+}

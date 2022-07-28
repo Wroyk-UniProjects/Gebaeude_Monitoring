@@ -1,0 +1,48 @@
+﻿@page "/listview"
+@using System.Timers
+@implements IDisposable
+
+<PageTitle>Building Monitoring</PageTitle>
+<div class="w-full grid justify-center">
+
+    @if (RoomList.Count <= 0)
+    {
+        //Loding Text anzegen wenn noch keine Räume in der Liste sind.
+        <Loading/>
+    }
+
+    
+    @foreach (var room in RoomList)
+    {
+        <RoomListTile Room=room />
+    }
+    
+</div>
+
+@code{
+    public List<Room> RoomList { get; set; } = new List<Room>();
+
+    [Inject]
+    public IRoomService RoomServic { get; set; }
+
+    private Timer timer = new(2000);
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        RoomList = await RoomServic.GetRooms();
+
+        await Task.Delay(2000);
+
+        timer.Elapsed += (sender, eventArgs) => autoRefechData();
+        timer.Start();
+    }
+
+    private async void autoRefechData()
+    {
+        RoomList = await RoomServic.GetRooms();
+        StateHasChanged();
+    }
+
+    public void Dispose() => timer.Dispose();
+}
